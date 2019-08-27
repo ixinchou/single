@@ -34,11 +34,16 @@ public class ChildController {
         if (StringUtil.isEmpty(vo.getName())) {
             return HttpResponse.failure(ChildCode.ChildNameCannotBeEmpty, "添加孩子信息时名字不能为空");
         }
-        boolean b = childService.addChild(vo);
-        if (b) {
-            return HttpResponse.success("添加成功");
-        } else {
-            return HttpResponse.failure("添加失败");
+        int ret = childService.addChild(vo);
+        switch (ret) {
+            case -2:
+                return HttpResponse.failure(MemberCode.MemberNotExists, "请先绑定您的微信");
+            case -1:
+                return HttpResponse.failure(ChildCode.ChildNameExist, "已有同名孩子的信息");
+            case 1:
+                return HttpResponse.success("添加成功");
+            default:
+                return HttpResponse.failure("添加失败");
         }
     }
 
@@ -46,5 +51,11 @@ public class ChildController {
     @GetMapping("/list/{sessionId}")
     public HttpResponse findChildren(@PathVariable("sessionId") String sessionId) {
         return HttpResponse.success(childService.find(sessionId));
+    }
+
+    @ApiOperation(value = "删除已添加的孩子信息")
+    @PostMapping("/delete")
+    public HttpResponse deleteChild(@RequestBody ChildVo child) {
+        return HttpResponse.failure("暂时不支持删除");
     }
 }

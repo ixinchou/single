@@ -13,6 +13,7 @@ public class ChildVo {
 
     private byte sex;
     private String name;
+    private Date birthday;
     private String sessionId;
 
     public byte getSex() {
@@ -29,6 +30,14 @@ public class ChildVo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public String getSessionId() {

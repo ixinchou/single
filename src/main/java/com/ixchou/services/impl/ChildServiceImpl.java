@@ -29,19 +29,26 @@ public class ChildServiceImpl implements IChildService {
     private TChildMapper childMapper;
 
     @Override
-    public boolean addChild(ChildVo vo) {
+    public int addChild(ChildVo vo) {
         TMember member = memberMapper.selectBySessionId(vo.getSessionId());
         if (null == member) {
-            return false;
+            return -2;
         }
+        // 查找同一个用户底下是否有相同名字的孩子
         TChild child = new TChild();
-        child.setBirthday(new Date());
         child.setMember(member.getId());
         child.setName(vo.getName());
-        child.setRegisterTime(new Date());
-        child.setSex(vo.getSex() > 0);
-        int i = childMapper.insertSelective(child);
-        return i > 0;
+        TChild exists = childMapper.selectByMemberAndName(child);
+        if (null == exists) {
+            // 不存在相同名字的才添加
+            child.setBirthday(vo.getBirthday());
+            child.setMember(member.getId());
+            child.setName(vo.getName());
+            child.setRegisterTime(new Date());
+            child.setSex(vo.getSex() > 0);
+            return childMapper.insertSelective(child);
+        }
+        return -1;
     }
 
     @Override
@@ -51,5 +58,10 @@ public class ChildServiceImpl implements IChildService {
             return new ArrayList<>();
         }
         return childMapper.selectByMemberId(member.getId());
+    }
+
+    @Override
+    public int deleteChild(ChildVo vo) {
+        return 0;
     }
 }

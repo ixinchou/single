@@ -13,6 +13,8 @@ public interface TChildMapper {
 
     TChild selectByPrimaryKey(Integer id);
 
+    TChild selectByMemberAndName(TChild child);
+
     List<TChild> selectByMemberId(Integer memberId);
 
     int updateByPrimaryKeySelective(TChild record);

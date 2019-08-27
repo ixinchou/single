@@ -1,7 +1,6 @@
 package com.ixchou.controller;
 
 import com.ixchou.model.entity.TMember;
-import com.ixchou.model.vo.MemberQueryVo;
 import com.ixchou.model.vo.MemberVo;
 import com.ixchou.model.vo.WxPhoneEncryptedVo;
 import com.ixchou.model.vo.WxRegistryVo;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.WebAsyncTask;
 
 import javax.annotation.Resource;
 
@@ -37,23 +37,27 @@ public class WxController {
 
     @ApiOperation("解密微信绑定的手机号码")
     @PostMapping("phone")
-    public HttpResponse fetchWxPhone(@RequestBody WxPhoneEncryptedVo info) {
-        if (StringUtil.isEmpty(info.getSessionId())) {
-            return HttpResponse.failure(WxCode.NullOfLoginCode, "解密手机号码时sessionId不能为空");
-        }
-        return HttpResponse.success(new MemberVo(memberService.fetchingWxPhone(info)));
+    public WebAsyncTask<HttpResponse> fetchWxPhone(@RequestBody WxPhoneEncryptedVo info) {
+        return new WebAsyncTask<>(() -> {
+            if (StringUtil.isEmpty(info.getSessionId())) {
+                return HttpResponse.failure(WxCode.NullOfLoginCode, "解密手机号码时sessionId不能为空");
+            }
+            return HttpResponse.success(new MemberVo(memberService.fetchingWxPhone(info)));
+        });
     }
 
     @ApiOperation(value = "通过微信绑定的信息查找用户", notes = "通过微信端获取到的用户数据去获取用户的基本信息，如果用户不存在则直接注册")
     @PostMapping("registry")
-    public HttpResponse findWxUserInfo(@RequestBody WxRegistryVo info) {
-        if (StringUtil.isEmpty(info.getLoginCode())) {
-            logger.info("查询请求中的 login code 为空");
-            return HttpResponse.failure(WxCode.NullOfLoginCode, "login code 为空");
-        }
-        TMember member = memberService.findByWxInfo(info);
-        MemberVo vo = new MemberVo(member);
-        return HttpResponse.success(vo);
+    public WebAsyncTask<HttpResponse> findWxUserInfo(@RequestBody WxRegistryVo info) {
+        return new WebAsyncTask<>(() -> {
+            if (StringUtil.isEmpty(info.getLoginCode())) {
+                logger.info("查询请求中的 login code 为空");
+                return HttpResponse.failure(WxCode.NullOfLoginCode, "login code 为空");
+            }
+            TMember member = memberService.findByWxInfo(info);
+            MemberVo vo = new MemberVo(member);
+            return HttpResponse.success(vo);
+        });
         // 通过微信用户信息查找用户手机号码等信息之后保留注册信息
 //        if (StringUtil.isEmpty(info.getLoginCode())) {
 //            logger.info("登录码为空：" + info);

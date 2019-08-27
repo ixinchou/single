@@ -1,16 +1,12 @@
 package com.ixchou.config;
 
-import com.ixchou.controller.WxController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.AsyncConfigurer;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.web.context.request.async.TimeoutCallableProcessingInterceptor;
+import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-import java.util.Arrays;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -22,16 +18,28 @@ import java.util.concurrent.ThreadPoolExecutor;
  * <b>Description</b>:
  */
 @Configuration
-@EnableAsync
-public class ThreadPoolConfiguration implements AsyncConfigurer {
+public class ThreadPoolConfiguration extends WebMvcConfigurationSupport {
 
-    private final Logger logger = LoggerFactory.getLogger(WxController.class);
+//    private final Logger logger = LoggerFactory.getLogger(WxController.class);
+
+
+    @Override
+    protected void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+        configurer.setDefaultTimeout(30L * 1000);
+        configurer.registerCallableInterceptors(timeoutInterceptor());
+        configurer.setTaskExecutor(getAsyncExecutor());
+        //super.configureAsyncSupport(configurer);
+    }
+
+    @Bean
+    public TimeoutCallableProcessingInterceptor timeoutInterceptor() {
+        return new TimeoutCallableProcessingInterceptor();
+    }
 
     @Bean("asyncTaskExecutor")
-    @Override
-    public Executor getAsyncExecutor() {
+    public ThreadPoolTaskExecutor getAsyncExecutor() {
         int threads = Runtime.getRuntime().availableProcessors() + 1;
-        ThreadPoolTaskExecutor executor= new ThreadPoolTaskExecutor();
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(threads);
         executor.setMaxPoolSize(threads);
         executor.setQueueCapacity(200);
@@ -41,12 +49,12 @@ public class ThreadPoolConfiguration implements AsyncConfigurer {
         return executor;
     }
 
-    @Override
-    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return (throwable, method, objects) -> {
-            logger.error("AsyncUncaughtExceptionHandler:", throwable);
-            System.out.println("method:" + method.getName());
-            System.out.println("objects:" + Arrays.asList(objects));
-        };
-    }
+//    @Override
+//    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+//        return (throwable, method, objects) -> {
+//            logger.error("AsyncUncaughtExceptionHandler:", throwable);
+//            System.out.println("method:" + method.getName());
+//            System.out.println("objects:" + Arrays.asList(objects));
+//        };
+//    }
 }

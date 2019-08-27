@@ -16,9 +16,11 @@ public interface IChildService {
 
     /**
      * 指定用户添加一个孩子的信息
-     * @param child 用户添加的孩子的信息
+     * @param vo 用户添加的孩子的信息
      */
-    boolean addChild(ChildVo vo);
+    int addChild(ChildVo vo);
 
     List<TChild> find(String sessionId);
+
+    int deleteChild(ChildVo vo);
 }

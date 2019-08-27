@@ -53,15 +53,15 @@ public class WebLogAspect {
             logger.info("name: {}, value: {}", name, request.getParameter(name));
         }
         // body
-        try {
-            CustomRequestWrapper wrapper = new CustomRequestWrapper(request);
-            String body = wrapper.getBody();
-            if (!StringUtil.isEmpty(body)) {
-                logger.info("body: " + body);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            CustomRequestWrapper wrapper = new CustomRequestWrapper(request);
+//            String body = wrapper.getBody();
+//            if (!StringUtil.isEmpty(body)) {
+//                logger.info("body: " + body);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 

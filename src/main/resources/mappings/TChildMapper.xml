@@ -18,6 +18,12 @@
     from t_child
     where id = #{id,jdbcType=INTEGER}
   </select>
+    <select id="selectByMemberAndName" resultMap="BaseResultMap" parameterType="com.ixchou.model.entity.TChild">
+        select
+        <include refid="Base_Column_List"/>
+        from t_child
+        where member = #{member, jdbcType=INTEGER} and name = #{name, jdbcType=VARCHAR}
+    </select>
     <select id="selectByMemberId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List" />

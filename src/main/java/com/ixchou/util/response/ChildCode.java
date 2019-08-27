@@ -12,4 +12,8 @@ public class ChildCode {
      * 孩子的名字不能为空
      */
     public static final String ChildNameCannotBeEmpty = "700";
+    /**
+     * 已有相同名字存在
+     */
+    public static final String ChildNameExist="701";
 }
