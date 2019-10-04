@@ -54,8 +54,11 @@ public class ChildController {
     }
 
     @ApiOperation(value = "删除已添加的孩子信息")
-    @GetMapping("/delete/{childId}")
+    @PostMapping("/delete/{childId}")
     public HttpResponse deleteChild(@PathVariable("childId") Integer childId) {
-        return HttpResponse.failure("暂时不支持删除");
+        if (childService.deleteChild(childId) > 0) {
+            return HttpResponse.success("删除成功");
+        }
+        return HttpResponse.failure("删除孩子信息失败");
     }
 }

@@ -5,9 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.context.request.async.TimeoutCallableProcessingInterceptor;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -18,13 +17,13 @@ import java.util.concurrent.ThreadPoolExecutor;
  * <b>Description</b>:
  */
 @Configuration
-public class ThreadPoolConfiguration extends WebMvcConfigurationSupport {
+public class ThreadPoolConfiguration implements WebMvcConfigurer {
 
 //    private final Logger logger = LoggerFactory.getLogger(WxController.class);
 
 
     @Override
-    protected void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
         configurer.setDefaultTimeout(30L * 1000);
         configurer.registerCallableInterceptors(timeoutInterceptor());
         configurer.setTaskExecutor(getAsyncExecutor());
