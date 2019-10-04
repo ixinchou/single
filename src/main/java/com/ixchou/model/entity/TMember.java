@@ -5,19 +5,21 @@ import java.util.Date;
 public class TMember {
     private Integer id;
 
-    private Boolean isUploadable;
+    private Boolean isDeleted;
+
+    private Boolean isUploadAble;
 
     private Boolean wxSex;
 
-    private Date lastLogin;
+    private Date lastLoginTime;
 
     private Date registerTime;
 
     private String phone;
 
-    private String sessionId;
-
     private String userName;
+
+    private String sessionId;
 
     private String wxId;
 
@@ -33,12 +35,20 @@ public class TMember {
         this.id = id;
     }
 
-    public Boolean getIsUploadable() {
-        return isUploadable;
+    public Boolean getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setIsUploadable(Boolean isUploadable) {
-        this.isUploadable = isUploadable;
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public Boolean getIsUploadAble() {
+        return isUploadAble;
+    }
+
+    public void setIsUploadAble(Boolean isUploadAble) {
+        this.isUploadAble = isUploadAble;
     }
 
     public Boolean getWxSex() {
@@ -49,12 +59,12 @@ public class TMember {
         this.wxSex = wxSex;
     }
 
-    public Date getLastLogin() {
-        return lastLogin;
+    public Date getLastLoginTime() {
+        return lastLoginTime;
     }
 
-    public void setLastLogin(Date lastLogin) {
-        this.lastLogin = lastLogin;
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
     }
 
     public Date getRegisterTime() {
@@ -73,20 +83,20 @@ public class TMember {
         this.phone = phone == null ? null : phone.trim();
     }
 
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId == null ? null : sessionId.trim();
-    }
-
     public String getUserName() {
         return userName;
     }
 
     public void setUserName(String userName) {
         this.userName = userName == null ? null : userName.trim();
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId == null ? null : sessionId.trim();
     }
 
     public String getWxId() {

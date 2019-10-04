@@ -1,9 +1,15 @@
 package com.ixchou.model.entity;
 
+import java.util.Date;
+
 public class TCourse {
     private Integer id;
 
-    private String courseName;
+    private Boolean isDeleted;
+
+    private Date registerTime;
+
+    private String name;
 
     private String description;
 
@@ -15,12 +21,28 @@ public class TCourse {
         this.id = id;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public Boolean getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName == null ? null : courseName.trim();
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getDescription() {

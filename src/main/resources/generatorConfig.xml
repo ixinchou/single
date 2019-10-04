@@ -19,10 +19,11 @@
             <property name="suppressAllComments" value="true"/>
             <!-- 是否包含数据库表属性中的注释信息 -->
             <property name="addRemarkComments" value="false"/>
-            <property value="true" name="mapUnderscoreToCamelCase"/>
+            <!-- 下划线转换成驼峰命名 -->
+            <property name="mapUnderscoreToCamelCase" value="true"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://192.168.32.132:3306/ixchou"
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://192.168.32.130:3306/ixchou"
                         userId="root" password="root1234%">
         </jdbcConnection>
         <javaTypeResolver>

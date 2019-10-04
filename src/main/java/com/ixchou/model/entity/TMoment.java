@@ -5,15 +5,17 @@ import java.util.Date;
 public class TMoment {
     private Integer id;
 
-    private Integer courseid;
+    private Boolean isDeleted;
 
-    private Integer postMember;
+    private Integer courseId;
+
+    private Integer memberId;
+
+    private Date postTime;
 
     private String title;
 
     private String content;
-
-    private Date posttime;
 
     public Integer getId() {
         return id;
@@ -23,20 +25,36 @@ public class TMoment {
         this.id = id;
     }
 
-    public Integer getCourseid() {
-        return courseid;
+    public Boolean getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setCourseid(Integer courseid) {
-        this.courseid = courseid;
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
-    public Integer getPostMember() {
-        return postMember;
+    public Integer getCourseId() {
+        return courseId;
     }
 
-    public void setPostMember(Integer postMember) {
-        this.postMember = postMember;
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+    public Integer getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
+    }
+
+    public Date getPostTime() {
+        return postTime;
+    }
+
+    public void setPostTime(Date postTime) {
+        this.postTime = postTime;
     }
 
     public String getTitle() {
@@ -53,13 +71,5 @@ public class TMoment {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
-    }
-
-    public Date getPosttime() {
-        return posttime;
-    }
-
-    public void setPosttime(Date posttime) {
-        this.posttime = posttime;
     }
 }

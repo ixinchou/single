@@ -3,44 +3,46 @@
 <mapper namespace="com.ixchou.mappings.TChildMapper" >
   <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TChild" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="member" property="member" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="sex" property="sex" jdbcType="BIT" />
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
     <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
     <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, member, sex, birthday, register_time, name
+    id, is_deleted, member_id, sex, birthday, register_time, name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
+    select 
     <include refid="Base_Column_List" />
     from t_child
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </select>
     <select id="selectByMemberAndName" resultMap="BaseResultMap" parameterType="com.ixchou.model.entity.TChild">
         select
         <include refid="Base_Column_List"/>
         from t_child
-        where member = #{member, jdbcType=INTEGER} and name = #{name, jdbcType=VARCHAR}
+        where member_id = #{memberId, jdbcType=INTEGER} and name = #{name, jdbcType=VARCHAR} and is_deleted = 0
     </select>
     <select id="selectByMemberId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List" />
         from t_child
-        where member = #{memberId,jdbcType=INTEGER}
+        where member_id = #{memberId,jdbcType=INTEGER} and is_deleted = 0
     </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_child
-    where id = #{id,jdbcType=INTEGER}
+    update t_child
+    set is_deleted = 1
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </delete>
   <insert id="insert" parameterType="com.ixchou.model.entity.TChild" >
-    insert into t_child (id, member, sex, 
-      birthday, register_time, name
-      )
-    values (#{id,jdbcType=INTEGER}, #{member,jdbcType=INTEGER}, #{sex,jdbcType=BIT}, 
-      #{birthday,jdbcType=TIMESTAMP}, #{registerTime,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}
-      )
+    insert into t_child (id, is_deleted, member_id, 
+      sex, birthday, register_time,
+      name)
+    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}, #{memberId,jdbcType=INTEGER}, 
+      #{sex,jdbcType=BIT}, #{birthday,jdbcType=TIMESTAMP}, #{registerTime,jdbcType=TIMESTAMP},
+      #{name,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ixchou.model.entity.TChild" >
     insert into t_child
@@ -48,8 +50,11 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="member != null" >
-        member,
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="memberId != null" >
+        member_id,
       </if>
       <if test="sex != null" >
         sex,
@@ -68,8 +73,11 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="member != null" >
-        #{member,jdbcType=INTEGER},
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=INTEGER},
       </if>
       <if test="sex != null" >
         #{sex,jdbcType=BIT},
@@ -88,8 +96,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.ixchou.model.entity.TChild" >
     update t_child
     <set >
-      <if test="member != null" >
-        member = #{member,jdbcType=INTEGER},
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=INTEGER},
       </if>
       <if test="sex != null" >
         sex = #{sex,jdbcType=BIT},
@@ -104,15 +115,16 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TChild" >
     update t_child
-    set member = #{member,jdbcType=INTEGER},
+    set is_deleted = #{isDeleted,jdbcType=BIT},
+      member_id = #{memberId,jdbcType=INTEGER},
       sex = #{sex,jdbcType=BIT},
       birthday = #{birthday,jdbcType=TIMESTAMP},
       register_time = #{registerTime,jdbcType=TIMESTAMP},
       name = #{name,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </update>
 </mapper>

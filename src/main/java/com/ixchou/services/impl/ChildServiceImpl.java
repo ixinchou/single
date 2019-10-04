@@ -36,13 +36,13 @@ public class ChildServiceImpl implements IChildService {
         }
         // 查找同一个用户底下是否有相同名字的孩子
         TChild child = new TChild();
-        child.setMember(member.getId());
+        child.setMemberId(member.getId());
         child.setName(vo.getName());
         TChild exists = childMapper.selectByMemberAndName(child);
         if (null == exists) {
             // 不存在相同名字的才添加
             child.setBirthday(vo.getBirthday());
-            child.setMember(member.getId());
+            child.setMemberId(member.getId());
             child.setName(vo.getName());
             child.setRegisterTime(new Date());
             child.setSex(vo.getSex() > 0);
@@ -61,7 +61,7 @@ public class ChildServiceImpl implements IChildService {
     }
 
     @Override
-    public int deleteChild(ChildVo vo) {
-        return 0;
+    public int deleteChild(Integer childId) {
+        return childMapper.deleteByPrimaryKey(childId);
     }
 }

@@ -3,29 +3,35 @@
 <mapper namespace="com.ixchou.mappings.TAttachmentMapper" >
   <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TAttachment" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
-    <result column="file_size" property="fileSize" jdbcType="INTEGER" />
-    <result column="file_md5" property="fileMd5" jdbcType="CHAR" />
-    <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="size" property="size" jdbcType="INTEGER" />
+    <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP" />
+    <result column="signature" property="signature" jdbcType="CHAR" />
+    <result column="save_name" property="saveName" jdbcType="VARCHAR" />
+    <result column="origin_name" property="originName" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, file_name, file_size, file_md5, file_url
+    id, is_deleted, size, upload_time, signature, save_name, origin_name, url
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_attachment
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_attachment
-    where id = #{id,jdbcType=INTEGER}
+    update t_attachment
+    set is_deleted = 1
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </delete>
   <insert id="insert" parameterType="com.ixchou.model.entity.TAttachment" >
-    insert into t_attachment (id, file_name, file_size, 
-      file_md5, file_url)
-    values (#{id,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{fileSize,jdbcType=INTEGER}, 
-      #{fileMd5,jdbcType=CHAR}, #{fileUrl,jdbcType=VARCHAR})
+    insert into t_attachment (id, is_deleted, size, 
+      upload_time, signature, save_name, 
+      origin_name, url)
+    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}, #{size,jdbcType=INTEGER}, 
+      #{uploadTime,jdbcType=TIMESTAMP}, #{signature,jdbcType=CHAR}, #{saveName,jdbcType=VARCHAR}, 
+      #{originName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ixchou.model.entity.TAttachment" >
     insert into t_attachment
@@ -33,61 +39,91 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="fileName != null" >
-        file_name,
+      <if test="isDeleted != null" >
+        is_deleted,
       </if>
-      <if test="fileSize != null" >
-        file_size,
+      <if test="size != null" >
+        size,
       </if>
-      <if test="fileMd5 != null" >
-        file_md5,
+      <if test="uploadTime != null" >
+        upload_time,
       </if>
-      <if test="fileUrl != null" >
-        file_url,
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="saveName != null" >
+        save_name,
+      </if>
+      <if test="originName != null" >
+        origin_name,
+      </if>
+      <if test="url != null" >
+        url,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="fileName != null" >
-        #{fileName,jdbcType=VARCHAR},
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
       </if>
-      <if test="fileSize != null" >
-        #{fileSize,jdbcType=INTEGER},
+      <if test="size != null" >
+        #{size,jdbcType=INTEGER},
       </if>
-      <if test="fileMd5 != null" >
-        #{fileMd5,jdbcType=CHAR},
+      <if test="uploadTime != null" >
+        #{uploadTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="fileUrl != null" >
-        #{fileUrl,jdbcType=VARCHAR},
+      <if test="signature != null" >
+        #{signature,jdbcType=CHAR},
+      </if>
+      <if test="saveName != null" >
+        #{saveName,jdbcType=VARCHAR},
+      </if>
+      <if test="originName != null" >
+        #{originName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.ixchou.model.entity.TAttachment" >
     update t_attachment
     <set >
-      <if test="fileName != null" >
-        file_name = #{fileName,jdbcType=VARCHAR},
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
       </if>
-      <if test="fileSize != null" >
-        file_size = #{fileSize,jdbcType=INTEGER},
+      <if test="size != null" >
+        size = #{size,jdbcType=INTEGER},
       </if>
-      <if test="fileMd5 != null" >
-        file_md5 = #{fileMd5,jdbcType=CHAR},
+      <if test="uploadTime != null" >
+        upload_time = #{uploadTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="fileUrl != null" >
-        file_url = #{fileUrl,jdbcType=VARCHAR},
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=CHAR},
+      </if>
+      <if test="saveName != null" >
+        save_name = #{saveName,jdbcType=VARCHAR},
+      </if>
+      <if test="originName != null" >
+        origin_name = #{originName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TAttachment" >
     update t_attachment
-    set file_name = #{fileName,jdbcType=VARCHAR},
-      file_size = #{fileSize,jdbcType=INTEGER},
-      file_md5 = #{fileMd5,jdbcType=CHAR},
-      file_url = #{fileUrl,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    set is_deleted = #{isDeleted,jdbcType=BIT},
+      size = #{size,jdbcType=INTEGER},
+      upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+      signature = #{signature,jdbcType=CHAR},
+      save_name = #{saveName,jdbcType=VARCHAR},
+      origin_name = #{originName,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </update>
 </mapper>

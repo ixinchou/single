@@ -53,7 +53,7 @@ public class MemberServiceImpl implements IMemberService {
         TMember member = memberMapper.selectByWxOpenId(openIdVo.getOpenid());
         if (null != member) {
             // 更新最后登录时间
-            member.setLastLogin(new Date());
+            member.setLastLoginTime(new Date());
             // 同时更新微信昵称
             member.setWxNickName(info.getNickName());
             // 同时更新微信 sessionid以便后续解码手机号码等信息
@@ -63,8 +63,8 @@ public class MemberServiceImpl implements IMemberService {
         }
         // 注册一个新的账号
         member = new TMember();
-        member.setIsUploadable(false);
-        member.setLastLogin(new Date());
+        member.setIsUploadAble(false);
+        member.setLastLoginTime(new Date());
         member.setRegisterTime(new Date());
         member.setUserName("");
         member.setPhone("");

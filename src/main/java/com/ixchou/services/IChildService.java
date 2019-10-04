@@ -22,5 +22,5 @@ public interface IChildService {
 
     List<TChild> find(String sessionId);
 
-    int deleteChild(ChildVo vo);
+    int deleteChild(Integer childId);
 }

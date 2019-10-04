@@ -1,176 +1,190 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ixchou.mappings.TMemberMapper">
-    <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TMember">
-        <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="is_uploadable" property="isUploadable" jdbcType="BIT"/>
-        <result column="wx_sex" property="wxSex" jdbcType="BIT"/>
-        <result column="last_login" property="lastLogin" jdbcType="TIMESTAMP"/>
-        <result column="register_time" property="registerTime" jdbcType="TIMESTAMP"/>
-        <result column="phone" property="phone" jdbcType="CHAR"/>
-        <result column="session_id" property="sessionId" jdbcType="CHAR"/>
-        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
-        <result column="wx_id" property="wxId" jdbcType="VARCHAR"/>
-        <result column="wx_session" property="wxSession" jdbcType="VARCHAR"/>
-        <result column="wx_nick_name" property="wxNickName" jdbcType="VARCHAR"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-    id, is_uploadable, wx_sex, last_login, register_time, phone, session_id, user_name, 
-    wx_id, wx_session, wx_nick_name
+<mapper namespace="com.ixchou.mappings.TMemberMapper" >
+  <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TMember" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="is_upload_able" property="isUploadAble" jdbcType="BIT" />
+    <result column="wx_sex" property="wxSex" jdbcType="BIT" />
+    <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+    <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="session_id" property="sessionId" jdbcType="VARCHAR" />
+    <result column="wx_id" property="wxId" jdbcType="VARCHAR" />
+    <result column="wx_session" property="wxSession" jdbcType="VARCHAR" />
+    <result column="wx_nick_name" property="wxNickName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, is_deleted, is_upload_able, wx_sex, last_login_time, register_time, phone, user_name, 
+    session_id, wx_id, wx_session, wx_nick_name
   </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from t_member
-        where id = #{id,jdbcType=INTEGER}
-    </select>
-    <select id="selectByWxOpenId" resultMap="BaseResultMap" parameterType="java.lang.String">
-        select
-        <include refid="Base_Column_List"/>
-        from t_member
-        where wx_id = #{openid, jdbcType=VARCHAR}
-    </select>
-    <select id="selectBySessionId" resultMap="BaseResultMap" parameterType="java.lang.String">
-        select
-        <include refid="Base_Column_List"/>
-        from t_member
-        where session_id = #{sessionId, jdbcType=VARCHAR}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_member
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-    <insert id="insert" parameterType="com.ixchou.model.entity.TMember">
-    insert into t_member (id, is_uploadable, wx_sex, 
-      last_login, register_time, phone, 
-      session_id, user_name, wx_id, 
-      wx_session, wx_nick_name)
-    values (#{id,jdbcType=INTEGER}, #{isUploadable,jdbcType=BIT}, #{wxSex,jdbcType=BIT}, 
-      #{lastLogin,jdbcType=TIMESTAMP}, #{registerTime,jdbcType=TIMESTAMP}, #{phone,jdbcType=CHAR}, 
-      #{sessionId,jdbcType=CHAR}, #{userName,jdbcType=VARCHAR}, #{wxId,jdbcType=VARCHAR}, 
-      #{wxSession,jdbcType=VARCHAR}, #{wxNickName,jdbcType=VARCHAR})
-  </insert>
-    <insert id="insertSelective" parameterType="com.ixchou.model.entity.TMember">
-        insert into t_member
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="isUploadable != null">
-                is_uploadable,
-            </if>
-            <if test="wxSex != null">
-                wx_sex,
-            </if>
-            <if test="lastLogin != null">
-                last_login,
-            </if>
-            <if test="registerTime != null">
-                register_time,
-            </if>
-            <if test="phone != null">
-                phone,
-            </if>
-            <if test="sessionId != null">
-                session_id,
-            </if>
-            <if test="userName != null">
-                user_name,
-            </if>
-            <if test="wxId != null">
-                wx_id,
-            </if>
-            <if test="wxSession != null">
-                wx_session,
-            </if>
-            <if test="wxNickName != null">
-                wx_nick_name,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="isUploadable != null">
-                #{isUploadable,jdbcType=BIT},
-            </if>
-            <if test="wxSex != null">
-                #{wxSex,jdbcType=BIT},
-            </if>
-            <if test="lastLogin != null">
-                #{lastLogin,jdbcType=TIMESTAMP},
-            </if>
-            <if test="registerTime != null">
-                #{registerTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="phone != null">
-                #{phone,jdbcType=CHAR},
-            </if>
-            <if test="sessionId != null">
-                #{sessionId,jdbcType=CHAR},
-            </if>
-            <if test="userName != null">
-                #{userName,jdbcType=VARCHAR},
-            </if>
-            <if test="wxId != null">
-                #{wxId,jdbcType=VARCHAR},
-            </if>
-            <if test="wxSession != null">
-                #{wxSession,jdbcType=VARCHAR},
-            </if>
-            <if test="wxNickName != null">
-                #{wxNickName,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.ixchou.model.entity.TMember">
-        update t_member
-        <set>
-            <if test="isUploadable != null">
-                is_uploadable = #{isUploadable,jdbcType=BIT},
-            </if>
-            <if test="wxSex != null">
-                wx_sex = #{wxSex,jdbcType=BIT},
-            </if>
-            <if test="lastLogin != null">
-                last_login = #{lastLogin,jdbcType=TIMESTAMP},
-            </if>
-            <if test="registerTime != null">
-                register_time = #{registerTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="phone != null">
-                phone = #{phone,jdbcType=CHAR},
-            </if>
-            <if test="sessionId != null">
-                session_id = #{sessionId,jdbcType=CHAR},
-            </if>
-            <if test="userName != null">
-                user_name = #{userName,jdbcType=VARCHAR},
-            </if>
-            <if test="wxId != null">
-                wx_id = #{wxId,jdbcType=VARCHAR},
-            </if>
-            <if test="wxSession != null">
-                wx_session = #{wxSession,jdbcType=VARCHAR},
-            </if>
-            <if test="wxNickName != null">
-                wx_nick_name = #{wxNickName,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TMember">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_member
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
+  </select>
+  <select id="selectByWxOpenId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    from t_member
+    where wx_id = #{openid, jdbcType=VARCHAR} and is_deleted = 0
+  </select>
+  <select id="selectBySessionId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    from t_member
+    where session_id = #{sessionId, jdbcType=VARCHAR} and is_deleted = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     update t_member
-    set is_uploadable = #{isUploadable,jdbcType=BIT},
+    set is_deleted = 1
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
+  </delete>
+  <insert id="insert" parameterType="com.ixchou.model.entity.TMember" >
+    insert into t_member (id, is_deleted, is_upload_able, 
+      wx_sex, last_login_time, register_time, 
+      phone, user_name, session_id, 
+      wx_id, wx_session, wx_nick_name
+      )
+    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}, #{isUploadAble,jdbcType=BIT}, 
+      #{wxSex,jdbcType=BIT}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{registerTime,jdbcType=TIMESTAMP}, 
+      #{phone,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{sessionId,jdbcType=VARCHAR}, 
+      #{wxId,jdbcType=VARCHAR}, #{wxSession,jdbcType=VARCHAR}, #{wxNickName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TMember" >
+    insert into t_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="isUploadAble != null" >
+        is_upload_able,
+      </if>
+      <if test="wxSex != null" >
+        wx_sex,
+      </if>
+      <if test="lastLoginTime != null" >
+        last_login_time,
+      </if>
+      <if test="registerTime != null" >
+        register_time,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="sessionId != null" >
+        session_id,
+      </if>
+      <if test="wxId != null" >
+        wx_id,
+      </if>
+      <if test="wxSession != null" >
+        wx_session,
+      </if>
+      <if test="wxNickName != null" >
+        wx_nick_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="isUploadAble != null" >
+        #{isUploadAble,jdbcType=BIT},
+      </if>
+      <if test="wxSex != null" >
+        #{wxSex,jdbcType=BIT},
+      </if>
+      <if test="lastLoginTime != null" >
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registerTime != null" >
+        #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null" >
+        #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxId != null" >
+        #{wxId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxSession != null" >
+        #{wxSession,jdbcType=VARCHAR},
+      </if>
+      <if test="wxNickName != null" >
+        #{wxNickName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ixchou.model.entity.TMember" >
+    update t_member
+    <set >
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="isUploadAble != null" >
+        is_upload_able = #{isUploadAble,jdbcType=BIT},
+      </if>
+      <if test="wxSex != null" >
+        wx_sex = #{wxSex,jdbcType=BIT},
+      </if>
+      <if test="lastLoginTime != null" >
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registerTime != null" >
+        register_time = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null" >
+        session_id = #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxId != null" >
+        wx_id = #{wxId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxSession != null" >
+        wx_session = #{wxSession,jdbcType=VARCHAR},
+      </if>
+      <if test="wxNickName != null" >
+        wx_nick_name = #{wxNickName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TMember" >
+    update t_member
+    set is_deleted = #{isDeleted,jdbcType=BIT},
+      is_upload_able = #{isUploadAble,jdbcType=BIT},
       wx_sex = #{wxSex,jdbcType=BIT},
-      last_login = #{lastLogin,jdbcType=TIMESTAMP},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       register_time = #{registerTime,jdbcType=TIMESTAMP},
-      phone = #{phone,jdbcType=CHAR},
-      session_id = #{sessionId,jdbcType=CHAR},
+      phone = #{phone,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR},
       wx_id = #{wxId,jdbcType=VARCHAR},
       wx_session = #{wxSession,jdbcType=VARCHAR},
       wx_nick_name = #{wxNickName,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </update>
 </mapper>

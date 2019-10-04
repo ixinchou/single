@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class MemberVo {
 
-    private Boolean isUploadable;
+    private Boolean isUploadAble;
 
     private Boolean wxSex;
 
@@ -34,9 +34,9 @@ public class MemberVo {
     }
 
     public MemberVo(TMember member) {
-        isUploadable = member.getIsUploadable();
+        isUploadAble = member.getIsUploadAble();
         wxSex = member.getWxSex();
-        lastLogin = member.getLastLogin();
+        lastLogin = member.getLastLoginTime();
         registerTime = member.getRegisterTime();
         phone = member.getPhone();
         sessionId = member.getSessionId();
@@ -44,12 +44,12 @@ public class MemberVo {
         wxNickName = member.getWxNickName();
     }
 
-    public Boolean getUploadable() {
-        return isUploadable;
+    public Boolean getUploadAble() {
+        return isUploadAble;
     }
 
-    public void setUploadable(Boolean uploadable) {
-        isUploadable = uploadable;
+    public void setUploadAble(Boolean uploadAble) {
+        isUploadAble = uploadAble;
     }
 
     public Boolean getWxSex() {

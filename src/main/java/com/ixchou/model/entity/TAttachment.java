@@ -1,15 +1,23 @@
 package com.ixchou.model.entity;
 
+import java.util.Date;
+
 public class TAttachment {
     private Integer id;
 
-    private String fileName;
+    private Boolean isDeleted;
 
-    private Integer fileSize;
+    private Integer size;
 
-    private String fileMd5;
+    private Date uploadTime;
 
-    private String fileUrl;
+    private String signature;
+
+    private String saveName;
+
+    private String originName;
+
+    private String url;
 
     public Integer getId() {
         return id;
@@ -19,35 +27,59 @@ public class TAttachment {
         this.id = id;
     }
 
-    public String getFileName() {
-        return fileName;
+    public Boolean getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName == null ? null : fileName.trim();
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
-    public Integer getFileSize() {
-        return fileSize;
+    public Integer getSize() {
+        return size;
     }
 
-    public void setFileSize(Integer fileSize) {
-        this.fileSize = fileSize;
+    public void setSize(Integer size) {
+        this.size = size;
     }
 
-    public String getFileMd5() {
-        return fileMd5;
+    public Date getUploadTime() {
+        return uploadTime;
     }
 
-    public void setFileMd5(String fileMd5) {
-        this.fileMd5 = fileMd5 == null ? null : fileMd5.trim();
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
     }
 
-    public String getFileUrl() {
-        return fileUrl;
+    public String getSignature() {
+        return signature;
     }
 
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl == null ? null : fileUrl.trim();
+    public void setSignature(String signature) {
+        this.signature = signature == null ? null : signature.trim();
+    }
+
+    public String getSaveName() {
+        return saveName;
+    }
+
+    public void setSaveName(String saveName) {
+        this.saveName = saveName == null ? null : saveName.trim();
+    }
+
+    public String getOriginName() {
+        return originName;
+    }
+
+    public void setOriginName(String originName) {
+        this.originName = originName == null ? null : originName.trim();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
     }
 }

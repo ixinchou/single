@@ -3,14 +3,15 @@
 <mapper namespace="com.ixchou.mappings.TMomentMapper" >
   <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TMoment" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="courseId" property="courseid" jdbcType="INTEGER" />
-    <result column="post_member" property="postMember" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="course_id" property="courseId" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="postTime" property="posttime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, courseId, post_member, title, content, postTime
+    id, is_deleted, course_id, member_id, post_time, title, content
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -23,12 +24,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ixchou.model.entity.TMoment" >
-    insert into t_moment (id, courseId, post_member, 
-      title, content, postTime
-      )
-    values (#{id,jdbcType=INTEGER}, #{courseid,jdbcType=INTEGER}, #{postMember,jdbcType=INTEGER}, 
-      #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{posttime,jdbcType=TIMESTAMP}
-      )
+    insert into t_moment (id, is_deleted, course_id, 
+      member_id, post_time, title, 
+      content)
+    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}, #{courseId,jdbcType=INTEGER}, 
+      #{memberId,jdbcType=INTEGER}, #{postTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ixchou.model.entity.TMoment" >
     insert into t_moment
@@ -36,11 +37,17 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="courseid != null" >
-        courseId,
+      <if test="isDeleted != null" >
+        is_deleted,
       </if>
-      <if test="postMember != null" >
-        post_member,
+      <if test="courseId != null" >
+        course_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="postTime != null" >
+        post_time,
       </if>
       <if test="title != null" >
         title,
@@ -48,19 +55,22 @@
       <if test="content != null" >
         content,
       </if>
-      <if test="posttime != null" >
-        postTime,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="courseid != null" >
-        #{courseid,jdbcType=INTEGER},
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
       </if>
-      <if test="postMember != null" >
-        #{postMember,jdbcType=INTEGER},
+      <if test="courseId != null" >
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="postTime != null" >
+        #{postTime,jdbcType=TIMESTAMP},
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
@@ -68,19 +78,22 @@
       <if test="content != null" >
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="posttime != null" >
-        #{posttime,jdbcType=TIMESTAMP},
-      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.ixchou.model.entity.TMoment" >
     update t_moment
     <set >
-      <if test="courseid != null" >
-        courseId = #{courseid,jdbcType=INTEGER},
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
       </if>
-      <if test="postMember != null" >
-        post_member = #{postMember,jdbcType=INTEGER},
+      <if test="courseId != null" >
+        course_id = #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="postTime != null" >
+        post_time = #{postTime,jdbcType=TIMESTAMP},
       </if>
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
@@ -88,19 +101,17 @@
       <if test="content != null" >
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="posttime != null" >
-        postTime = #{posttime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TMoment" >
     update t_moment
-    set courseId = #{courseid,jdbcType=INTEGER},
-      post_member = #{postMember,jdbcType=INTEGER},
+    set is_deleted = #{isDeleted,jdbcType=BIT},
+      course_id = #{courseId,jdbcType=INTEGER},
+      member_id = #{memberId,jdbcType=INTEGER},
+      post_time = #{postTime,jdbcType=TIMESTAMP},
       title = #{title,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
-      postTime = #{posttime,jdbcType=TIMESTAMP}
+      content = #{content,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

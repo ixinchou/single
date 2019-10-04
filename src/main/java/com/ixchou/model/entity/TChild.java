@@ -5,7 +5,9 @@ import java.util.Date;
 public class TChild {
     private Integer id;
 
-    private Integer member;
+    private Boolean isDeleted;
+
+    private Integer memberId;
 
     private Boolean sex;
 
@@ -23,12 +25,20 @@ public class TChild {
         this.id = id;
     }
 
-    public Integer getMember() {
-        return member;
+    public Boolean getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setMember(Integer member) {
-        this.member = member;
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public Integer getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
     }
 
     public Boolean getSex() {
