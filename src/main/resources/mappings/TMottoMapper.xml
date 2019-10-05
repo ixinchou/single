@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ixchou.mappings.TMottoMapper" >
+  <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TMotto" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="post_member" property="postMember" jdbcType="INTEGER" />
+    <result column="update_times" property="updateTimes" jdbcType="INTEGER" />
+    <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
+    <result column="last_update" property="lastUpdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ixchou.model.entity.TMotto" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, is_deleted, post_member, update_times, post_time, last_update
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_motto
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
+  </select>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_motto
+    where is_deleted = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_motto
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ixchou.model.entity.TMotto" >
+    insert into t_motto (id, is_deleted, post_member, 
+      update_times, post_time, last_update, 
+      content)
+    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}, #{postMember,jdbcType=INTEGER}, 
+      #{updateTimes,jdbcType=INTEGER}, #{postTime,jdbcType=TIMESTAMP}, #{lastUpdate,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TMotto" >
+    insert into t_motto
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="postMember != null" >
+        post_member,
+      </if>
+      <if test="updateTimes != null" >
+        update_times,
+      </if>
+      <if test="postTime != null" >
+        post_time,
+      </if>
+      <if test="lastUpdate != null" >
+        last_update,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="postMember != null" >
+        #{postMember,jdbcType=INTEGER},
+      </if>
+      <if test="updateTimes != null" >
+        #{updateTimes,jdbcType=INTEGER},
+      </if>
+      <if test="postTime != null" >
+        #{postTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdate != null" >
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ixchou.model.entity.TMotto" >
+    update t_motto
+    <set >
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="postMember != null" >
+        post_member = #{postMember,jdbcType=INTEGER},
+      </if>
+      <if test="updateTimes != null" >
+        update_times = #{updateTimes,jdbcType=INTEGER},
+      </if>
+      <if test="postTime != null" >
+        post_time = #{postTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdate != null" >
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ixchou.model.entity.TMotto" >
+    update t_motto
+    set is_deleted = #{isDeleted,jdbcType=BIT},
+      post_member = #{postMember,jdbcType=INTEGER},
+      update_times = #{updateTimes,jdbcType=INTEGER},
+      post_time = #{postTime,jdbcType=TIMESTAMP},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TMotto" >
+    update t_motto
+    set is_deleted = #{isDeleted,jdbcType=BIT},
+      post_member = #{postMember,jdbcType=INTEGER},
+      update_times = #{updateTimes,jdbcType=INTEGER},
+      post_time = #{postTime,jdbcType=TIMESTAMP},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
+  </update>
+</mapper>
