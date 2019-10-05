@@ -4,8 +4,9 @@ import com.ixchou.model.entity.TMember;
 import com.ixchou.model.vo.MemberVo;
 import com.ixchou.services.IMemberService;
 import com.ixchou.util.StringUtil;
-import com.ixchou.util.response.HttpResponse;
-import com.ixchou.util.response.MemberCode;
+import com.ixchou.util.http.response.HttpCode;
+import com.ixchou.util.http.response.HttpResponse;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/api/member")
+@Api(tags = "Member Controller 会员相关接口")
 public class MemberController {
 
     @Resource
@@ -39,10 +41,10 @@ public class MemberController {
     @PostMapping("update/name")
     public HttpResponse updateMyName(@RequestBody MemberVo vo) {
         if (StringUtil.isEmpty(vo.getSessionId())) {
-            return HttpResponse.failure(MemberCode.SessionIdEmpty, "SessionId 不能为空");
+            return HttpResponse.failure(HttpCode.MemberSessionIdNull);
         }
         if (StringUtil.isEmpty(vo.getUserName())) {
-            return HttpResponse.failure(MemberCode.NameCannotUpdateToEmpty, "用户名字不能改为空");
+            return HttpResponse.failure(HttpCode.MemberNameNull);
         }
         boolean updated = memberService.updateMyName(vo);
         if (updated) {

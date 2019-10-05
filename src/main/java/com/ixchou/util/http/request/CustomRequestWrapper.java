@@ -1,4 +1,4 @@
-package com.ixchou.util.request;
+package com.ixchou.util.http.request;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;

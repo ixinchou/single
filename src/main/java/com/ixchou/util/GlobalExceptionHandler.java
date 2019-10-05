@@ -1,6 +1,6 @@
 package com.ixchou.util;
 
-import com.ixchou.util.response.HttpResponse;
+import com.ixchou.util.http.response.HttpResponse;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;

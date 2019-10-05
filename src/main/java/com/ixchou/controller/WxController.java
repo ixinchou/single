@@ -6,8 +6,9 @@ import com.ixchou.model.vo.WxPhoneEncryptedVo;
 import com.ixchou.model.vo.WxRegistryVo;
 import com.ixchou.services.IMemberService;
 import com.ixchou.util.StringUtil;
-import com.ixchou.util.response.HttpResponse;
-import com.ixchou.util.response.WxCode;
+import com.ixchou.util.http.response.HttpCode;
+import com.ixchou.util.http.response.HttpResponse;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/api/wx")
+@Api(tags = "WX Controller 微信相关接口")
 public class WxController {
 
     private final Logger logger = LoggerFactory.getLogger(WxController.class);
@@ -40,7 +42,8 @@ public class WxController {
     public WebAsyncTask<HttpResponse> fetchWxPhone(@RequestBody WxPhoneEncryptedVo info) {
         return new WebAsyncTask<>(() -> {
             if (StringUtil.isEmpty(info.getSessionId())) {
-                return HttpResponse.failure(WxCode.NullOfLoginCode, "解密手机号码时sessionId不能为空");
+                logger.info(HttpCode.WxLoginCodeNullOfPhone.getReason());
+                return HttpResponse.failure(HttpCode.WxLoginCodeNullOfPhone);
             }
             return HttpResponse.success(new MemberVo(memberService.fetchingWxPhone(info)));
         });
@@ -51,8 +54,8 @@ public class WxController {
     public WebAsyncTask<HttpResponse> findWxUserInfo(@RequestBody WxRegistryVo info) {
         return new WebAsyncTask<>(() -> {
             if (StringUtil.isEmpty(info.getLoginCode())) {
-                logger.info("查询请求中的 login code 为空");
-                return HttpResponse.failure(WxCode.NullOfLoginCode, "login code 为空");
+                logger.info(HttpCode.WxLoginCodeNullOfQuery.getReason());
+                return HttpResponse.failure(HttpCode.WxLoginCodeNullOfQuery);
             }
             TMember member = memberService.findByWxInfo(info);
             MemberVo vo = new MemberVo(member);
@@ -61,7 +64,7 @@ public class WxController {
         // 通过微信用户信息查找用户手机号码等信息之后保留注册信息
 //        if (StringUtil.isEmpty(info.getLoginCode())) {
 //            logger.info("登录码为空：" + info);
-//            return HttpResponse.failure(WxCode.NullOfLoginCode, "登录码不能为空");
+//            return HttpResponse.failure(HttpCode.WxLoginCodeNullOfQuery);
 //        } else {
 //            // 通过用户的登录码去查询用户的基本信息，比如手机号码，openid等
 //            RestTemplate template = new RestTemplate();
@@ -79,7 +82,7 @@ public class WxController {
 //            if (null != vo) {
 
 //            } else {
-//                return HttpResponse.failure(WxCode.GetSessionFailure, "获取微信登录信息失败");
+//                return HttpResponse.failure(HttpCode.WxGetSessionFailure);
 //            }
 //        }
     }

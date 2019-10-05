@@ -1,8 +1,6 @@
 package com.ixchou.aop;
 
 import com.ixchou.util.GsonUtil;
-import com.ixchou.util.StringUtil;
-import com.ixchou.util.request.CustomRequestWrapper;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,8 +13,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.Enumeration;
 
 /**

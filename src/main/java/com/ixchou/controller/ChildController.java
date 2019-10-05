@@ -3,9 +3,9 @@ package com.ixchou.controller;
 import com.ixchou.model.vo.ChildVo;
 import com.ixchou.services.IChildService;
 import com.ixchou.util.StringUtil;
-import com.ixchou.util.response.ChildCode;
-import com.ixchou.util.response.HttpResponse;
-import com.ixchou.util.response.MemberCode;
+import com.ixchou.util.http.response.HttpCode;
+import com.ixchou.util.http.response.HttpResponse;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +20,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/api/child")
+@Api(tags = "Child Controller 孩子相关接口")
 public class ChildController {
 
     @Resource
@@ -29,21 +30,21 @@ public class ChildController {
     @PostMapping("add")
     public HttpResponse addChild(@RequestBody ChildVo vo) {
         if (StringUtil.isEmpty(vo.getSessionId())) {
-            return HttpResponse.failure(MemberCode.SessionIdEmpty, "添加孩子信息的 sessionId 不能为空");
+            return HttpResponse.failure(HttpCode.MemberSessionIdNull, "添加孩子信息的 sessionId 不能为空");
         }
         if (StringUtil.isEmpty(vo.getName())) {
-            return HttpResponse.failure(ChildCode.ChildNameCannotBeEmpty, "添加孩子信息时名字不能为空");
+            return HttpResponse.failure(HttpCode.MemberNameNull, "添加孩子信息时名字不能为空");
         }
         int ret = childService.addChild(vo);
         switch (ret) {
             case -2:
-                return HttpResponse.failure(MemberCode.MemberNotExists, "请先绑定您的微信");
+                return HttpResponse.failure(HttpCode.MemberNotBind);
             case -1:
-                return HttpResponse.failure(ChildCode.ChildNameExist, "已有同名孩子的信息");
+                return HttpResponse.failure(HttpCode.MemberChildExist);
             case 1:
-                return HttpResponse.success("添加成功");
+                return HttpResponse.success("添加孩子信息成功");
             default:
-                return HttpResponse.failure("添加失败");
+                return HttpResponse.failure("添加孩子信息失败");
         }
     }
 
@@ -57,8 +58,8 @@ public class ChildController {
     @PostMapping("/delete/{childId}")
     public HttpResponse deleteChild(@PathVariable("childId") Integer childId) {
         if (childService.deleteChild(childId) > 0) {
-            return HttpResponse.success("删除成功");
+            return HttpResponse.success("已删除孩子的信息");
         }
-        return HttpResponse.failure("删除孩子信息失败");
+        return HttpResponse.failure("删除孩子的信息失败");
     }
 }

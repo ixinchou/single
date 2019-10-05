@@ -1,8 +1,9 @@
 package com.ixchou.controller;
 
-import com.ixchou.util.response.HttpResponse;
+import com.ixchou.util.http.response.HttpCode;
+import com.ixchou.util.http.response.HttpResponse;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -13,10 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
  * <b>Description</b>:
  */
 @RestController
+@Api(tags = "基本接口")
 public class BaseController {
 
     @GetMapping("/404.do")
     public Object error404() {
-        return new HttpResponse<>("404", "您的请求不存在！");
+        return new HttpResponse<>(HttpCode.Err404);
     }
 }
