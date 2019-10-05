@@ -34,6 +34,9 @@ public class MemberController {
             return HttpResponse.failure("查询的 sessionId 不能为空");
         }
         TMember member = memberService.findBySessionId(sessionId);
+        if (null == member) {
+            return HttpResponse.failure(HttpCode.MemberNotBind);
+        }
         return HttpResponse.success(new MemberVo(member));
     }
 

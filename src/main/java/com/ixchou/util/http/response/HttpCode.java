@@ -9,7 +9,7 @@ package com.ixchou.util.http.response;
  */
 public enum HttpCode {
     /**
-     * 操作成功
+     * 成功
      */
     Success("000", "成功"),
     /**

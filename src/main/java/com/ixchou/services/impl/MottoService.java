@@ -23,7 +23,7 @@ public class MottoService implements IMottoService {
 
     @Override
     public int insert(TMotto motto) {
-        if (motto.getId() > 0) {
+        if (null != motto.getId() && motto.getId() > 0) {
             return update(motto);
         }
         return mapper.insertSelective(motto);

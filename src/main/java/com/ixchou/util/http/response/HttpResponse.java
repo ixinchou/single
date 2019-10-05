@@ -36,11 +36,6 @@ public class HttpResponse<T> implements Serializable {
         this.data = data;
     }
 
-    private HttpResponse(String code, String message) {
-        this.code = code;
-        this.message = message;
-    }
-
     /**
      * 返回空内容的成功操作
      *
@@ -50,6 +45,17 @@ public class HttpResponse<T> implements Serializable {
         HttpCode code = HttpCode.Success;
         code.setReason(message);
         return new HttpResponse(code);
+    }
+
+    /**
+     * 返回带数据的成功操作
+     *
+     * @param data 数据
+     */
+    public static <T> HttpResponse success(T data, String message) {
+        HttpCode code = HttpCode.Success;
+        code.setReason(message);
+        return new HttpResponse<>(code, data);
     }
 
     /**
