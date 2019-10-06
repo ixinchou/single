@@ -1,7 +1,9 @@
 package com.ixchou.config;
 
+import com.github.tobato.fastdfs.FdfsClientConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -21,6 +23,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * <b>Description</b>:
  */
 @Configuration
+// 导入 FastDFS
+@Import(FdfsClientConfig.class)
 @EnableSwagger2
 public class SwaggerConfiguration implements WebMvcConfigurer {
 
