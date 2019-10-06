@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.async.WebAsyncTask;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
@@ -39,32 +40,36 @@ public class WebLogAspect {
         assert attributes != null;
         HttpServletRequest request = attributes.getRequest();
         // 记录下请求的内容
+        String url = request.getRequestURL().toString();
         logger.info("===============================");
-        logger.info("URL: " + request.getRequestURL().toString());
+        logger.info("URL: " + url);
         logger.info("METHOD: " + request.getMethod());
         logger.info("IP: " + request.getRemoteAddr());
+        // 参数列表
         Enumeration<String> enumeration = request.getParameterNames();
         while (enumeration.hasMoreElements()) {
             String name = enumeration.nextElement();
             logger.info("name: {}, value: {}", name, request.getParameter(name));
         }
         // body
-//        try {
-//            CustomRequestWrapper wrapper = new CustomRequestWrapper(request);
-//            String body = wrapper.getBody();
-//            if (!StringUtil.isEmpty(body)) {
-//                logger.info("body: " + body);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
+        if (!url.contains("/api/upload")) {
+            Object[] args = joinPoint.getArgs();
+            if (null != args && args.length > 0) {
+                for (Object object : args) {
+                    logger.info("body: " + GsonUtil.toString(object));
+                }
+            }
+        }
     }
 
     @AfterReturning(returning = "object", pointcut = "webLog()")
     public void doAfterReturning(Object object) {
         // 处理完成，返回内容
-        logger.info("RESPONSE: " + GsonUtil.toString(object));
-        logger.info("===============================");
+        if (object instanceof WebAsyncTask) {
+            logger.info("Asynchronous task executing.......");
+        } else {
+            logger.info("RESPONSE: " + GsonUtil.toString(object));
+            logger.info("===============================");
+        }
     }
 }
