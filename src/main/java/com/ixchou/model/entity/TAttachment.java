@@ -9,15 +9,21 @@ public class TAttachment {
 
     private Integer size;
 
+    private Integer duration;
+
+    private Integer height;
+
+    private Integer width;
+
     private Date uploadTime;
 
     private String signature;
 
+    private String url;
+
     private String saveName;
 
     private String originName;
-
-    private String url;
 
     public Integer getId() {
         return id;
@@ -43,6 +49,30 @@ public class TAttachment {
         this.size = size;
     }
 
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
     public Date getUploadTime() {
         return uploadTime;
     }
@@ -59,6 +89,14 @@ public class TAttachment {
         this.signature = signature == null ? null : signature.trim();
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
+    }
+
     public String getSaveName() {
         return saveName;
     }
@@ -73,13 +111,5 @@ public class TAttachment {
 
     public void setOriginName(String originName) {
         this.originName = originName == null ? null : originName.trim();
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
     }
 }

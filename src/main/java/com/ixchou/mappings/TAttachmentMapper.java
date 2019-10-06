@@ -11,6 +11,8 @@ public interface TAttachmentMapper {
 
     TAttachment selectByPrimaryKey(Integer id);
 
+    TAttachment selectBySignature(String signature);
+
     int updateByPrimaryKeySelective(TAttachment record);
 
     int updateByPrimaryKey(TAttachment record);

@@ -41,9 +41,10 @@ public class WebLogAspect {
         HttpServletRequest request = attributes.getRequest();
         // 记录下请求的内容
         String url = request.getRequestURL().toString();
+        String method = request.getMethod();
         logger.info("===============================");
         logger.info("URL: " + url);
-        logger.info("METHOD: " + request.getMethod());
+        logger.info("METHOD: " + method);
         logger.info("IP: " + request.getRemoteAddr());
         // 参数列表
         Enumeration<String> enumeration = request.getParameterNames();
@@ -52,7 +53,7 @@ public class WebLogAspect {
             logger.info("name: {}, value: {}", name, request.getParameter(name));
         }
         // body
-        if (!url.contains("/api/upload")) {
+        if (!url.contains("/upload") && "POST".equals(method)) {
             Object[] args = joinPoint.getArgs();
             if (null != args && args.length > 0) {
                 for (Object object : args) {
