@@ -5,6 +5,7 @@ import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.ixchou.model.entity.TAttachment;
 import com.ixchou.services.IAttachmentService;
 import com.ixchou.util.ObjectUtil;
+import com.ixchou.util.StringUtil;
 import com.ixchou.util.http.response.HttpCode;
 import com.ixchou.util.http.response.HttpResponse;
 import io.swagger.annotations.Api;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.WebAsyncTask;
 import org.springframework.web.multipart.MultipartFile;
@@ -77,6 +79,14 @@ public class AttachmentController {
                     StorePath path = client.uploadFile(file.getInputStream(), size, FilenameUtils.getExtension(file.getOriginalFilename()), null);
                     attachment.setUrl(path.getFullPath());
                     attachment.setSaveName(FilenameUtils.getName(path.getFullPath()));
+                    // 判断文件长度
+                    if (null == attachment.getSize() || 0 == attachment.getSize()) {
+                        attachment.setSize((int) size);
+                    }
+                    // 判断文件特征码
+                    if (StringUtil.isEmpty(attachment.getSignature())) {
+                        //DigestUtils.
+                    }
                     service.insert(attachment);
                     response = HttpResponse.success(attachment, "上传成功");
                 } catch (Exception e) {
