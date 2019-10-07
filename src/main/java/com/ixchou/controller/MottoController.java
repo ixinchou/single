@@ -70,7 +70,7 @@ public class MottoController {
             motto.setLastUpdate(new Date());
             motto.setUpdateTimes(1);
             if (mottoService.update(motto) > 0) {
-                return HttpResponse.success("校训内容已修改");
+                return HttpResponse.success(motto, "校训内容已修改");
             } else {
                 return HttpResponse.failure(HttpCode.MottoUpdateFailure);
             }

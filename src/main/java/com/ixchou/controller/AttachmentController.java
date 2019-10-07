@@ -4,6 +4,7 @@ import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.ixchou.model.entity.TAttachment;
 import com.ixchou.services.IAttachmentService;
+import com.ixchou.util.ObjectUtil;
 import com.ixchou.util.http.response.HttpCode;
 import com.ixchou.util.http.response.HttpResponse;
 import io.swagger.annotations.Api;
@@ -18,6 +19,8 @@ import org.springframework.web.context.request.async.WebAsyncTask;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 
 /**
  * <b>Author</b>: Xiang Liguo<br/>
@@ -45,20 +48,41 @@ public class AttachmentController {
 
     @ApiOperation(value = "文件上传")
     @PostMapping("upload")
-    public WebAsyncTask<HttpResponse> upload(@RequestBody MultipartFile file) {
+    public WebAsyncTask<HttpResponse> upload(HttpServletRequest request, @RequestParam(value = "file") MultipartFile file) {
         logger.info("thread '" + Thread.currentThread().getName() + "' executing....");
         WebAsyncTask<HttpResponse> task = new WebAsyncTask<>(10000L, executor, () -> {
             logger.info("thread '" + Thread.currentThread().getName() + "' executing....");
+            request.setCharacterEncoding("UTF-8");
+            // 反射获取所有属性
+            TAttachment attachment = new TAttachment();
+            Enumeration<String> enumeration = request.getParameterNames();
+            while (enumeration.hasMoreElements()) {
+                String name = enumeration.nextElement();
+                String value = request.getParameter(name);
+                ObjectUtil.setPropertyValue(attachment, name, value);
+            }
+            TAttachment exist = service.query(attachment.getSignature());
+            if (null != exist && exist.getSize().equals(attachment.getSize())) {
+                // 如果文件签名相同且文件长度相同则认为有相同的文件存在，直接返回
+                return HttpResponse.success(exist, "已有相同文件存在");
+            }
             HttpResponse response;
-            try {
-                String orgName = FilenameUtils.getName(file.getOriginalFilename());
-                long size = file.getSize();
-                String contentType = file.getContentType();
-                logger.info("name: " + orgName + ", size: " + size + ", type: " + contentType);
-                StorePath path = client.uploadFile(file.getInputStream(), size, FilenameUtils.getExtension(file.getOriginalFilename()), null);
-                response = HttpResponse.success(path);
-            } catch (Exception e) {
-                response = HttpResponse.failure("文件上传失败：" + e.getMessage());
+            if (null == file || file.isEmpty()) {
+                response = HttpResponse.failure("没有文件内容");
+            } else {
+                try {
+                    String orgName = FilenameUtils.getName(file.getOriginalFilename());
+                    attachment.setOriginName(orgName);
+                    long size = file.getSize();
+                    StorePath path = client.uploadFile(file.getInputStream(), size, FilenameUtils.getExtension(file.getOriginalFilename()), null);
+                    attachment.setUrl(path.getFullPath());
+                    attachment.setSaveName(FilenameUtils.getName(path.getFullPath()));
+                    service.insert(attachment);
+                    response = HttpResponse.success(attachment, "上传成功");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    response = HttpResponse.failure("文件上传失败：" + e.getMessage());
+                }
             }
             logger.info("thread '" + Thread.currentThread().getName() + "' executed....");
             return response;

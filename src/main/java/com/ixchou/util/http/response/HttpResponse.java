@@ -42,9 +42,14 @@ public class HttpResponse<T> implements Serializable {
      * @param message 消息内容
      */
     public static HttpResponse success(String message) {
-        HttpCode code = HttpCode.Success;
-        code.setReason(message);
-        return new HttpResponse(code);
+        return new HttpResponse(fixUnknownCode(HttpCode.Success, message));
+    }
+
+    private static HttpCode fixUnknownCode(HttpCode code, String message) {
+        HttpCode unknown = HttpCode.Unknown;
+        unknown.setReason(message);
+        unknown.setCode(code.getCode());
+        return unknown;
     }
 
     /**
@@ -53,9 +58,7 @@ public class HttpResponse<T> implements Serializable {
      * @param data 数据
      */
     public static <T> HttpResponse success(T data, String message) {
-        HttpCode code = HttpCode.Success;
-        code.setReason(message);
-        return new HttpResponse<>(code, data);
+        return new HttpResponse<>(fixUnknownCode(HttpCode.Success, message), data);
     }
 
     /**
@@ -82,8 +85,7 @@ public class HttpResponse<T> implements Serializable {
      * @param code 消息错误码
      */
     public static HttpResponse failure(HttpCode code, String message) {
-        code.setReason(message);
-        return failure(code);
+        return failure(fixUnknownCode(code, message));
     }
 
     /**
@@ -92,9 +94,7 @@ public class HttpResponse<T> implements Serializable {
      * @param message 消息内容
      */
     public static HttpResponse failure(String message) {
-        HttpCode code = HttpCode.Failure;
-        code.setReason(message);
-        return new HttpResponse(code);
+        return new HttpResponse(fixUnknownCode(HttpCode.Failure, message));
     }
 
     public String getCode() {

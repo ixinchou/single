@@ -21,6 +21,11 @@ public class AttachmentServiceImpl implements IAttachmentService {
     TAttachmentMapper mapper;
 
     @Override
+    public int insert(TAttachment attachment) {
+        return mapper.insertSelective(attachment);
+    }
+
+    @Override
     public TAttachment query(String signature) {
         return mapper.selectBySignature(signature);
     }

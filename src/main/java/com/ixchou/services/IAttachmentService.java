@@ -11,5 +11,7 @@ import com.ixchou.model.entity.TAttachment;
  */
 public interface IAttachmentService {
 
+    int insert(TAttachment attachment);
+
     TAttachment query(String signature);
 }
