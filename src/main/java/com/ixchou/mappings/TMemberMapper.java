@@ -2,6 +2,8 @@ package com.ixchou.mappings;
 
 import com.ixchou.model.entity.TMember;
 
+import java.util.List;
+
 public interface TMemberMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,6 +16,10 @@ public interface TMemberMapper {
     TMember selectBySessionId(String sessionId);
 
     TMember selectByWxOpenId(String openid);
+
+    List<TMember> list();
+
+    List<TMember> fuzzySearch(TMember record);
 
     int updateByPrimaryKeySelective(TMember record);
 

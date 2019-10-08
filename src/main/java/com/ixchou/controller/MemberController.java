@@ -2,7 +2,8 @@ package com.ixchou.controller;
 
 import com.ixchou.model.entity.TMember;
 import com.ixchou.model.vo.MemberVo;
-import com.ixchou.services.IMemberService;
+import com.ixchou.services.impl.MemberServiceImpl;
+import com.ixchou.util.ObjectUtil;
 import com.ixchou.util.StringUtil;
 import com.ixchou.util.http.response.HttpCode;
 import com.ixchou.util.http.response.HttpResponse;
@@ -22,10 +23,10 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/api/member")
 @Api(tags = "Member Controller 会员相关接口")
-public class MemberController {
+public class MemberController extends AbstractBaseController<TMember> {
 
     @Resource
-    private IMemberService memberService;
+    private MemberServiceImpl memberService;
 
     @ApiOperation(value = "通过平台自身的sessionId查询用户信息")
     @GetMapping("/find/{sessionId}")
@@ -33,7 +34,9 @@ public class MemberController {
         if (StringUtil.isEmpty(sessionId)) {
             return HttpResponse.failure("查询的 sessionId 不能为空");
         }
-        TMember member = memberService.findBySessionId(sessionId);
+        TMember member = new TMember();//memberService.findBySessionId(sessionId);
+        ObjectUtil.setPropertyValue(member, "sessionId", sessionId);
+        member = _query("sessionId", sessionId);
         if (null == member) {
             return HttpResponse.failure(HttpCode.MemberNotBind);
         }

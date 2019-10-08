@@ -5,6 +5,8 @@ import com.ixchou.model.vo.MemberVo;
 import com.ixchou.model.vo.WxPhoneEncryptedVo;
 import com.ixchou.model.vo.WxRegistryVo;
 
+import java.util.List;
+
 /**
  * <b>Author</b>: Hsiang Leekwok<br/>
  * <b>Date</b>: 2019/08/04 18:32<br/>
@@ -12,7 +14,7 @@ import com.ixchou.model.vo.WxRegistryVo;
  * <b>Subject</b>: 用户服务类<br/>
  * <b>Description</b>:
  */
-public interface IMemberService extends IBaseService {
+public interface IMemberService {
 
     /**
      * 通过 sessionId 查找用户信息

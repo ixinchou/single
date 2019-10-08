@@ -37,6 +37,45 @@
     from t_member
     where session_id = #{sessionId, jdbcType=VARCHAR} and is_deleted = 0
   </select>
+  <select id="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_member
+    where is_deleted = 0
+  </select>
+  <!-- 模糊查询 -->
+  <select id="fuzzySearch" parameterType="com.ixchou.model.entity.TMember" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_member
+    where is_deleted = 0 and
+    <trim suffixOverrides=" or" prefix="(" suffix=")">
+      <if test="id != null">
+        id <![CDATA[=]]> #{id,jdbcType=INTEGER} or
+      </if>
+      <if test="isUploadAble != null">
+        is_upload_able <![CDATA[=]]> #{isUploadAble,jdbcType=TINYINT} or
+      </if>
+      <if test="phone != null and phone != '' ">
+        instr(phone,#{phone,jdbcType=VARCHAR}) > 0 or
+      </if>
+      <if test="userName != null and userName != '' ">
+        instr(user_name,#{userName,jdbcType=VARCHAR}) > 0 or
+      </if>
+      <if test="sessionId != null and sessionId != '' ">
+        instr(session_id,#{sessionId,jdbcType=VARCHAR}) > 0 or
+      </if>
+      <if test="wxId != null and wxId != '' ">
+        instr(wx_id,#{wxId,jdbcType=VARCHAR}) > 0 or
+      </if>
+      <if test="wxSession != null and wxSession != '' ">
+        instr(wx_session,#{wxSession,jdbcType=VARCHAR}) > 0 or
+      </if>
+      <if test="wxNickName != null and wxNickName != '' ">
+        instr(wx_nick_name,#{wxNickName,jdbcType=VARCHAR}) > 0 or
+      </if>
+    </trim>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     update t_member
     set is_deleted = 1

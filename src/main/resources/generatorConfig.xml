@@ -10,7 +10,7 @@
     -->
     <!-- 数据库驱动:选择你的本地硬盘上面的数据库驱动包-->
     <classPathEntry
-            location="C:\Users\Hsiang Leekwok\.m2\repository\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar"/>
+            location="C:\Users\www\.m2\repository\mysql\mysql-connector-java\5.1.46\mysql-connector-java-5.1.46.jar"/>
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <commentGenerator>
             <!-- 不需要生成时间戳 -->
@@ -23,7 +23,7 @@
             <property name="mapUnderscoreToCamelCase" value="true"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://192.168.32.130:3306/ixchou"
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1/ixchou?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;tinyInt1isBit=false"
                         userId="root" password="root1234%">
         </jdbcConnection>
         <javaTypeResolver>
@@ -53,20 +53,20 @@
         <table tableName="t_attachment" domainObjectName="TAttachment" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-<!--        <table tableName="t_child" domainObjectName="TChild" enableCountByExample="false"-->
-<!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
-<!--               selectByExampleQueryId="false"/>-->
-<!--        <table tableName="t_course" domainObjectName="TCourse" enableCountByExample="false"-->
-<!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
-<!--               selectByExampleQueryId="false"/>-->
-<!--        <table tableName="t_member" domainObjectName="TMember" enableCountByExample="false"-->
-<!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
-<!--               selectByExampleQueryId="false"/>-->
-<!--        <table tableName="t_moment" domainObjectName="TMoment" enableCountByExample="false"-->
-<!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
-<!--               selectByExampleQueryId="false"/>-->
-<!--        <table tableName="t_motto" domainObjectName="TMotto" enableCountByExample="false"-->
-<!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
-<!--               selectByExampleQueryId="false"/>-->
+        <table tableName="t_child" domainObjectName="TChild" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="t_course" domainObjectName="TCourse" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="t_member" domainObjectName="TMember" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="t_moment" domainObjectName="TMoment" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <table tableName="t_motto" domainObjectName="TMotto" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
     </context>
 </generatorConfiguration>

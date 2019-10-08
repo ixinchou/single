@@ -30,19 +30,19 @@ import java.util.Date;
  * <b>Description</b>:
  */
 @Service
-public class MemberServiceImpl implements IMemberService {
+public class MemberServiceImpl extends BaseServiceImpl<TMember> {
 
     private final Logger logger = LoggerFactory.getLogger(WxController.class);
 
-    @Resource
-    private TMemberMapper memberMapper;
+    //@Resource
+    //private TMemberMapper memberMapper;
+//
+//    @Override
+//    public TMember findBySessionId(String sessionId) {
+//        return memberMapper.selectBySessionId(sessionId);
+//    }
 
-    @Override
-    public TMember findBySessionId(String sessionId) {
-        return memberMapper.selectBySessionId(sessionId);
-    }
-
-    @Override
+//    @Override
     public TMember findByWxInfo(WxRegistryVo info) {
         // 通过用户的登录码去查询用户的基本信息，比如手机号码，openid等
         RestTemplate template = new RestTemplate();
@@ -77,7 +77,7 @@ public class MemberServiceImpl implements IMemberService {
         return member;
     }
 
-    @Override
+//    @Override
     public TMember fetchingWxPhone(WxPhoneEncryptedVo info) {
         TMember member = memberMapper.selectBySessionId(info.getSessionId());
         if (null == member) {
@@ -106,7 +106,7 @@ public class MemberServiceImpl implements IMemberService {
         return member;
     }
 
-    @Override
+//    @Override
     public boolean updateMyName(MemberVo vo) {
         TMember member = memberMapper.selectBySessionId(vo.getSessionId());
         if (null == member) {
