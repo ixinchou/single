@@ -21,8 +21,6 @@ public class TAttachment {
 
     private String url;
 
-    private String saveName;
-
     private String originName;
 
     public Integer getId() {
@@ -95,14 +93,6 @@ public class TAttachment {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
-    }
-
-    public String getSaveName() {
-        return saveName;
-    }
-
-    public void setSaveName(String saveName) {
-        this.saveName = saveName == null ? null : saveName.trim();
     }
 
     public String getOriginName() {

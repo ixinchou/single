@@ -4,9 +4,9 @@ import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.ixchou.model.entity.TAttachment;
 import com.ixchou.services.IAttachmentService;
+import com.ixchou.util.DigestUtil;
 import com.ixchou.util.ObjectUtil;
 import com.ixchou.util.StringUtil;
-import com.ixchou.util.http.response.HttpCode;
 import com.ixchou.util.http.response.HttpResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.WebAsyncTask;
 import org.springframework.web.multipart.MultipartFile;
@@ -76,19 +75,23 @@ public class AttachmentController {
                     String orgName = FilenameUtils.getName(file.getOriginalFilename());
                     attachment.setOriginName(orgName);
                     long size = file.getSize();
-                    StorePath path = client.uploadFile(file.getInputStream(), size, FilenameUtils.getExtension(file.getOriginalFilename()), null);
-                    attachment.setUrl(path.getFullPath());
-                    attachment.setSaveName(FilenameUtils.getName(path.getFullPath()));
                     // 判断文件长度
                     if (null == attachment.getSize() || 0 == attachment.getSize()) {
                         attachment.setSize((int) size);
                     }
                     // 判断文件特征码
                     if (StringUtil.isEmpty(attachment.getSignature())) {
-                        //DigestUtils.
+                        attachment.setSignature(DigestUtil.sha1(file.getInputStream()));
                     }
-                    service.insert(attachment);
-                    response = HttpResponse.success(attachment, "上传成功");
+                    exist = service.query(attachment.getSignature());
+                    if (null != exist && exist.getSize().equals(attachment.getSize())) {
+                        response = HttpResponse.success(exist, "已有相同文件存在无需重复上传");
+                    } else {
+                        StorePath path = client.uploadFile(file.getInputStream(), size, FilenameUtils.getExtension(file.getOriginalFilename()), null);
+                        attachment.setUrl(path.getFullPath());
+                        service.insert(attachment);
+                        response = HttpResponse.success(attachment, "上传成功");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     response = HttpResponse.failure("文件上传失败：" + e.getMessage());

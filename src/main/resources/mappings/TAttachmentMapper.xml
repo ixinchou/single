@@ -11,12 +11,10 @@
     <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
     <result column="signature" jdbcType="CHAR" property="signature" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="save_name" jdbcType="VARCHAR" property="saveName" />
     <result column="origin_name" jdbcType="VARCHAR" property="originName" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, is_deleted, size, duration, height, width, upload_time, signature, url, save_name, 
-    origin_name
+    id, is_deleted, size, duration, height, width, upload_time, signature, url, origin_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -35,24 +33,18 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ixchou.model.entity.TAttachment">
-    insert into t_attachment (id, is_deleted, size, 
+    insert into t_attachment (id, size,
       duration, height, width, 
-      upload_time, signature, url, 
-      save_name, origin_name)
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}, #{size,jdbcType=INTEGER}, 
+      signature, url,
+      origin_name)
+    values (#{id,jdbcType=INTEGER}, #{size,jdbcType=INTEGER},
       #{duration,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, #{width,jdbcType=INTEGER}, 
-      #{uploadTime,jdbcType=TIMESTAMP}, #{signature,jdbcType=CHAR}, #{url,jdbcType=VARCHAR}, 
-      #{saveName,jdbcType=VARCHAR}, #{originName,jdbcType=VARCHAR})
+      #{signature,jdbcType=CHAR}, #{url,jdbcType=VARCHAR},
+      #{originName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ixchou.model.entity.TAttachment" useGeneratedKeys="true" keyProperty="id">
     insert into t_attachment
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="isDeleted != null">
-        is_deleted,
-      </if>
       <if test="size != null">
         size,
       </if>
@@ -65,29 +57,17 @@
       <if test="width != null">
         width,
       </if>
-      <if test="uploadTime != null">
-        upload_time,
-      </if>
       <if test="signature != null">
         signature,
       </if>
       <if test="url != null">
         url,
       </if>
-      <if test="saveName != null">
-        save_name,
-      </if>
       <if test="originName != null">
         origin_name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="isDeleted != null">
-        #{isDeleted,jdbcType=BIT},
-      </if>
       <if test="size != null">
         #{size,jdbcType=INTEGER},
       </if>
@@ -100,17 +80,11 @@
       <if test="width != null">
         #{width,jdbcType=INTEGER},
       </if>
-      <if test="uploadTime != null">
-        #{uploadTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="signature != null">
         #{signature,jdbcType=CHAR},
       </if>
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="saveName != null">
-        #{saveName,jdbcType=VARCHAR},
       </if>
       <if test="originName != null">
         #{originName,jdbcType=VARCHAR},
@@ -135,17 +109,11 @@
       <if test="width != null">
         width = #{width,jdbcType=INTEGER},
       </if>
-      <if test="uploadTime != null">
-        upload_time = #{uploadTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="signature != null">
         signature = #{signature,jdbcType=CHAR},
       </if>
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="saveName != null">
-        save_name = #{saveName,jdbcType=VARCHAR},
       </if>
       <if test="originName != null">
         origin_name = #{originName,jdbcType=VARCHAR},
@@ -160,10 +128,8 @@
       duration = #{duration,jdbcType=INTEGER},
       height = #{height,jdbcType=INTEGER},
       width = #{width,jdbcType=INTEGER},
-      upload_time = #{uploadTime,jdbcType=TIMESTAMP},
       signature = #{signature,jdbcType=CHAR},
       url = #{url,jdbcType=VARCHAR},
-      save_name = #{saveName,jdbcType=VARCHAR},
       origin_name = #{originName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
