@@ -35,6 +35,11 @@ public interface IBaseService<T> {
     T query(String propertyName, Object value);
 
     /**
+     * 通过指定某些属性值进行精确查询
+     */
+    T query(T entity);
+
+    /**
      * 分页选择
      */
     PageInfo<T> list(Integer pageIndex, Integer pageSize);

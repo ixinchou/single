@@ -4,7 +4,7 @@ import com.ixchou.model.entity.TMember;
 import com.ixchou.model.vo.MemberVo;
 import com.ixchou.model.vo.WxPhoneEncryptedVo;
 import com.ixchou.model.vo.WxRegistryVo;
-import com.ixchou.services.IMemberService;
+import com.ixchou.services.impl.MemberServiceImpl;
 import com.ixchou.util.StringUtil;
 import com.ixchou.util.http.response.HttpCode;
 import com.ixchou.util.http.response.HttpResponse;
@@ -30,12 +30,12 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/api/wx")
 @Api(tags = "WX Controller 微信相关接口")
-public class WxController {
+public class WxController extends AbstractBaseController<TMember> {
 
     private final Logger logger = LoggerFactory.getLogger(WxController.class);
 
     @Resource
-    private IMemberService memberService;
+    private MemberServiceImpl memberService;
 
     @ApiOperation("解密微信绑定的手机号码")
     @PostMapping("phone")

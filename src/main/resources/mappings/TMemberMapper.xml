@@ -25,12 +25,6 @@
     from t_member
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </select>
-  <select id="selectByWxOpenId" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select
-    <include refid="Base_Column_List"/>
-    from t_member
-    where wx_id = #{openid, jdbcType=VARCHAR} and is_deleted = 0
-  </select>
   <select id="selectBySessionId" resultMap="BaseResultMap" parameterType="java.lang.String">
     select
     <include refid="Base_Column_List"/>

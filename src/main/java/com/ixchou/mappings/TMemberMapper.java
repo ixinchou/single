@@ -15,8 +15,6 @@ public interface TMemberMapper {
 
     TMember selectBySessionId(String sessionId);
 
-    TMember selectByWxOpenId(String openid);
-
     List<TMember> list();
 
     List<TMember> fuzzySearch(TMember record);

@@ -1,6 +1,6 @@
 package com.ixchou.services.impl;
 
-import com.ixchou.mappings.TChildMapper;
+import com.github.pagehelper.PageInfo;
 import com.ixchou.mappings.TMemberMapper;
 import com.ixchou.model.entity.TChild;
 import com.ixchou.model.entity.TMember;
@@ -21,12 +21,10 @@ import java.util.List;
  * <b>Description</b>:
  */
 @Service
-public class ChildServiceImpl implements IChildService {
+public class ChildServiceImpl extends BaseServiceImpl<TChild> implements IChildService {
 
     @Resource
     private TMemberMapper memberMapper;
-    @Resource
-    private TChildMapper childMapper;
 
     @Override
     public int addChild(ChildVo vo) {
@@ -38,7 +36,7 @@ public class ChildServiceImpl implements IChildService {
         TChild child = new TChild();
         child.setMemberId(member.getId());
         child.setName(vo.getName());
-        TChild exists = childMapper.selectByMemberAndName(child);
+        TChild exists = query(child);
         if (null == exists) {
             // 不存在相同名字的才添加
             child.setBirthday(vo.getBirthday());
@@ -46,7 +44,7 @@ public class ChildServiceImpl implements IChildService {
             child.setName(vo.getName());
             child.setRegisterTime(new Date());
             child.setSex(vo.getSex());
-            return childMapper.insertSelective(child);
+            return insert(child);
         }
         return -1;
     }
@@ -57,11 +55,19 @@ public class ChildServiceImpl implements IChildService {
         if (null == member) {
             return new ArrayList<>();
         }
-        return childMapper.selectByMemberId(member.getId());
+        TChild child = new TChild();
+        child.setMemberId(member.getId());
+        PageInfo<TChild> info = fuzzySearch(child, 1, 10);
+        return info.getList();
     }
 
     @Override
     public int deleteChild(Integer childId) {
-        return childMapper.deleteByPrimaryKey(childId);
+        TChild child = query("id", childId);
+        if (null != child) {
+            child.setIsDeleted(True);
+            return update(child);
+        }
+        return 0;
     }
 }

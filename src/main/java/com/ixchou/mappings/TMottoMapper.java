@@ -13,7 +13,7 @@ public interface TMottoMapper {
 
     TMotto selectByPrimaryKey(Integer id);
 
-    List<TMotto> selectAll();
+    List<TMotto> list();
 
     int updateByPrimaryKeySelective(TMotto record);
 

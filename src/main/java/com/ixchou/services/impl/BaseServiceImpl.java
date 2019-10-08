@@ -54,17 +54,20 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
         try {
             T object = entityClass.newInstance();
             ObjectUtil.setPropertyValue(object, propertyName, value);
-
-            PageHelper.startPage(1, 2);
-            List<T> list = session.selectList(nameSpace + "fuzzySearch", object);
-
-            if (null != list && list.size() > 0) {
-                return list.get(0);
-            }
+            return query(object);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public T query(T entity) {
+        if (ObjectUtil.isObjectNull(entity)) {
+            return null;
+        }
+        List<T> list = fuzzySearchList(entity, 1, 2);
+        return (null == list || list.size() < 1) ? null : list.get(0);
     }
 
     @Override
@@ -77,12 +80,15 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
     @Override
     public PageInfo<T> fuzzySearch(T query, Integer pageIndex, Integer pageSize) {
         if (ObjectUtil.isObjectNull(query)) {
-            // 如果查询条件为空则直接走全部查询
+            // 如果查询对象的所有属性都为空，则直接查询所有列表
             return list(pageIndex, pageSize);
         }
+        return new PageInfo<>(fuzzySearchList(query, pageIndex, pageSize));
+    }
+
+    private List<T> fuzzySearchList(T query, Integer pageIndex, Integer pageSize) {
         PageHelper.startPage(pageIndex, pageSize);
-        List<T> list = session.selectList(nameSpace + "fuzzySearch", query);
-        return new PageInfo<>(list);
+        return session.selectList(nameSpace + "fuzzySearch", query);
     }
 
     @Override

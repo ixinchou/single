@@ -31,6 +31,32 @@
         from t_child
         where member_id = #{memberId,jdbcType=INTEGER} and is_deleted = 0
     </select>
+
+  <select id="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_child
+    where is_deleted = 0
+  </select>
+  <!-- 模糊查询 -->
+  <select id="fuzzySearch" parameterType="com.ixchou.model.entity.TChild" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_child
+    where is_deleted = 0 and
+    <trim suffixOverrides=" or" prefix="(" suffix=")">
+      <if test="id != null">
+        id <![CDATA[=]]> #{id,jdbcType=INTEGER} or
+      </if>
+      <if test="memberId != null">
+        member_id <![CDATA[=]]> #{memberId,jdbcType=INTEGER} or
+      </if>
+      <if test="name != null and name != '' ">
+        instr(name,#{name,jdbcType=VARCHAR}) > 0 or
+      </if>
+    </trim>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     update t_child
     set is_deleted = 1

@@ -17,14 +17,6 @@ import java.util.List;
 public interface IMemberService {
 
     /**
-     * 通过 sessionId 查找用户信息
-     *
-     * @param sessionId 新筹平台的sessionid
-     * @return 返回找到的用户信息
-     */
-    TMember findBySessionId(String sessionId);
-
-    /**
      * 通过微信的绑定信息查找用户
      *
      * @param info 微信平台绑定的基本信息
@@ -41,8 +33,6 @@ public interface IMemberService {
 
     /**
      * 更新我的名字
-     *
-     * @param vo
      */
-    boolean updateMyName(MemberVo vo);
+    boolean updateMyName(String mySessionId, String myNewName);
 }

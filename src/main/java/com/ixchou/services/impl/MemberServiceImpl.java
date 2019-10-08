@@ -1,7 +1,6 @@
 package com.ixchou.services.impl;
 
 import com.ixchou.controller.WxController;
-import com.ixchou.mappings.TMemberMapper;
 import com.ixchou.model.entity.TMember;
 import com.ixchou.model.vo.*;
 import com.ixchou.services.IMemberService;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.Resource;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -30,19 +28,11 @@ import java.util.Date;
  * <b>Description</b>:
  */
 @Service
-public class MemberServiceImpl extends BaseServiceImpl<TMember> {
+public class MemberServiceImpl extends BaseServiceImpl<TMember> implements IMemberService {
 
     private final Logger logger = LoggerFactory.getLogger(WxController.class);
 
-    //@Resource
-    //private TMemberMapper memberMapper;
-//
-//    @Override
-//    public TMember findBySessionId(String sessionId) {
-//        return memberMapper.selectBySessionId(sessionId);
-//    }
-
-//    @Override
+    @Override
     public TMember findByWxInfo(WxRegistryVo info) {
         // 通过用户的登录码去查询用户的基本信息，比如手机号码，openid等
         RestTemplate template = new RestTemplate();
@@ -50,7 +40,7 @@ public class MemberServiceImpl extends BaseServiceImpl<TMember> {
                 String.class, "wxd3d08f6f3ef69525", "463ec9bdd2d9670b9379a78e8ce12255", info.getLoginCode());
         System.out.println("template: " + template + ", " + "response: " + response);
         WxSessionOpenIdVo openIdVo = GsonUtil.fromString(response, WxSessionOpenIdVo.class);
-        TMember member = memberMapper.selectByWxOpenId(openIdVo.getOpenid());
+        TMember member = query("wxId", openIdVo.getOpenid());
         if (null != member) {
             // 更新最后登录时间
             member.setLastLoginTime(new Date());
@@ -58,7 +48,7 @@ public class MemberServiceImpl extends BaseServiceImpl<TMember> {
             member.setWxNickName(info.getNickName());
             // 同时更新微信 sessionid以便后续解码手机号码等信息
             member.setWxSession(openIdVo.getSession_key());
-            memberMapper.updateByPrimaryKey(member);
+            update(member);
             return member;
         }
         // 注册一个新的账号
@@ -73,13 +63,13 @@ public class MemberServiceImpl extends BaseServiceImpl<TMember> {
         member.setWxSession(openIdVo.getSession_key());
         member.setWxSex(info.getGender());
         member.setSessionId(UUIDGenerator.getUUID());
-        memberMapper.insertSelective(member);
+        insert(member);
         return member;
     }
 
-//    @Override
+    @Override
     public TMember fetchingWxPhone(WxPhoneEncryptedVo info) {
-        TMember member = memberMapper.selectBySessionId(info.getSessionId());
+        TMember member = query("sessionId", info.getSessionId());
         if (null == member) {
             return null;
         }
@@ -101,22 +91,22 @@ public class MemberServiceImpl extends BaseServiceImpl<TMember> {
             System.out.println(resultString);
             WxPhoneDecryptedVo decryptedVo = GsonUtil.fromString(resultString, WxPhoneDecryptedVo.class);
             member.setPhone(decryptedVo.getPhoneNumber());
-            memberMapper.updateByPrimaryKey(member);
+            update(member);
         }
         return member;
     }
 
-//    @Override
-    public boolean updateMyName(MemberVo vo) {
-        TMember member = memberMapper.selectBySessionId(vo.getSessionId());
+    @Override
+    public boolean updateMyName(String mySessionId, String myNewName) {
+        TMember member = query("sessionId", mySessionId);
         if (null == member) {
             return false;
         }
-        if (StringUtil.isEmpty(vo.getUserName())) {
+        if (StringUtil.isEmpty(myNewName)) {
             return false;
         }
-        member.setUserName(vo.getUserName());
-        int updated = memberMapper.updateByPrimaryKey(member);
+        member.setUserName(myNewName);
+        int updated = update(member);
         return updated > 0;
     }
 }

@@ -1,7 +1,9 @@
 package com.ixchou.controller;
 
+import com.ixchou.model.entity.TChild;
 import com.ixchou.model.vo.ChildVo;
-import com.ixchou.services.IChildService;
+import com.ixchou.services.IBaseService;
+import com.ixchou.services.impl.ChildServiceImpl;
 import com.ixchou.util.StringUtil;
 import com.ixchou.util.http.response.HttpCode;
 import com.ixchou.util.http.response.HttpResponse;
@@ -21,10 +23,10 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/api/child")
 @Api(tags = "Child Controller 孩子相关接口")
-public class ChildController {
+public class ChildController extends AbstractBaseController<TChild> {
 
     @Resource
-    private IChildService childService;
+    private ChildServiceImpl childService;
 
     @ApiOperation(value = "给当前用户添加一个小孩信息")
     @PostMapping("add")
@@ -57,7 +59,10 @@ public class ChildController {
     @ApiOperation(value = "删除已添加的孩子信息")
     @PostMapping("/delete/{childId}")
     public HttpResponse deleteChild(@PathVariable("childId") Integer childId) {
-        if (childService.deleteChild(childId) > 0) {
+        TChild child = new TChild();
+        child.setId(childId);
+        child.setIsDeleted(IBaseService.True);
+        if (_update(child) > 0) {
             return HttpResponse.success("已删除孩子的信息");
         }
         return HttpResponse.failure("删除孩子的信息失败");

@@ -1,10 +1,11 @@
 package com.ixchou.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.ixchou.model.entity.TMember;
 import com.ixchou.model.entity.TMotto;
 import com.ixchou.model.vo.DefaultQueryVo;
-import com.ixchou.services.IMemberService;
-import com.ixchou.services.IMottoService;
+import com.ixchou.services.impl.MemberServiceImpl;
+import com.ixchou.services.impl.MottoServiceImpl;
 import com.ixchou.util.StringUtil;
 import com.ixchou.util.http.response.HttpCode;
 import com.ixchou.util.http.response.HttpResponse;
@@ -19,19 +20,19 @@ import java.util.Date;
  * <b>Author</b>: Hsiang Leekwok<br/>
  * <b>Date</b>: 2019/10/05 09:19<br/>
  * <b>Version</b>: v1.0<br/>
- * <b>Subject</b>: <br/>
+ * <b>Subject</b>: 校训<br/>
  * <b>Description</b>:
  */
 @RestController
 @RequestMapping("/api/motto")
 @Api(tags = "Motto Controller 校训相关接口")
-public class MottoController {
+public class MottoController extends AbstractBaseController<TMotto> {
 
     @Resource
-    private IMottoService mottoService;
+    private MottoServiceImpl mottoService;
 
     @Resource
-    private IMemberService memberService;
+    private MemberServiceImpl memberService;
 
     @PostMapping("insert")
     @ApiOperation("添加新的校训内容")
@@ -58,7 +59,7 @@ public class MottoController {
         if (StringUtil.isEmpty(session)) {
             return HttpResponse.failure(HttpCode.MemberSessionIdNull, "添加、修改校训内容时 session 内容不能为空");
         }
-        TMember member = memberService.findBySessionId(session);
+        TMember member = memberService.query("sessionId", session);
         if (null == member) {
             return HttpResponse.failure(HttpCode.MemberNotBind);
         }
@@ -86,6 +87,8 @@ public class MottoController {
     @GetMapping("get")
     @ApiOperation("获取校训内容")
     public HttpResponse get() {
-        return HttpResponse.success(mottoService.get());
+        PageInfo<TMotto> info = _list(1, 10);
+        TMotto motto = (null == info.getList() || info.getList().size() < 1) ? null : info.getList().get(0);
+        return HttpResponse.success(motto);
     }
 }
