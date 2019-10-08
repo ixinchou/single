@@ -12,7 +12,7 @@ import com.ixchou.model.vo.WxRegistryVo;
  * <b>Subject</b>: 用户服务类<br/>
  * <b>Description</b>:
  */
-public interface IMemberService {
+public interface IMemberService extends IBaseService {
 
     /**
      * 通过 sessionId 查找用户信息
@@ -39,6 +39,7 @@ public interface IMemberService {
 
     /**
      * 更新我的名字
+     *
      * @param vo
      */
     boolean updateMyName(MemberVo vo);

@@ -9,7 +9,7 @@ import com.ixchou.model.entity.TMotto;
  * <b>Subject</b>: 校训<br/>
  * <b>Description</b>:
  */
-public interface IMottoService {
+public interface IMottoService extends IBaseService {
 
     int insert(TMotto motto);
 

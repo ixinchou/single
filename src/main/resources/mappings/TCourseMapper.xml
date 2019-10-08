@@ -3,8 +3,8 @@
 <mapper namespace="com.ixchou.mappings.TCourseMapper" >
   <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TCourse" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
-    <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
   </resultMap>
@@ -23,23 +23,12 @@
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </delete>
   <insert id="insert" parameterType="com.ixchou.model.entity.TCourse" >
-    insert into t_course (id, is_deleted, register_time, 
-      name, description)
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}, #{registerTime,jdbcType=TIMESTAMP}, 
-      #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+    insert into t_course (name, description)
+    values (#{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ixchou.model.entity.TCourse" >
     insert into t_course
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="isDeleted != null" >
-        is_deleted,
-      </if>
-      <if test="registerTime != null" >
-        register_time,
-      </if>
       <if test="name != null" >
         name,
       </if>
@@ -48,15 +37,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="isDeleted != null" >
-        #{isDeleted,jdbcType=BIT},
-      </if>
-      <if test="registerTime != null" >
-        #{registerTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
@@ -69,10 +49,7 @@
     update t_course
     <set >
       <if test="isDeleted != null" >
-        is_deleted = #{isDeleted,jdbcType=BIT},
-      </if>
-      <if test="registerTime != null" >
-        register_time = #{registerTime,jdbcType=TIMESTAMP},
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -85,8 +62,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TCourse" >
     update t_course
-    set is_deleted = #{isDeleted,jdbcType=BIT},
-      register_time = #{registerTime,jdbcType=TIMESTAMP},
+    set is_deleted = #{isDeleted,jdbcType=TINYINT},
       name = #{name,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0

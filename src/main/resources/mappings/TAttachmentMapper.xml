@@ -1,26 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ixchou.mappings.TAttachmentMapper">
-  <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TAttachment">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
-    <result column="size" jdbcType="INTEGER" property="size" />
-    <result column="duration" jdbcType="INTEGER" property="duration" />
-    <result column="height" jdbcType="INTEGER" property="height" />
-    <result column="width" jdbcType="INTEGER" property="width" />
-    <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
-    <result column="signature" jdbcType="CHAR" property="signature" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="origin_name" jdbcType="VARCHAR" property="originName" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ixchou.mappings.TAttachmentMapper" >
+  <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TAttachment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+    <result column="size" property="size" jdbcType="INTEGER" />
+    <result column="duration" property="duration" jdbcType="INTEGER" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP" />
+    <result column="signature" property="signature" jdbcType="CHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="origin_name" property="originName" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, is_deleted, size, duration, height, width, upload_time, signature, url, origin_name
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_attachment
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </select>
   <select id="selectBySignature" resultMap="BaseResultMap" parameterType="java.lang.String">
     select
@@ -28,102 +28,103 @@
     from t_attachment
     where signature = #{signature,jdbcType=CHAR} and is_deleted = 0
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_attachment
-    where id = #{id,jdbcType=INTEGER}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update t_attachment
+    set is_deleted = 1
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </delete>
-  <insert id="insert" parameterType="com.ixchou.model.entity.TAttachment">
-    insert into t_attachment (id, size,
+  <insert id="insert" parameterType="com.ixchou.model.entity.TAttachment" >
+    insert into t_attachment (size,
       duration, height, width, 
-      signature, url,
+      upload_time, signature, url, 
       origin_name)
-    values (#{id,jdbcType=INTEGER}, #{size,jdbcType=INTEGER},
+    values ( #{size,jdbcType=INTEGER},
       #{duration,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, #{width,jdbcType=INTEGER}, 
       #{signature,jdbcType=CHAR}, #{url,jdbcType=VARCHAR},
       #{originName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ixchou.model.entity.TAttachment" useGeneratedKeys="true" keyProperty="id">
     insert into t_attachment
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="size != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="size != null" >
         size,
       </if>
-      <if test="duration != null">
+      <if test="duration != null" >
         duration,
       </if>
-      <if test="height != null">
+      <if test="height != null" >
         height,
       </if>
-      <if test="width != null">
+      <if test="width != null" >
         width,
       </if>
-      <if test="signature != null">
+      <if test="signature != null" >
         signature,
       </if>
-      <if test="url != null">
+      <if test="url != null" >
         url,
       </if>
-      <if test="originName != null">
+      <if test="originName != null" >
         origin_name,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="size != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="size != null" >
         #{size,jdbcType=INTEGER},
       </if>
-      <if test="duration != null">
+      <if test="duration != null" >
         #{duration,jdbcType=INTEGER},
       </if>
-      <if test="height != null">
+      <if test="height != null" >
         #{height,jdbcType=INTEGER},
       </if>
-      <if test="width != null">
+      <if test="width != null" >
         #{width,jdbcType=INTEGER},
       </if>
-      <if test="signature != null">
+      <if test="signature != null" >
         #{signature,jdbcType=CHAR},
       </if>
-      <if test="url != null">
+      <if test="url != null" >
         #{url,jdbcType=VARCHAR},
       </if>
-      <if test="originName != null">
+      <if test="originName != null" >
         #{originName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ixchou.model.entity.TAttachment">
+  <update id="updateByPrimaryKeySelective" parameterType="com.ixchou.model.entity.TAttachment" >
     update t_attachment
-    <set>
-      <if test="isDeleted != null">
-        is_deleted = #{isDeleted,jdbcType=BIT},
+    <set >
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
       </if>
-      <if test="size != null">
+      <if test="size != null" >
         size = #{size,jdbcType=INTEGER},
       </if>
-      <if test="duration != null">
+      <if test="duration != null" >
         duration = #{duration,jdbcType=INTEGER},
       </if>
-      <if test="height != null">
+      <if test="height != null" >
         height = #{height,jdbcType=INTEGER},
       </if>
-      <if test="width != null">
+      <if test="width != null" >
         width = #{width,jdbcType=INTEGER},
       </if>
-      <if test="signature != null">
+      <if test="signature != null" >
         signature = #{signature,jdbcType=CHAR},
       </if>
-      <if test="url != null">
+      <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="originName != null">
+      <if test="originName != null" >
         origin_name = #{originName,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TAttachment">
+  <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TAttachment" >
     update t_attachment
-    set is_deleted = #{isDeleted,jdbcType=BIT},
+    set is_deleted = #{isDeleted,jdbcType=TINYINT},
       size = #{size,jdbcType=INTEGER},
       duration = #{duration,jdbcType=INTEGER},
       height = #{height,jdbcType=INTEGER},
@@ -131,6 +132,6 @@
       signature = #{signature,jdbcType=CHAR},
       url = #{url,jdbcType=VARCHAR},
       origin_name = #{originName,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </update>
 </mapper>

@@ -12,10 +12,11 @@ import java.util.List;
  * <b>Subject</b>: 孩子的服务类<br/>
  * <b>Description</b>:
  */
-public interface IChildService {
+public interface IChildService extends IBaseService {
 
     /**
      * 指定用户添加一个孩子的信息
+     *
      * @param vo 用户添加的孩子的信息
      */
     int addChild(ChildVo vo);

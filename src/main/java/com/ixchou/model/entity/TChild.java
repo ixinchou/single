@@ -5,11 +5,11 @@ import java.util.Date;
 public class TChild {
     private Integer id;
 
-    private Boolean isDeleted;
+    private Byte isDeleted;
 
     private Integer memberId;
 
-    private Boolean sex;
+    private Byte sex;
 
     private Date birthday;
 
@@ -25,11 +25,11 @@ public class TChild {
         this.id = id;
     }
 
-    public Boolean getIsDeleted() {
+    public Byte getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(Boolean isDeleted) {
+    public void setIsDeleted(Byte isDeleted) {
         this.isDeleted = isDeleted;
     }
 
@@ -41,11 +41,11 @@ public class TChild {
         this.memberId = memberId;
     }
 
-    public Boolean getSex() {
+    public Byte getSex() {
         return sex;
     }
 
-    public void setSex(Boolean sex) {
+    public void setSex(Byte sex) {
         this.sex = sex;
     }
 

@@ -5,7 +5,7 @@ import java.util.Date;
 public class TCourse {
     private Integer id;
 
-    private Boolean isDeleted;
+    private Byte isDeleted;
 
     private Date registerTime;
 
@@ -21,11 +21,11 @@ public class TCourse {
         this.id = id;
     }
 
-    public Boolean getIsDeleted() {
+    public Byte getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(Boolean isDeleted) {
+    public void setIsDeleted(Byte isDeleted) {
         this.isDeleted = isDeleted;
     }
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.ixchou.mappings.TMottoMapper" >
   <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TMotto" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
     <result column="post_member" property="postMember" jdbcType="INTEGER" />
     <result column="update_times" property="updateTimes" jdbcType="INTEGER" />
     <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
@@ -35,60 +35,27 @@
     where is_deleted = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_motto
-    where id = #{id,jdbcType=INTEGER}
+    update t_motto
+    set is_deleted = 1
+    where id = #{id,jdbcType=INTEGER} is_deleted = 0
   </delete>
   <insert id="insert" parameterType="com.ixchou.model.entity.TMotto" >
-    insert into t_motto (id, is_deleted, post_member, 
-      update_times, post_time, last_update, 
-      content)
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}, #{postMember,jdbcType=INTEGER}, 
-      #{updateTimes,jdbcType=INTEGER}, #{postTime,jdbcType=TIMESTAMP}, #{lastUpdate,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=LONGVARCHAR})
+    insert into t_motto (post_member, content)
+    values (#{postMember,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ixchou.model.entity.TMotto" >
     insert into t_motto
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="isDeleted != null" >
-        is_deleted,
-      </if>
       <if test="postMember != null" >
         post_member,
-      </if>
-      <if test="updateTimes != null" >
-        update_times,
-      </if>
-      <if test="postTime != null" >
-        post_time,
-      </if>
-      <if test="lastUpdate != null" >
-        last_update,
       </if>
       <if test="content != null" >
         content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="isDeleted != null" >
-        #{isDeleted,jdbcType=BIT},
-      </if>
       <if test="postMember != null" >
         #{postMember,jdbcType=INTEGER},
-      </if>
-      <if test="updateTimes != null" >
-        #{updateTimes,jdbcType=INTEGER},
-      </if>
-      <if test="postTime != null" >
-        #{postTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdate != null" >
-        #{lastUpdate,jdbcType=TIMESTAMP},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -99,16 +66,13 @@
     update t_motto
     <set >
       <if test="isDeleted != null" >
-        is_deleted = #{isDeleted,jdbcType=BIT},
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
       </if>
       <if test="postMember != null" >
         post_member = #{postMember,jdbcType=INTEGER},
       </if>
       <if test="updateTimes != null" >
         update_times = update_times + 1,
-      </if>
-      <if test="postTime != null" >
-        post_time = #{postTime,jdbcType=TIMESTAMP},
       </if>
       <if test="lastUpdate != null" >
         last_update = #{lastUpdate,jdbcType=TIMESTAMP},
@@ -121,21 +85,19 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ixchou.model.entity.TMotto" >
     update t_motto
-    set is_deleted = #{isDeleted,jdbcType=BIT},
+    set is_deleted = #{isDeleted,jdbcType=TINYINT},
       post_member = #{postMember,jdbcType=INTEGER},
-      update_times = #{updateTimes,jdbcType=INTEGER},
-      post_time = #{postTime,jdbcType=TIMESTAMP},
+      update_times = update_times + 1,
       last_update = #{lastUpdate,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TMotto" >
     update t_motto
-    set is_deleted = #{isDeleted,jdbcType=BIT},
+    set is_deleted = #{isDeleted,jdbcType=TINYINT},
       post_member = #{postMember,jdbcType=INTEGER},
-      update_times = #{updateTimes,jdbcType=INTEGER},
-      post_time = #{postTime,jdbcType=TIMESTAMP},
+      update_times = update_times + 1,
       last_update = #{lastUpdate,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

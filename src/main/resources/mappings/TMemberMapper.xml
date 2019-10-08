@@ -3,9 +3,9 @@
 <mapper namespace="com.ixchou.mappings.TMemberMapper" >
   <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TMember" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
-    <result column="is_upload_able" property="isUploadAble" jdbcType="BIT" />
-    <result column="wx_sex" property="wxSex" jdbcType="BIT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+    <result column="is_upload_able" property="isUploadAble" jdbcType="TINYINT" />
+    <result column="wx_sex" property="wxSex" jdbcType="TINYINT" />
     <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
     <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
@@ -43,13 +43,13 @@
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </delete>
   <insert id="insert" parameterType="com.ixchou.model.entity.TMember" >
-    insert into t_member (id, is_deleted, is_upload_able, 
-      wx_sex, last_login_time, register_time, 
+    insert into t_member (is_upload_able,
+      wx_sex,
       phone, user_name, session_id, 
       wx_id, wx_session, wx_nick_name
       )
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}, #{isUploadAble,jdbcType=BIT}, 
-      #{wxSex,jdbcType=BIT}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{registerTime,jdbcType=TIMESTAMP}, 
+    values (#{isUploadAble,jdbcType=TINYINT},
+      #{wxSex,jdbcType=TINYINT},
       #{phone,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{sessionId,jdbcType=VARCHAR}, 
       #{wxId,jdbcType=VARCHAR}, #{wxSession,jdbcType=VARCHAR}, #{wxNickName,jdbcType=VARCHAR}
       )
@@ -57,23 +57,11 @@
   <insert id="insertSelective" parameterType="com.ixchou.model.entity.TMember" >
     insert into t_member
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="isDeleted != null" >
-        is_deleted,
-      </if>
       <if test="isUploadAble != null" >
         is_upload_able,
       </if>
       <if test="wxSex != null" >
         wx_sex,
-      </if>
-      <if test="lastLoginTime != null" >
-        last_login_time,
-      </if>
-      <if test="registerTime != null" >
-        register_time,
       </if>
       <if test="phone != null" >
         phone,
@@ -95,23 +83,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="isDeleted != null" >
-        #{isDeleted,jdbcType=BIT},
-      </if>
       <if test="isUploadAble != null" >
-        #{isUploadAble,jdbcType=BIT},
+        #{isUploadAble,jdbcType=TINYINT},
       </if>
       <if test="wxSex != null" >
-        #{wxSex,jdbcType=BIT},
-      </if>
-      <if test="lastLoginTime != null" >
-        #{lastLoginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="registerTime != null" >
-        #{registerTime,jdbcType=TIMESTAMP},
+        #{wxSex,jdbcType=TINYINT},
       </if>
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},
@@ -137,19 +113,16 @@
     update t_member
     <set >
       <if test="isDeleted != null" >
-        is_deleted = #{isDeleted,jdbcType=BIT},
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
       </if>
       <if test="isUploadAble != null" >
-        is_upload_able = #{isUploadAble,jdbcType=BIT},
+        is_upload_able = #{isUploadAble,jdbcType=TINYINT},
       </if>
       <if test="wxSex != null" >
-        wx_sex = #{wxSex,jdbcType=BIT},
+        wx_sex = #{wxSex,jdbcType=TINYINT},
       </if>
       <if test="lastLoginTime != null" >
         last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="registerTime != null" >
-        register_time = #{registerTime,jdbcType=TIMESTAMP},
       </if>
       <if test="phone != null" >
         phone = #{phone,jdbcType=VARCHAR},
@@ -174,11 +147,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TMember" >
     update t_member
-    set is_deleted = #{isDeleted,jdbcType=BIT},
-      is_upload_able = #{isUploadAble,jdbcType=BIT},
-      wx_sex = #{wxSex,jdbcType=BIT},
+    set is_deleted = #{isDeleted,jdbcType=TINYINT},
+      is_upload_able = #{isUploadAble,jdbcType=TINYINT},
+      wx_sex = #{wxSex,jdbcType=TINYINT},
       last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
-      register_time = #{registerTime,jdbcType=TIMESTAMP},
       phone = #{phone,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
       session_id = #{sessionId,jdbcType=VARCHAR},

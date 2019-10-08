@@ -3,9 +3,9 @@
 <mapper namespace="com.ixchou.mappings.TChildMapper" >
   <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TChild" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
-    <result column="sex" property="sex" jdbcType="BIT" />
+    <result column="sex" property="sex" jdbcType="TINYINT" />
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
     <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
     <result column="name" property="name" jdbcType="VARCHAR" />
@@ -38,21 +38,15 @@
   </delete>
   <insert id="insert" parameterType="com.ixchou.model.entity.TChild" >
     insert into t_child (id, is_deleted, member_id, 
-      sex, birthday, register_time,
+      sex, birthday, register_time, 
       name)
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}, #{memberId,jdbcType=INTEGER}, 
-      #{sex,jdbcType=BIT}, #{birthday,jdbcType=TIMESTAMP}, #{registerTime,jdbcType=TIMESTAMP},
+    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{memberId,jdbcType=INTEGER}, 
+      #{sex,jdbcType=TINYINT}, #{birthday,jdbcType=TIMESTAMP}, #{registerTime,jdbcType=TIMESTAMP}, 
       #{name,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ixchou.model.entity.TChild" >
     insert into t_child
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="isDeleted != null" >
-        is_deleted,
-      </if>
       <if test="memberId != null" >
         member_id,
       </if>
@@ -62,31 +56,19 @@
       <if test="birthday != null" >
         birthday,
       </if>
-      <if test="registerTime != null" >
-        register_time,
-      </if>
       <if test="name != null" >
         name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="isDeleted != null" >
-        #{isDeleted,jdbcType=BIT},
-      </if>
       <if test="memberId != null" >
         #{memberId,jdbcType=INTEGER},
       </if>
       <if test="sex != null" >
-        #{sex,jdbcType=BIT},
+        #{sex,jdbcType=TINYINT},
       </if>
       <if test="birthday != null" >
         #{birthday,jdbcType=TIMESTAMP},
-      </if>
-      <if test="registerTime != null" >
-        #{registerTime,jdbcType=TIMESTAMP},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -97,19 +79,16 @@
     update t_child
     <set >
       <if test="isDeleted != null" >
-        is_deleted = #{isDeleted,jdbcType=BIT},
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
       </if>
       <if test="memberId != null" >
         member_id = #{memberId,jdbcType=INTEGER},
       </if>
       <if test="sex != null" >
-        sex = #{sex,jdbcType=BIT},
+        sex = #{sex,jdbcType=TINYINT},
       </if>
       <if test="birthday != null" >
         birthday = #{birthday,jdbcType=TIMESTAMP},
-      </if>
-      <if test="registerTime != null" >
-        register_time = #{registerTime,jdbcType=TIMESTAMP},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -119,9 +98,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TChild" >
     update t_child
-    set is_deleted = #{isDeleted,jdbcType=BIT},
+    set is_deleted = #{isDeleted,jdbcType=TINYINT},
       member_id = #{memberId,jdbcType=INTEGER},
-      sex = #{sex,jdbcType=BIT},
+      sex = #{sex,jdbcType=TINYINT},
       birthday = #{birthday,jdbcType=TIMESTAMP},
       register_time = #{registerTime,jdbcType=TIMESTAMP},
       name = #{name,jdbcType=VARCHAR}

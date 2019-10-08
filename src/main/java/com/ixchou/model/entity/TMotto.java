@@ -1,25 +1,18 @@
 package com.ixchou.model.entity;
 
-import io.swagger.annotations.ApiModelProperty;
-
 import java.util.Date;
 
 public class TMotto {
     private Integer id;
 
-    @ApiModelProperty(hidden = true)
-    private Boolean isDeleted;
+    private Byte isDeleted;
 
-    @ApiModelProperty(hidden = true)
     private Integer postMember;
 
-    @ApiModelProperty(hidden = true)
     private Integer updateTimes;
 
-    @ApiModelProperty(hidden = true)
     private Date postTime;
 
-    @ApiModelProperty(hidden = true)
     private Date lastUpdate;
 
     private String content;
@@ -32,11 +25,11 @@ public class TMotto {
         this.id = id;
     }
 
-    public Boolean getIsDeleted() {
+    public Byte getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(Boolean isDeleted) {
+    public void setIsDeleted(Byte isDeleted) {
         this.isDeleted = isDeleted;
     }
 

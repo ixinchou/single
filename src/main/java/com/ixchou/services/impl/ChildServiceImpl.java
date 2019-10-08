@@ -45,7 +45,7 @@ public class ChildServiceImpl implements IChildService {
             child.setMemberId(member.getId());
             child.setName(vo.getName());
             child.setRegisterTime(new Date());
-            child.setSex(vo.getSex() > 0);
+            child.setSex(vo.getSex());
             return childMapper.insertSelective(child);
         }
         return -1;

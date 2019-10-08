@@ -1,6 +1,7 @@
 package com.ixchou.model.vo;
 
 import com.ixchou.model.entity.TMember;
+import com.ixchou.services.IBaseService;
 
 import java.util.Date;
 
@@ -34,8 +35,8 @@ public class MemberVo {
     }
 
     public MemberVo(TMember member) {
-        uploadAble = member.getIsUploadAble();
-        wxSex = member.getWxSex();
+        uploadAble = member.getIsUploadAble().equals(IBaseService.True);
+        wxSex = member.getWxSex().equals(IBaseService.True);
         lastLogin = member.getLastLoginTime();
         registerTime = member.getRegisterTime();
         phone = member.getPhone();

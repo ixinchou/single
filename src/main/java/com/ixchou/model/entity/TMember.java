@@ -5,11 +5,11 @@ import java.util.Date;
 public class TMember {
     private Integer id;
 
-    private Boolean isDeleted;
+    private Byte isDeleted;
 
-    private Boolean isUploadAble;
+    private Byte isUploadAble;
 
-    private Boolean wxSex;
+    private Byte wxSex;
 
     private Date lastLoginTime;
 
@@ -35,27 +35,27 @@ public class TMember {
         this.id = id;
     }
 
-    public Boolean getIsDeleted() {
+    public Byte getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(Boolean isDeleted) {
+    public void setIsDeleted(Byte isDeleted) {
         this.isDeleted = isDeleted;
     }
 
-    public Boolean getIsUploadAble() {
+    public Byte getIsUploadAble() {
         return isUploadAble;
     }
 
-    public void setIsUploadAble(Boolean isUploadAble) {
+    public void setIsUploadAble(Byte isUploadAble) {
         this.isUploadAble = isUploadAble;
     }
 
-    public Boolean getWxSex() {
+    public Byte getWxSex() {
         return wxSex;
     }
 
-    public void setWxSex(Boolean wxSex) {
+    public void setWxSex(Byte wxSex) {
         this.wxSex = wxSex;
     }
 

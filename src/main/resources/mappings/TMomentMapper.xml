@@ -3,7 +3,7 @@
 <mapper namespace="com.ixchou.mappings.TMomentMapper" >
   <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TMoment" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
     <result column="course_id" property="courseId" jdbcType="INTEGER" />
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
@@ -27,7 +27,7 @@
     insert into t_moment (id, is_deleted, course_id, 
       member_id, post_time, title, 
       content)
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}, #{courseId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{courseId,jdbcType=INTEGER}, 
       #{memberId,jdbcType=INTEGER}, #{postTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR})
   </insert>
@@ -61,7 +61,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="isDeleted != null" >
-        #{isDeleted,jdbcType=BIT},
+        #{isDeleted,jdbcType=TINYINT},
       </if>
       <if test="courseId != null" >
         #{courseId,jdbcType=INTEGER},
@@ -84,7 +84,7 @@
     update t_moment
     <set >
       <if test="isDeleted != null" >
-        is_deleted = #{isDeleted,jdbcType=BIT},
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
       </if>
       <if test="courseId != null" >
         course_id = #{courseId,jdbcType=INTEGER},
@@ -106,7 +106,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TMoment" >
     update t_moment
-    set is_deleted = #{isDeleted,jdbcType=BIT},
+    set is_deleted = #{isDeleted,jdbcType=TINYINT},
       course_id = #{courseId,jdbcType=INTEGER},
       member_id = #{memberId,jdbcType=INTEGER},
       post_time = #{postTime,jdbcType=TIMESTAMP},

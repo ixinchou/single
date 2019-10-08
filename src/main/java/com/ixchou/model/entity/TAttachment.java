@@ -5,7 +5,7 @@ import java.util.Date;
 public class TAttachment {
     private Integer id;
 
-    private Boolean isDeleted;
+    private Byte isDeleted;
 
     private Integer size;
 
@@ -31,11 +31,11 @@ public class TAttachment {
         this.id = id;
     }
 
-    public Boolean getIsDeleted() {
+    public Byte getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(Boolean isDeleted) {
+    public void setIsDeleted(Byte isDeleted) {
         this.isDeleted = isDeleted;
     }
 

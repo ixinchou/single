@@ -63,7 +63,7 @@ public class MemberServiceImpl implements IMemberService {
         }
         // 注册一个新的账号
         member = new TMember();
-        member.setIsUploadAble(false);
+        member.setIsUploadAble(False);
         member.setLastLoginTime(new Date());
         member.setRegisterTime(new Date());
         member.setUserName("");
@@ -71,7 +71,7 @@ public class MemberServiceImpl implements IMemberService {
         member.setWxId(openIdVo.getOpenid());
         member.setWxNickName(info.getNickName());
         member.setWxSession(openIdVo.getSession_key());
-        member.setWxSex(info.getGender() == 1);
+        member.setWxSex(info.getGender());
         member.setSessionId(UUIDGenerator.getUUID());
         memberMapper.insertSelective(member);
         return member;
