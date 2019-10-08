@@ -3,7 +3,7 @@ package com.ixchou.controller;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.ixchou.model.entity.TAttachment;
-import com.ixchou.services.IAttachmentService;
+import com.ixchou.services.impl.AttachmentServiceImpl;
 import com.ixchou.util.DigestUtil;
 import com.ixchou.util.ObjectUtil;
 import com.ixchou.util.StringUtil;
@@ -33,7 +33,7 @@ import java.util.Enumeration;
 @RestController
 @RequestMapping("/api/attachment")
 @Api(tags = "Attachment Controller 文件上传 api")
-public class AttachmentController {
+public class AttachmentController extends AbstractBaseController<TAttachment> {
 
     private static Logger logger = LoggerFactory.getLogger(AttachmentController.class);
 
@@ -45,7 +45,7 @@ public class AttachmentController {
     private ThreadPoolTaskExecutor executor;
 
     @Resource
-    IAttachmentService service;
+    AttachmentServiceImpl service;
 
     @ApiOperation(value = "文件上传")
     @PostMapping("upload")
@@ -62,7 +62,7 @@ public class AttachmentController {
                 String value = request.getParameter(name);
                 ObjectUtil.setPropertyValue(attachment, name, value);
             }
-            TAttachment exist = service.query(attachment.getSignature());
+            TAttachment exist = _query("signature", attachment.getSignature());
             if (null != exist && exist.getSize().equals(attachment.getSize())) {
                 // 如果文件签名相同且文件长度相同则认为有相同的文件存在，直接返回
                 return HttpResponse.success(exist, "已有相同文件存在");
@@ -83,13 +83,13 @@ public class AttachmentController {
                     if (StringUtil.isEmpty(attachment.getSignature())) {
                         attachment.setSignature(DigestUtil.sha1(file.getInputStream()));
                     }
-                    exist = service.query(attachment.getSignature());
+                    exist = _query("signature", attachment.getSignature());
                     if (null != exist && exist.getSize().equals(attachment.getSize())) {
                         response = HttpResponse.success(exist, "已有相同文件存在无需重复上传");
                     } else {
                         StorePath path = client.uploadFile(file.getInputStream(), size, FilenameUtils.getExtension(file.getOriginalFilename()), null);
                         attachment.setUrl(path.getFullPath());
-                        service.insert(attachment);
+                        _insert(attachment);
                         response = HttpResponse.success(attachment, "上传成功");
                     }
                 } catch (Exception e) {
@@ -108,7 +108,7 @@ public class AttachmentController {
     @GetMapping("query/{signature}")
     public HttpResponse query(@PathVariable("signature") String signature) {
         // f2dcdee25062e554925069e67ecd4f18368834ca
-        TAttachment attachment = service.query(signature);
+        TAttachment attachment = _query("signature", signature);
         // 无论找到相同文件与否，都返回成功
         return HttpResponse.success(attachment);
     }

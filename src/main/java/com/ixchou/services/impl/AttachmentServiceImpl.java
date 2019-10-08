@@ -1,11 +1,7 @@
 package com.ixchou.services.impl;
 
-import com.ixchou.mappings.TAttachmentMapper;
 import com.ixchou.model.entity.TAttachment;
-import com.ixchou.services.IAttachmentService;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * <b>Author</b>: Hsiang Leekwok<br/>
@@ -15,18 +11,6 @@ import javax.annotation.Resource;
  * <b>Description</b>:
  */
 @Service
-public class AttachmentServiceImpl implements IAttachmentService {
+public class AttachmentServiceImpl extends BaseServiceImpl<TAttachment> {
 
-    @Resource
-    TAttachmentMapper mapper;
-
-    @Override
-    public int insert(TAttachment attachment) {
-        return mapper.insertSelective(attachment);
-    }
-
-    @Override
-    public TAttachment query(String signature) {
-        return mapper.selectBySignature(signature);
-    }
 }
