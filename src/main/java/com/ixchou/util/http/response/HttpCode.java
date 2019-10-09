@@ -49,6 +49,10 @@ public enum HttpCode {
      */
     MemberChildExist("653", "已有同名孩子的信息"),
     /**
+     * 孩子信息不存在
+     */
+    MemberChildNotExist("654", "孩子信息不存在"),
+    /**
      * 添加校训失败，请联系管理员
      */
     MottoInsertFailure("660", "添加校训失败"),
@@ -68,6 +72,18 @@ public enum HttpCode {
      * 暂时没有校训内容，请先添加
      */
     MottoNotExist("654", "暂时没有校训内容，请先添加"),
+    /**
+     * 已有相同名称的课程存在
+     */
+    CourseNameExist("660", "已有同名课程"),
+    /**
+     * 新增数据库记录失败
+     */
+    DatabaseInsertFail("997", "新增数据库记录失败(新增了 0 条记录)"),
+    /**
+     * 修改数据库记录失败
+     */
+    DatabaseUpdateFail("998", "修改数据库记录失败(没有记录被更改)"),
     /**
      * 操作失败
      */

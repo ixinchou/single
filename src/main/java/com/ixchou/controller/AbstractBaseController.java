@@ -25,6 +25,13 @@ public abstract class AbstractBaseController<T> {
     }
 
     /**
+     * 获取一个未经初始化实际内容的空对象
+     */
+    protected T _getEmptyObject() {
+        return service.getEmptyObject();
+    }
+
+    /**
      * 根据属性值进行查询
      */
     protected T _query(String propertyName, Object value) {
@@ -43,6 +50,13 @@ public abstract class AbstractBaseController<T> {
      */
     protected int _update(T entity) {
         return service.update(entity);
+    }
+
+    /**
+     * 删除数据
+     */
+    protected int _delete(Integer id) {
+        return service.delete(id);
     }
 
     /**

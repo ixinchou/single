@@ -7,8 +7,6 @@ import java.util.List;
 public interface TChildMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(TChild record);
-
     int insertSelective(TChild record);
 
     TChild selectByPrimaryKey(Integer id);
@@ -18,6 +16,4 @@ public interface TChildMapper {
     List<TChild> selectByMemberId(Integer memberId);
 
     int updateByPrimaryKeySelective(TChild record);
-
-    int updateByPrimaryKey(TChild record);
 }

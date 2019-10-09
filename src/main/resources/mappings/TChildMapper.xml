@@ -62,15 +62,7 @@
     set is_deleted = 1
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </delete>
-  <insert id="insert" parameterType="com.ixchou.model.entity.TChild" >
-    insert into t_child (id, is_deleted, member_id, 
-      sex, birthday, register_time, 
-      name)
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{memberId,jdbcType=INTEGER}, 
-      #{sex,jdbcType=TINYINT}, #{birthday,jdbcType=TIMESTAMP}, #{registerTime,jdbcType=TIMESTAMP}, 
-      #{name,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TChild" >
+  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TChild" useGeneratedKeys="true" keyProperty="id">
     insert into t_child
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="memberId != null" >
@@ -120,16 +112,6 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TChild" >
-    update t_child
-    set is_deleted = #{isDeleted,jdbcType=TINYINT},
-      member_id = #{memberId,jdbcType=INTEGER},
-      sex = #{sex,jdbcType=TINYINT},
-      birthday = #{birthday,jdbcType=TIMESTAMP},
-      register_time = #{registerTime,jdbcType=TIMESTAMP},
-      name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </update>
 </mapper>

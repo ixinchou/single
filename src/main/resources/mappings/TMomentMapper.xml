@@ -23,15 +23,7 @@
     delete from t_moment
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.ixchou.model.entity.TMoment" >
-    insert into t_moment (id, is_deleted, course_id, 
-      member_id, post_time, title, 
-      content)
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{courseId,jdbcType=INTEGER}, 
-      #{memberId,jdbcType=INTEGER}, #{postTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TMoment" >
+  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TMoment" useGeneratedKeys="true" keyProperty="id">
     insert into t_moment
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -102,16 +94,6 @@
         content = #{content,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TMoment" >
-    update t_moment
-    set is_deleted = #{isDeleted,jdbcType=TINYINT},
-      course_id = #{courseId,jdbcType=INTEGER},
-      member_id = #{memberId,jdbcType=INTEGER},
-      post_time = #{postTime,jdbcType=TIMESTAMP},
-      title = #{title,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

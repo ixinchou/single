@@ -75,19 +75,7 @@
     set is_deleted = 1
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </delete>
-  <insert id="insert" parameterType="com.ixchou.model.entity.TMember" >
-    insert into t_member (is_upload_able,
-      wx_sex,
-      phone, user_name, session_id, 
-      wx_id, wx_session, wx_nick_name
-      )
-    values (#{isUploadAble,jdbcType=TINYINT},
-      #{wxSex,jdbcType=TINYINT},
-      #{phone,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{sessionId,jdbcType=VARCHAR}, 
-      #{wxId,jdbcType=VARCHAR}, #{wxSession,jdbcType=VARCHAR}, #{wxNickName,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TMember" >
+  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TMember" useGeneratedKeys="true" keyProperty="id">
     insert into t_member
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="isUploadAble != null" >
@@ -176,20 +164,6 @@
         wx_nick_name = #{wxNickName,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TMember" >
-    update t_member
-    set is_deleted = #{isDeleted,jdbcType=TINYINT},
-      is_upload_able = #{isUploadAble,jdbcType=TINYINT},
-      wx_sex = #{wxSex,jdbcType=TINYINT},
-      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
-      phone = #{phone,jdbcType=VARCHAR},
-      user_name = #{userName,jdbcType=VARCHAR},
-      session_id = #{sessionId,jdbcType=VARCHAR},
-      wx_id = #{wxId,jdbcType=VARCHAR},
-      wx_session = #{wxSession,jdbcType=VARCHAR},
-      wx_nick_name = #{wxNickName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </update>
 </mapper>

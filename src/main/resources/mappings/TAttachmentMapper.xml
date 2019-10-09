@@ -56,16 +56,6 @@
     set is_deleted = 1
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </delete>
-  <insert id="insert" parameterType="com.ixchou.model.entity.TAttachment" >
-    insert into t_attachment (size,
-      duration, height, width, 
-      upload_time, signature, url, 
-      origin_name)
-    values ( #{size,jdbcType=INTEGER},
-      #{duration,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, #{width,jdbcType=INTEGER}, 
-      #{signature,jdbcType=CHAR}, #{url,jdbcType=VARCHAR},
-      #{originName,jdbcType=VARCHAR})
-  </insert>
   <insert id="insertSelective" parameterType="com.ixchou.model.entity.TAttachment" useGeneratedKeys="true" keyProperty="id">
     insert into t_attachment
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -143,18 +133,6 @@
         origin_name = #{originName,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TAttachment" >
-    update t_attachment
-    set is_deleted = #{isDeleted,jdbcType=TINYINT},
-      size = #{size,jdbcType=INTEGER},
-      duration = #{duration,jdbcType=INTEGER},
-      height = #{height,jdbcType=INTEGER},
-      width = #{width,jdbcType=INTEGER},
-      signature = #{signature,jdbcType=CHAR},
-      url = #{url,jdbcType=VARCHAR},
-      origin_name = #{originName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </update>
 </mapper>

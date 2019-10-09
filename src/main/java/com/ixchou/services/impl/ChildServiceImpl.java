@@ -63,11 +63,6 @@ public class ChildServiceImpl extends BaseServiceImpl<TChild> implements IChildS
 
     @Override
     public int deleteChild(Integer childId) {
-        TChild child = query("id", childId);
-        if (null != child) {
-            child.setIsDeleted(True);
-            return update(child);
-        }
-        return 0;
+        return delete(childId);
     }
 }

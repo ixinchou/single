@@ -43,10 +43,10 @@ public class ChildController extends AbstractBaseController<TChild> {
                 return HttpResponse.failure(HttpCode.MemberNotBind);
             case -1:
                 return HttpResponse.failure(HttpCode.MemberChildExist);
-            case 1:
-                return HttpResponse.success("添加孩子信息成功");
-            default:
+            case 0:
                 return HttpResponse.failure("添加孩子信息失败");
+            default:
+                return HttpResponse.success("添加孩子信息成功");
         }
     }
 
@@ -57,14 +57,11 @@ public class ChildController extends AbstractBaseController<TChild> {
     }
 
     @ApiOperation(value = "删除已添加的孩子信息")
-    @PostMapping("/delete/{childId}")
-    public HttpResponse deleteChild(@PathVariable("childId") Integer childId) {
-        TChild child = new TChild();
-        child.setId(childId);
-        child.setIsDeleted(IBaseService.True);
-        if (_update(child) > 0) {
+    @PostMapping("/delete/{id}")
+    public HttpResponse delete(@PathVariable("id") Integer id) {
+        if (_delete(id) > 0) {
             return HttpResponse.success("已删除孩子的信息");
         }
-        return HttpResponse.failure("删除孩子的信息失败");
+        return HttpResponse.failure(HttpCode.MemberChildNotExist);
     }
 }

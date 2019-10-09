@@ -20,6 +20,11 @@ public interface IBaseService<T> {
     Byte False = 0;
 
     /**
+     * 获取一个空属性列表的对象实体
+     */
+    T getEmptyObject();
+
+    /**
      * 插入新纪录
      */
     int insert(T entity);
@@ -53,4 +58,9 @@ public interface IBaseService<T> {
      * 更改纪录
      */
     int update(T entity);
+
+    /**
+     * 删除记录
+     */
+    int delete(Integer id);
 }

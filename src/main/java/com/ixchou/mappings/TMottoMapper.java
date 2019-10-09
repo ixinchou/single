@@ -7,8 +7,6 @@ import java.util.List;
 public interface TMottoMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(TMotto record);
-
     int insertSelective(TMotto record);
 
     TMotto selectByPrimaryKey(Integer id);
@@ -16,8 +14,4 @@ public interface TMottoMapper {
     List<TMotto> list();
 
     int updateByPrimaryKeySelective(TMotto record);
-
-    int updateByPrimaryKeyWithBLOBs(TMotto record);
-
-    int updateByPrimaryKey(TMotto record);
 }

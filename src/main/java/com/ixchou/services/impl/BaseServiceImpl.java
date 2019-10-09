@@ -29,7 +29,7 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
     @SuppressWarnings("unchecked")
     BaseServiceImpl() {
         entityClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        nameSpace = "com.ixchou.mappings." + entityClass.getSimpleName() + "Mapper.";
+        nameSpace = entityClass.getName().replace("model.entity", "mappings") + "Mapper.";//"com.ixchou.mappings." + entityClass.getSimpleName() + "Mapper.";
         String beanName = StringUtils.capitalize(entityClass.getSimpleName() + "Mapper");
         try {
             MapperFactoryBean mapperFactoryBean = SpringContextAware.getBean("&" + beanName);
@@ -37,6 +37,17 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    public T getEmptyObject() {
+        try {
+            return entityClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -51,12 +62,10 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
 
     @Override
     public T query(@NonNull String propertyName, @NonNull Object value) {
-        try {
-            T object = entityClass.newInstance();
+        T object = getEmptyObject();
+        if (null != object) {
             ObjectUtil.setPropertyValue(object, propertyName, value);
             return query(object);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }
@@ -94,5 +103,16 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
     @Override
     public int update(T entity) {
         return session.update(nameSpace + "updateByPrimaryKeySelective", entity);
+    }
+
+    @Override
+    public int delete(Integer id) {
+        T object = getEmptyObject();
+        if (null != object) {
+            ObjectUtil.setPropertyValue(object, "id", id);
+            ObjectUtil.setPropertyValue(object, "isDeleted", True);
+            return update(object);
+        }
+        return 0;
     }
 }

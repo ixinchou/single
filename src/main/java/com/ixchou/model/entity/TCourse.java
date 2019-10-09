@@ -7,9 +7,17 @@ public class TCourse {
 
     private Byte isDeleted;
 
-    private Date registerTime;
+    private Date createTime;
+
+    private Date updateTime;
+
+    private Integer createMemberId;
+
+    private Integer updateMemberId;
 
     private String name;
+
+    private String cover;
 
     private String description;
 
@@ -29,12 +37,36 @@ public class TCourse {
         this.isDeleted = isDeleted;
     }
 
-    public Date getRegisterTime() {
-        return registerTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getCreateMemberId() {
+        return createMemberId;
+    }
+
+    public void setCreateMemberId(Integer createMemberId) {
+        this.createMemberId = createMemberId;
+    }
+
+    public Integer getUpdateMemberId() {
+        return updateMemberId;
+    }
+
+    public void setUpdateMemberId(Integer updateMemberId) {
+        this.updateMemberId = updateMemberId;
     }
 
     public String getName() {
@@ -43,6 +75,14 @@ public class TCourse {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover == null ? null : cover.trim();
     }
 
     public String getDescription() {
