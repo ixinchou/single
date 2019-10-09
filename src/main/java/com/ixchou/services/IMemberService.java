@@ -17,12 +17,12 @@ import java.util.List;
 public interface IMemberService {
 
     /**
-     * 通过微信的绑定信息查找用户
+     * 通过微信的绑定信息查找或注册用户
      *
      * @param info 微信平台绑定的基本信息
      * @return 返回找到或新注册的用户信息
      */
-    TMember findByWxInfo(WxRegistryVo info);
+    TMember findOrRegisterByWxInfo(WxRegistryVo info);
 
     /***
      * 解密微信绑定的手机号码
@@ -32,7 +32,7 @@ public interface IMemberService {
     TMember fetchingWxPhone(WxPhoneEncryptedVo vo);
 
     /**
-     * 更新我的名字
+     * 通过 sessionId 查找并更新成员的名字
      */
-    boolean updateMyName(String mySessionId, String myNewName);
+    boolean updateNameBySessionId(String mySessionId, String myNewName);
 }

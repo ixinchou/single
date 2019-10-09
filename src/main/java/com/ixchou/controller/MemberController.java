@@ -55,7 +55,7 @@ public class MemberController extends AbstractBaseController<TMember> {
         if (StringUtil.isEmpty(vo.getUserName())) {
             return HttpResponse.failure(HttpCode.MemberNameNull);
         }
-        boolean updated = memberService.updateMyName(vo.getSessionId(), vo.getUserName());
+        boolean updated = memberService.updateNameBySessionId(vo.getSessionId(), vo.getUserName());
         if (updated) {
             return HttpResponse.success("名字更改成功");
         } else {

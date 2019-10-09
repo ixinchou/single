@@ -24,7 +24,7 @@ import java.util.Date;
  * <b>Author</b>: Hsiang Leekwok<br/>
  * <b>Date</b>: 2019/08/05 08:11<br/>
  * <b>Version</b>: v1.0<br/>
- * <b>Subject</b>: <br/>
+ * <b>Subject</b>: 会员相关业务逻辑<br/>
  * <b>Description</b>:
  */
 @Service
@@ -33,7 +33,7 @@ public class MemberServiceImpl extends BaseServiceImpl<TMember> implements IMemb
     private final Logger logger = LoggerFactory.getLogger(WxController.class);
 
     @Override
-    public TMember findByWxInfo(WxRegistryVo info) {
+    public TMember findOrRegisterByWxInfo(WxRegistryVo info) {
         // 通过用户的登录码去查询用户的基本信息，比如手机号码，openid等
         RestTemplate template = new RestTemplate();
         String response = template.getForObject("https://api.weixin.qq.com/sns/jscode2session?appid={1}&secret={2}&js_code={3}&grant_type=authorization_code",
@@ -97,7 +97,7 @@ public class MemberServiceImpl extends BaseServiceImpl<TMember> implements IMemb
     }
 
     @Override
-    public boolean updateMyName(String mySessionId, String myNewName) {
+    public boolean updateNameBySessionId(String mySessionId, String myNewName) {
         TMember member = query("sessionId", mySessionId);
         if (null == member) {
             return false;

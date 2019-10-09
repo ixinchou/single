@@ -57,7 +57,7 @@ public class WxController extends AbstractBaseController<TMember> {
                 logger.info(HttpCode.WxLoginCodeNullOfQuery.getReason());
                 return HttpResponse.failure(HttpCode.WxLoginCodeNullOfQuery);
             }
-            TMember member = memberService.findByWxInfo(info);
+            TMember member = memberService.findOrRegisterByWxInfo(info);
             MemberVo vo = new MemberVo(member);
             return HttpResponse.success(vo);
         });
