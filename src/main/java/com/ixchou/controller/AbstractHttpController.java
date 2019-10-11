@@ -22,26 +22,44 @@ public abstract class AbstractHttpController<T> extends AbstractBaseController<T
      * 添加内容
      */
     protected HttpResponse __insert(T entity) {
-        T exist = _query(checkExistProperty(), ObjectUtil.getPropertyValue(entity, checkExistProperty()));
+        T exist = _query(checkSameRecordPropertyName(), ObjectUtil.getPropertyValue(entity, checkSameRecordPropertyName()));
         if (null != exist) {
-            return HttpResponse.failure(existCode());
+            return HttpResponse.failure(insertExistCode());
         }
         if (_insert(entity) > 0) {
-            return HttpResponse.success(entity, insertSuccess());
+            return HttpResponse.success(entity, insertSuccessMessage());
         }
         return HttpResponse.failure(HttpCode.DatabaseInsertFail);
     }
 
-    protected abstract String checkExistProperty();
+    /**
+     * 查找相同对象的属性，通过这个指定的属性查找对象
+     */
+    protected abstract String checkSameRecordPropertyName();
 
-    protected abstract String insertSuccess();
+    /**
+     * 插入成功之后的描述文字
+     */
+    protected abstract String insertSuccessMessage();
 
-    protected abstract String deleteSuccess();
+    /**
+     * 删除成功之后的描述文字
+     */
+    protected abstract String deleteSuccessMessage();
 
+    /**
+     * 更新成功之后的描述文字
+     */
     protected abstract String updateSuccess();
 
-    protected abstract HttpCode existCode();
+    /**
+     * 插入时有相同记录后的错误码
+     */
+    protected abstract HttpCode insertExistCode();
 
+    /**
+     * 模糊查询时设定需要查询的属性
+     */
     protected abstract void setFuzzyProperties(T entity, String queryValue);
 
     /**
@@ -49,7 +67,7 @@ public abstract class AbstractHttpController<T> extends AbstractBaseController<T
      */
     protected HttpResponse __delete(Integer id) {
         if (_delete(id) > 0) {
-            return HttpResponse.success(deleteSuccess());
+            return HttpResponse.success(deleteSuccessMessage());
         }
         return HttpResponse.failure(HttpCode.DatabaseUpdateFail);
     }
@@ -58,13 +76,13 @@ public abstract class AbstractHttpController<T> extends AbstractBaseController<T
      * 更改内容
      */
     protected HttpResponse __update(T entity) {
-        T exist = _query(checkExistProperty(), ObjectUtil.getPropertyValue(entity, checkExistProperty()));
+        T exist = _query(checkSameRecordPropertyName(), ObjectUtil.getPropertyValue(entity, checkSameRecordPropertyName()));
         if (null != exist) {
             Integer existId = (Integer) ObjectUtil.getPropertyValue(exist, PK);
             Integer updateId = (Integer) ObjectUtil.getPropertyValue(entity, PK);
             assert existId != null;
             if (!existId.equals(updateId)) {
-                return HttpResponse.failure(existCode());
+                return HttpResponse.failure(insertExistCode());
             }
         }
         if (_update(entity) > 0) {

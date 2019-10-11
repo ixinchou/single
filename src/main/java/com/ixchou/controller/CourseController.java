@@ -1,12 +1,9 @@
 package com.ixchou.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.ixchou.model.entity.TCourse;
 import com.ixchou.services.impl.TCourseServiceImpl;
-import com.ixchou.util.StringUtil;
 import com.ixchou.util.http.response.HttpCode;
 import com.ixchou.util.http.response.HttpResponse;
-import com.ixchou.util.http.response.Pagination;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -61,17 +58,17 @@ public class CourseController extends AbstractHttpController<TCourse> {
     }
 
     @Override
-    protected String checkExistProperty() {
+    protected String checkSameRecordPropertyName() {
         return "name";
     }
 
     @Override
-    protected String insertSuccess() {
+    protected String insertSuccessMessage() {
         return "课程添加成功";
     }
 
     @Override
-    protected String deleteSuccess() {
+    protected String deleteSuccessMessage() {
         return "课程已删除";
     }
 
@@ -81,7 +78,7 @@ public class CourseController extends AbstractHttpController<TCourse> {
     }
 
     @Override
-    protected HttpCode existCode() {
+    protected HttpCode insertExistCode() {
         return HttpCode.CourseNameExist;
     }
 
