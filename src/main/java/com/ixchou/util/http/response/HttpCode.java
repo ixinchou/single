@@ -4,7 +4,7 @@ package com.ixchou.util.http.response;
  * <b>Author</b>: Hsiang Leekwok<br/>
  * <b>Date</b>: 2019/08/04 18:51<br/>
  * <b>Version</b>: v1.0<br/>
- * <b>Subject</b>: <br/>
+ * <b>Subject</b>: 自定义返回内容<br/>
  * <b>Description</b>:
  */
 public enum HttpCode {
@@ -79,11 +79,15 @@ public enum HttpCode {
     /**
      * 新增数据库记录失败
      */
-    DatabaseInsertFail("997", "新增数据库记录失败(新增了 0 条记录)"),
+    DatabaseInsertFail("996", "新增数据库记录失败(新增了 0 条记录)"),
     /**
      * 修改数据库记录失败
      */
-    DatabaseUpdateFail("998", "修改数据库记录失败(没有记录被更改)"),
+    DatabaseUpdateFail("997", "修改数据库记录失败(没有记录被更改)"),
+    /**
+     * 删除数据库记录失败
+     */
+    DatabaseDeleteFail("998", "删除数据库记录失败(没有记录被删除)"),
     /**
      * 操作失败
      */

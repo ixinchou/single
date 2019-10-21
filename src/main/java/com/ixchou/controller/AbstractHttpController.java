@@ -21,7 +21,7 @@ public abstract class AbstractHttpController<T> extends AbstractBaseController<T
     /**
      * 添加内容
      */
-    protected HttpResponse __insert(T entity) {
+    HttpResponse __insert(T entity) {
         T exist = _query(checkSameRecordPropertyName(), ObjectUtil.getPropertyValue(entity, checkSameRecordPropertyName()));
         if (null != exist) {
             return HttpResponse.failure(insertExistCode());
@@ -65,17 +65,17 @@ public abstract class AbstractHttpController<T> extends AbstractBaseController<T
     /**
      * 删除内容
      */
-    protected HttpResponse __delete(Integer id) {
+    HttpResponse __delete(Integer id) {
         if (_delete(id) > 0) {
             return HttpResponse.success(deleteSuccessMessage());
         }
-        return HttpResponse.failure(HttpCode.DatabaseUpdateFail);
+        return HttpResponse.failure(HttpCode.DatabaseDeleteFail);
     }
 
     /**
      * 更改内容
      */
-    protected HttpResponse __update(T entity) {
+    HttpResponse __update(T entity) {
         T exist = _query(checkSameRecordPropertyName(), ObjectUtil.getPropertyValue(entity, checkSameRecordPropertyName()));
         if (null != exist) {
             Integer existId = (Integer) ObjectUtil.getPropertyValue(exist, PK);
@@ -94,7 +94,7 @@ public abstract class AbstractHttpController<T> extends AbstractBaseController<T
     /**
      * 分页查询内容
      */
-    protected HttpResponse __list(Integer pageIndex, Integer pageSize, String query) {
+    HttpResponse __list(Integer pageIndex, Integer pageSize, String query) {
         PageInfo<T> info;
         if (StringUtil.isEmpty(query)) {
             info = _list(pageIndex, pageSize);
