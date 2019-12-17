@@ -1,6 +1,7 @@
 package com.ixchou.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.ixchou.annotation.MasterService;
 import com.ixchou.services.IBaseService;
 import com.ixchou.services.impl.BaseServiceImpl;
 
@@ -86,11 +87,13 @@ public abstract class AbstractBaseController<T> {
         try {
             Field[] fields = getClass().getDeclaredFields();
             for (Field field : fields) {
-                field.setAccessible(true);
-                Object object = field.get(this);
-                if (object instanceof BaseServiceImpl) {
-                    this.service = (IBaseService<T>) object;
-                    break;
+                if (field.isAnnotationPresent(MasterService.class)) {
+                    field.setAccessible(true);
+                    Object object = field.get(this);
+                    if (object instanceof BaseServiceImpl) {
+                        this.service = (IBaseService<T>) object;
+                        break;
+                    }
                 }
             }
         } catch (Exception e) {

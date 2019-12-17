@@ -1,7 +1,8 @@
 package com.ixchou.controller;
 
+import com.ixchou.annotation.MasterService;
 import com.ixchou.model.entity.TCourse;
-import com.ixchou.services.impl.TCourseServiceImpl;
+import com.ixchou.services.impl.CourseServiceImpl;
 import com.ixchou.util.http.response.HttpCode;
 import com.ixchou.util.http.response.HttpResponse;
 import io.swagger.annotations.Api;
@@ -24,8 +25,9 @@ import javax.annotation.Resource;
 @RequestMapping("/api/course")
 public class CourseController extends AbstractHttpController<TCourse> {
 
+    @MasterService
     @Resource
-    private TCourseServiceImpl courseService;
+    private CourseServiceImpl courseService;
 
     @ApiOperation(value = "添加课程")
     @PostMapping("/add")

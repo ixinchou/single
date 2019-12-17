@@ -1,6 +1,7 @@
 package com.ixchou.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.ixchou.annotation.MasterService;
 import com.ixchou.model.entity.TMember;
 import com.ixchou.model.vo.MemberVo;
 import com.ixchou.services.impl.MemberServiceImpl;
@@ -30,6 +31,7 @@ import java.util.List;
 @Api(tags = "Member Controller 会员相关接口")
 public class MemberController extends AbstractBaseController<TMember> {
 
+    @MasterService
     @Resource
     private MemberServiceImpl memberService;
 

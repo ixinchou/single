@@ -2,6 +2,7 @@ package com.ixchou.controller;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
+import com.ixchou.annotation.MasterService;
 import com.ixchou.model.entity.TAttachment;
 import com.ixchou.services.impl.AttachmentServiceImpl;
 import com.ixchou.util.DigestUtil;
@@ -44,6 +45,7 @@ public class AttachmentController extends AbstractBaseController<TAttachment> {
     @Qualifier("asyncTaskExecutor")
     private ThreadPoolTaskExecutor executor;
 
+    @MasterService
     @Resource
     AttachmentServiceImpl service;
 

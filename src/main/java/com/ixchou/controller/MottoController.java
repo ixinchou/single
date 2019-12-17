@@ -1,6 +1,7 @@
 package com.ixchou.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.ixchou.annotation.MasterService;
 import com.ixchou.model.entity.TMember;
 import com.ixchou.model.entity.TMotto;
 import com.ixchou.model.vo.DefaultQueryVo;
@@ -28,6 +29,7 @@ import java.util.Date;
 @Api(tags = "Motto Controller 校训相关接口")
 public class MottoController extends AbstractBaseController<TMotto> {
 
+    @MasterService
     @Resource
     private MottoServiceImpl mottoService;
 

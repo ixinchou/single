@@ -1,5 +1,6 @@
 package com.ixchou.controller;
 
+import com.ixchou.annotation.MasterService;
 import com.ixchou.model.entity.TChild;
 import com.ixchou.model.vo.ChildVo;
 import com.ixchou.services.IBaseService;
@@ -25,6 +26,7 @@ import javax.annotation.Resource;
 @Api(tags = "Child Controller 孩子相关接口")
 public class ChildController extends AbstractBaseController<TChild> {
 
+    @MasterService
     @Resource
     private ChildServiceImpl childService;
 
