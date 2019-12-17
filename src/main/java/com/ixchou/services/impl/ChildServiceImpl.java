@@ -6,6 +6,7 @@ import com.ixchou.model.entity.TChild;
 import com.ixchou.model.entity.TMember;
 import com.ixchou.model.vo.ChildVo;
 import com.ixchou.services.IChildService;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,6 +22,7 @@ import java.util.List;
  * <b>Description</b>:
  */
 @Service
+@DependsOn("springContextAware")
 public class ChildServiceImpl extends BaseServiceImpl<TChild> implements IChildService {
 
     @Resource

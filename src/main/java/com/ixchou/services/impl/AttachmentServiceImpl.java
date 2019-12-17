@@ -1,6 +1,7 @@
 package com.ixchou.services.impl;
 
 import com.ixchou.model.entity.TAttachment;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
  * <b>Description</b>:
  */
 @Service
+@DependsOn("springContextAware")
 public class AttachmentServiceImpl extends BaseServiceImpl<TAttachment> {
 
 }

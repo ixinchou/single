@@ -1,6 +1,7 @@
 package com.ixchou.services.impl;
 
 import com.ixchou.model.entity.TCourse;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,5 +12,6 @@ import org.springframework.stereotype.Service;
  * <b>Description</b>:
  */
 @Service
-public class TCourseServiceImpl extends BaseServiceImpl<TCourse> {
+@DependsOn("springContextAware")
+public class CourseServiceImpl extends BaseServiceImpl<TCourse> {
 }

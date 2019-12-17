@@ -9,6 +9,7 @@ import com.ixchou.util.StringUtil;
 import com.ixchou.util.UUIDGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.client.RestTemplate;
@@ -28,6 +29,7 @@ import java.util.Date;
  * <b>Description</b>:
  */
 @Service
+@DependsOn("springContextAware")
 public class MemberServiceImpl extends BaseServiceImpl<TMember> implements IMemberService {
 
     private final Logger logger = LoggerFactory.getLogger(WxController.class);
