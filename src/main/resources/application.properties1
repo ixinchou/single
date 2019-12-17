@@ -13,25 +13,17 @@ spring.servlet.multipart.max-file-size=100MB
 spring.servlet.multipart.max-request-size=100MB
 
 # 服务器端口
-server.port=8080
+server.port=8082
 
 # mybatis
 mybatis.mapper-locations=classpath:mappings/*.xml
 mybatis.type-aliases-package=com.ixchou.model.entity
 mybatis.configuration.map-underscore-to-camel-case=true
-mybatis.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
+#mybatis.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
 
 # 日志配置 logback
 logging.level.root=INFO
 logging.level.com.enjoy.controller=DEBUG
-
-# ��־����Ϊ�ļ�
-# ������������������ˣ�ֻ��file������Ч
-# ָ����Ŀ¼�������Ŀ¼������spring.log
-#logging.path=/var/tmp
-# ָ�����ļ������������Ŀ��Ŀ¼������xxx.log
-#logging.file=xxx.log
-#logging.file=F:\\log\\enjoy.log
 
 # fastdfs 配置
 fdfs.connect-timeout=10

@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1/ixchou?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+    username: root
+    password: root1234%
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+server:
+  port: 8082
+
+mybatis:
+  mapper-locations: classpath:mappings/*.xml
+  type-aliases-package: com.ixchou.model.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+fdfs:
+  connect-timeout: 10
+  so-timeout: 1501
+  tracker-list: 192.168.32.130:22122
+  thumb-image:
+    height: 200
+    width: 200
+
+pagehelper:
+  reasonable: true
+
+logging:
+  #config: classpath:log4j2.xml

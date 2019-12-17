@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
-    <properties resource="application.properties"/>
+    <properties resource="mybatis.properties"/>
     <!--
         运行 MyBatis Generator
         1、java -jar mybatis-generator-core-x.x.x.jar -configfile generatorConfig.xml
