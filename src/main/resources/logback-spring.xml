@@ -149,7 +149,7 @@
 	<!--这里改level-->
 	<root level="${logback.level}">
 		<appender-ref ref="STDOUT"/>
-		<appender-ref ref="FILE-ALL"/>
+<!--		<appender-ref ref="FILE-ALL"/>-->
 		<appender-ref ref="FILE-INFO"/>
 		<appender-ref ref="FILE-ERROR"/>
 	</root>
