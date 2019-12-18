@@ -42,32 +42,38 @@ public class WebLogAspect {
         // 记录下请求的内容
         String url = request.getRequestURL().toString();
         String method = request.getMethod();
-        logger.info("===============================");
-        logger.info("URL: " + url);
-        logger.info("METHOD: " + method);
-        logger.info("IP: " + request.getRemoteAddr());
+        StringBuilder builder = new StringBuilder();
+        builder.append("\n===============================\n")
+                .append("URL: ").append(url).append("\n")
+                .append("METHOD: ").append(method).append("\n")
+                .append("IP: ").append(request.getRemoteAddr());
         // 参数列表
         Enumeration<String> enumeration = request.getParameterNames();
+        if (enumeration.hasMoreElements()) {
+            builder.append("\nparameters:\n");
+        }
         while (enumeration.hasMoreElements()) {
             String name = enumeration.nextElement();
-            logger.info("name: {}, value: {}", name, request.getParameter(name));
+            builder.append("  name: ").append(name).append(", ").append("value: ").append(request.getParameter(name)).append("\n");
         }
         // body
         if (!url.contains("/upload") && "POST".equals(method)) {
             Object[] args = joinPoint.getArgs();
             if (null != args && args.length > 0) {
+                builder.append("body:\n");
                 for (Object object : args) {
-                    logger.info("body: " + GsonUtil.toString(object));
+                    builder.append(GsonUtil.toString(object)).append("\n");
                 }
             }
         }
+        logger.info(builder.toString());
     }
 
     @AfterReturning(returning = "object", pointcut = "webLog()")
     public void doAfterReturning(Object object) {
         // 处理完成，返回内容
         if (object instanceof WebAsyncTask) {
-            logger.info("Asynchronous task executing.......");
+            logger.info("Waiting asynchronous task executing.......");
         } else {
             logger.info("RESPONSE: " + GsonUtil.toString(object));
             logger.info("===============================");
