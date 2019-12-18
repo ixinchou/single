@@ -2,9 +2,11 @@ package com.ixchou.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.ixchou.annotation.MasterService;
+import com.ixchou.model.entity.TContent;
 import com.ixchou.model.entity.TMember;
 import com.ixchou.model.entity.TMotto;
 import com.ixchou.model.vo.DefaultQueryVo;
+import com.ixchou.services.impl.ContentServiceImpl;
 import com.ixchou.services.impl.MemberServiceImpl;
 import com.ixchou.services.impl.MottoServiceImpl;
 import com.ixchou.util.StringUtil;
@@ -12,6 +14,7 @@ import com.ixchou.util.http.response.HttpCode;
 import com.ixchou.util.http.response.HttpResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,6 +38,9 @@ public class MottoController extends AbstractBaseController<TMotto> {
 
     @Resource
     private MemberServiceImpl memberService;
+
+    @Resource
+    private ContentServiceImpl contentService;
 
     @PostMapping("insert")
     @ApiOperation("添加新的校训内容")
@@ -65,21 +71,50 @@ public class MottoController extends AbstractBaseController<TMotto> {
         if (null == member) {
             return HttpResponse.failure(HttpCode.MemberNotBind);
         }
-        TMotto motto = new TMotto();
-        motto.setContent(queryVo.getContent());
-        motto.setPostMember(member.getId());
+        return saveMotto(member, queryVo);
+    }
+
+    @Transactional
+    HttpResponse saveMotto(TMember member, DefaultQueryVo queryVo) {
+        TMotto motto;
+        TContent content = new TContent();
+        int id = -1;
         if (queryVo.getId() > 0) {
-            motto.setId(queryVo.getId());
-            motto.setLastUpdate(new Date());
+            motto = mottoService.select(queryVo.getId());
+            if (null == motto) {
+                return HttpResponse.failure(HttpCode.MottoNotExist);
+            }
+            id = motto.getId();
+            if (null != motto.getContent()) {
+                content.setId(motto.getContent().getId());
+            }
+        }
+        // 内容
+        content.setContent(queryVo.getContent());
+        motto = new TMotto();
+        motto.setPostMember(member.getId());
+        if (id > 0) {
+            motto.setId(id);
             motto.setUpdateTimes(1);
             if (mottoService.update(motto) > 0) {
-                return HttpResponse.success(motto, "校训内容已修改");
+                // 更新或添加内容
+                if (null != content.getId() && content.getId() > 0) {
+                    contentService.update(content);
+                } else {
+                    content.setType(ContentServiceImpl.Type.MOTTO);
+                    content.setTargetId(motto.getId());
+                    contentService.insert(content);
+                }
+                return HttpResponse.success(mottoService.select(id), "校训内容已修改");
             } else {
                 return HttpResponse.failure(HttpCode.MottoUpdateFailure);
             }
         } else {
             if (mottoService.insert(motto) > 0) {
-                return HttpResponse.success(motto, "校训添加完毕");
+                content.setType(ContentServiceImpl.Type.MOTTO);
+                content.setTargetId(motto.getId());
+                contentService.insert(content);
+                return HttpResponse.success(mottoService.select(motto.getId()), "校训添加完毕");
             } else {
                 return HttpResponse.failure(HttpCode.MottoUpdateFailure);
             }

@@ -57,7 +57,6 @@ public class MemberServiceImpl extends BaseServiceImpl<TMember> implements IMemb
         member = new TMember();
         member.setIsUploadAble(False);
         member.setLastLoginTime(new Date());
-        member.setRegisterTime(new Date());
         member.setUserName("");
         member.setPhone("");
         member.setWxId(openIdVo.getOpenid());

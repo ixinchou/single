@@ -38,7 +38,7 @@ public class MemberVo {
         uploadAble = member.getIsUploadAble().equals(IBaseService.True);
         wxSex = member.getWxSex().equals(IBaseService.True);
         lastLogin = member.getLastLoginTime();
-        registerTime = member.getRegisterTime();
+        registerTime = member.getCreateTime();
         phone = member.getPhone();
         sessionId = member.getSessionId();
         userName = member.getUserName();

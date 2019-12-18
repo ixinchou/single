@@ -1,11 +1,10 @@
 package com.ixchou.model.entity;
 
+import com.ixchou.model.BaseModel;
+
 import java.util.Date;
 
-public class TChild {
-    private Integer id;
-
-    private Byte isDeleted;
+public class TChild extends BaseModel {
 
     private Integer memberId;
 
@@ -13,25 +12,7 @@ public class TChild {
 
     private Date birthday;
 
-    private Date registerTime;
-
     private String name;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Byte getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Byte isDeleted) {
-        this.isDeleted = isDeleted;
-    }
 
     public Integer getMemberId() {
         return memberId;
@@ -55,14 +36,6 @@ public class TChild {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-
-    public Date getRegisterTime() {
-        return registerTime;
-    }
-
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
     }
 
     public String getName() {

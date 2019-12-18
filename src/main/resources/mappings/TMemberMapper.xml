@@ -7,7 +7,8 @@
     <result column="is_upload_able" property="isUploadAble" jdbcType="TINYINT" />
     <result column="wx_sex" property="wxSex" jdbcType="TINYINT" />
     <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
-    <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="session_id" property="sessionId" jdbcType="VARCHAR" />
@@ -16,7 +17,7 @@
     <result column="wx_nick_name" property="wxNickName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, is_deleted, is_upload_able, wx_sex, last_login_time, register_time, phone, user_name, 
+    id, is_deleted, is_upload_able, wx_sex, last_login_time, create_time, update_time, phone, user_name,
     session_id, wx_id, wx_session, wx_nick_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

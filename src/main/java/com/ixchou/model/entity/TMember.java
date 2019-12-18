@@ -1,19 +1,16 @@
 package com.ixchou.model.entity;
 
+import com.ixchou.model.BaseModel;
+
 import java.util.Date;
 
-public class TMember {
-    private Integer id;
-
-    private Byte isDeleted;
+public class TMember extends BaseModel {
 
     private Byte isUploadAble;
 
     private Byte wxSex;
 
     private Date lastLoginTime;
-
-    private Date registerTime;
 
     private String phone;
 
@@ -26,22 +23,6 @@ public class TMember {
     private String wxSession;
 
     private String wxNickName;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Byte getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Byte isDeleted) {
-        this.isDeleted = isDeleted;
-    }
 
     public Byte getIsUploadAble() {
         return isUploadAble;
@@ -65,14 +46,6 @@ public class TMember {
 
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
-    }
-
-    public Date getRegisterTime() {
-        return registerTime;
-    }
-
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
     }
 
     public String getPhone() {

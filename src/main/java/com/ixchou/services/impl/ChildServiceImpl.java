@@ -44,7 +44,6 @@ public class ChildServiceImpl extends BaseServiceImpl<TChild> implements IChildS
             child.setBirthday(vo.getBirthday());
             child.setMemberId(member.getId());
             child.setName(vo.getName());
-            child.setRegisterTime(new Date());
             child.setSex(vo.getSex());
             return insert(child);
         }

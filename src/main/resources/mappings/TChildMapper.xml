@@ -7,11 +7,12 @@
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="sex" property="sex" jdbcType="TINYINT" />
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
-    <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, is_deleted, member_id, sex, birthday, register_time, name
+    id, is_deleted, member_id, sex, birthday, create_time, update_time, name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 

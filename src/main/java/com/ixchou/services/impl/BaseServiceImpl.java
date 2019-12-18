@@ -32,7 +32,7 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
         nameSpace = entityClass.getName().replace("model.entity", "mappings") + "Mapper.";//"com.ixchou.mappings." + entityClass.getSimpleName() + "Mapper.";
         String beanName = StringUtils.capitalize(entityClass.getSimpleName() + "Mapper");
         try {
-            MapperFactoryBean mapperFactoryBean = SpringContextAware.getBean("&" + beanName);
+            MapperFactoryBean<T> mapperFactoryBean = SpringContextAware.getBean("&" + beanName);
             session = mapperFactoryBean.getSqlSession();
         } catch (Exception e) {
             e.printStackTrace();

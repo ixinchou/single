@@ -1,37 +1,14 @@
 package com.ixchou.model.entity;
 
-import java.util.Date;
+import com.ixchou.model.BaseModel;
 
-public class TMotto {
-    private Integer id;
-
-    private Byte isDeleted;
+public class TMotto extends BaseModel {
 
     private Integer postMember;
 
     private Integer updateTimes;
 
-    private Date postTime;
-
-    private Date lastUpdate;
-
-    private String content;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Byte getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Byte isDeleted) {
-        this.isDeleted = isDeleted;
-    }
+    private TContent content;
 
     public Integer getPostMember() {
         return postMember;
@@ -49,27 +26,11 @@ public class TMotto {
         this.updateTimes = updateTimes;
     }
 
-    public Date getPostTime() {
-        return postTime;
-    }
-
-    public void setPostTime(Date postTime) {
-        this.postTime = postTime;
-    }
-
-    public Date getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(Date lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-
-    public String getContent() {
+    public TContent getContent() {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    public void setContent(TContent content) {
+        this.content = content;
     }
 }
