@@ -20,6 +20,14 @@ public class TCourse extends BaseModel {
         this.name = name == null ? null : name.trim();
     }
 
+    public String getClassTime() {
+        return classTime;
+    }
+
+    public void setClassTime(String classTime) {
+        this.classTime = classTime;
+    }
+
     public TAttachment getCover() {
         return cover;
     }

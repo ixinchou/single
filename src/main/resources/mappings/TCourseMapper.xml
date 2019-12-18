@@ -9,8 +9,7 @@
     <result column="create_member_id" property="createMemberId" jdbcType="INTEGER"/>
     <result column="update_member_id" property="updateMemberId" jdbcType="INTEGER"/>
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="cover" property="cover" jdbcType="VARCHAR" />
-    <result column="description" property="description" jdbcType="VARCHAR" />
+    <association property="cover" column="cover_id" fetchType="eager" select="com.ixchou.mappings.TAttachmentMapper.selectByPrimaryKey"/>
   </resultMap>
   <sql id="Base_Column_List" >
     id, is_deleted, create_time, update_time, create_member_id, update_member_id, name, cover, description
