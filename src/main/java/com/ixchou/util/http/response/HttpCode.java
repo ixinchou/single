@@ -77,6 +77,10 @@ public enum HttpCode {
      */
     CourseNameExist("660", "已有同名课程"),
     /**
+     * 没有找到相关数据
+     */
+    DatabaseSelectNone("995", "找不到相应的内容"),
+    /**
      * 新增数据库记录失败
      */
     DatabaseInsertFail("996", "新增数据库记录失败(新增了 0 条记录)"),

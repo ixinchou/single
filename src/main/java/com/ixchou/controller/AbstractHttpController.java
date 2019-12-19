@@ -91,6 +91,14 @@ public abstract class AbstractHttpController<T> extends AbstractBaseController<T
         return HttpResponse.failure(HttpCode.DatabaseUpdateFail);
     }
 
+    HttpResponse __select(Integer id) {
+        T t = _select(id);
+        if (null == t) {
+            return HttpResponse.failure(HttpCode.DatabaseSelectNone);
+        }
+        return HttpResponse.success(t);
+    }
+
     /**
      * 分页查询内容
      */

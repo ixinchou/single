@@ -2,6 +2,7 @@ package com.ixchou.controller;
 
 import com.ixchou.annotation.MasterService;
 import com.ixchou.model.entity.TCourse;
+import com.ixchou.model.vo.CourseVo;
 import com.ixchou.services.impl.CourseServiceImpl;
 import com.ixchou.util.http.response.HttpCode;
 import com.ixchou.util.http.response.HttpResponse;
@@ -31,8 +32,8 @@ public class CourseController extends AbstractHttpController<TCourse> {
 
     @ApiOperation(value = "添加课程")
     @PostMapping("/add")
-    public HttpResponse insert(@RequestBody TCourse course) {
-        return __insert(course);
+    public HttpResponse insert(@RequestBody CourseVo course) {
+        return handleCourse(course);
     }
 
     @ApiOperation(value = "删除课程")
@@ -41,11 +42,27 @@ public class CourseController extends AbstractHttpController<TCourse> {
         return __delete(id);
     }
 
-
     @ApiOperation(value = "修改课程")
     @PostMapping("/update")
-    public HttpResponse update(@RequestBody TCourse course) {
-        return __update(course);
+    public HttpResponse update(@RequestBody CourseVo course) {
+        return handleCourse(course);
+    }
+
+    private HttpResponse handleCourse(CourseVo course) {
+        TCourse t = new TCourse();
+        if (course.getId() > 0) {
+            t.setId(course.getId());
+        }
+        t.setName(course.getName());
+        t.setClassType(course.getClassType());
+        t.setFee(course.getClassFee());
+        t.setClassTime(course.getClassTime());
+        t.setCoverId(course.getCover());
+        t.setContentId(course.getContent());
+        if (course.getId() > 0) {
+            return __update(t);
+        }
+        return __insert(t);
     }
 
     @ApiOperation("分页列取课程列表")
