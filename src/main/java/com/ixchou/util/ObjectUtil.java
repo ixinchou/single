@@ -38,18 +38,19 @@ public class ObjectUtil {
         if (isNull(object)) {
             return null;
         }
-        try {
-            Class<?> clazz = object.getClass();
-            while (!Object.class.equals(clazz)) {
+        Class<?> clazz = object.getClass();
+        while (!Object.class.equals(clazz)) {
+            try {
                 Field field = clazz.getDeclaredField(propertyName);
                 if (null != field) {
                     return getPropertyValue(object, field);
                 }
-                clazz = clazz.getSuperclass();
+            } catch (Exception e) {
+//                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            clazz = clazz.getSuperclass();
         }
+
         return null;
     }
 
@@ -64,18 +65,18 @@ public class ObjectUtil {
         if (isNull(object)) {
             return;
         }
-        try {
-            Class<?> clazz = object.getClass();
-            while (!Object.class.equals(clazz)) {
+        Class<?> clazz = object.getClass();
+        while (!Object.class.equals(clazz)) {
+            try {
                 Field field = clazz.getDeclaredField(propertyName);
                 if (null != field) {
                     setPropertyValue(object, field, value);
                     return;
                 }
-                clazz = clazz.getSuperclass();
+            } catch (Exception e) {
+//                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            clazz = clazz.getSuperclass();
         }
     }
 
@@ -113,7 +114,7 @@ public class ObjectUtil {
             Field field = entity.getClass().getField(property);
             return isPropertyNull(field, entity, true);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return true;
     }
@@ -165,19 +166,19 @@ public class ObjectUtil {
             // 如果对象本身就为空则返回 true
             return true;
         }
-        try {
-            Class<?> clazz = entity.getClass();
-            while (!Object.class.equals(clazz)) {
+        Class<?> clazz = entity.getClass();
+        while (!Object.class.equals(clazz)) {
+            try {
                 Field[] fields = clazz.getDeclaredFields();
                 for (Field field : fields) {
                     if (!isPropertyNull(field, entity, ignore0LengthString)) {
                         return false;
                     }
                 }
-                clazz = clazz.getSuperclass();
+            } catch (Exception e) {
+//                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            clazz = clazz.getSuperclass();
         }
         return true;
     }
