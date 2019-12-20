@@ -77,44 +77,26 @@ public class MottoController extends AbstractBaseController<TMotto> {
     @Transactional
     HttpResponse saveMotto(TMember member, DefaultQueryVo queryVo) {
         TMotto motto;
-        TContent content = new TContent();
-        int id = -1;
         if (queryVo.getId() > 0) {
-            motto = mottoService.select(queryVo.getId());
+            motto = _select(queryVo.getId());
             if (null == motto) {
                 return HttpResponse.failure(HttpCode.MottoNotExist);
             }
-            id = motto.getId();
-            if (null != motto.getContent()) {
-                content.setId(motto.getContent().getId());
-            }
+        } else {
+            motto = new TMotto();
+            motto.setPostMember(member.getId());
         }
-        // 内容
-        content.setContent(queryVo.getContent());
-        motto = new TMotto();
-        motto.setPostMember(member.getId());
-        if (id > 0) {
-            motto.setId(id);
-            motto.setUpdateTimes(1);
-            if (mottoService.update(motto) > 0) {
-                // 更新或添加内容
-                if (null != content.getId() && content.getId() > 0) {
-                    contentService.update(content);
-                } else {
-                    content.setType(ContentServiceImpl.Type.MOTTO);
-                    content.setTargetId(motto.getId());
-                    contentService.insert(content);
-                }
-                return HttpResponse.success(mottoService.select(id), "校训内容已修改");
+        motto.setContentId(queryVo.getContentId());
+        motto.setUpdateTimes(1);
+        if (queryVo.getId() > 0) {
+            if (_update(motto) > 0) {
+                return HttpResponse.success(motto, "校训内容已修改");
             } else {
                 return HttpResponse.failure(HttpCode.MottoUpdateFailure);
             }
         } else {
-            if (mottoService.insert(motto) > 0) {
-                content.setType(ContentServiceImpl.Type.MOTTO);
-                content.setTargetId(motto.getId());
-                contentService.insert(content);
-                return HttpResponse.success(mottoService.select(motto.getId()), "校训添加完毕");
+            if (_insert(motto) > 0) {
+                return HttpResponse.success(_select(motto.getId()), "校训添加完毕");
             } else {
                 return HttpResponse.failure(HttpCode.MottoUpdateFailure);
             }

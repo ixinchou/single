@@ -60,7 +60,7 @@ public class WebLogAspect {
         if (!url.contains("/upload") && "POST".equals(method)) {
             Object[] args = joinPoint.getArgs();
             if (null != args && args.length > 0) {
-                builder.append("body:\n");
+                builder.append("\nbody:\n");
                 for (Object object : args) {
                     builder.append(GsonUtil.toString(object)).append("\n");
                 }

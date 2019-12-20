@@ -16,7 +16,7 @@ import com.ixchou.util.http.response.Pagination;
  */
 public abstract class AbstractHttpController<T> extends AbstractBaseController<T> {
 
-    private static final String PK = "id";
+    protected static final String PK = "id";
 
     /**
      * 添加内容
@@ -76,7 +76,13 @@ public abstract class AbstractHttpController<T> extends AbstractBaseController<T
      * 更改内容
      */
     HttpResponse __update(T entity) {
-        T exist = _query(checkSameRecordPropertyName(), ObjectUtil.getPropertyValue(entity, checkSameRecordPropertyName()));
+        String name = checkSameRecordPropertyName();
+        T exist;
+        if (StringUtil.isEmpty(name)) {
+            exist = _select((Integer) ObjectUtil.getPropertyValue(entity, PK));
+        } else {
+            exist = _query(checkSameRecordPropertyName(), ObjectUtil.getPropertyValue(entity, checkSameRecordPropertyName()));
+        }
         if (null != exist) {
             Integer existId = (Integer) ObjectUtil.getPropertyValue(exist, PK);
             Integer updateId = (Integer) ObjectUtil.getPropertyValue(entity, PK);

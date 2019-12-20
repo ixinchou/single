@@ -6,14 +6,12 @@
     <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="target_id" jdbcType="INTEGER" property="targetId" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ixchou.model.entity.TContent">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, is_deleted, create_time, update_time, type, target_id
+    id, is_deleted, create_time, update_time
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -49,14 +47,6 @@
     set is_deleted = 1
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </delete>
-  <insert id="insert" parameterType="com.ixchou.model.entity.TContent">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_content (id, type, target_id, content)
-    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER},
-      #{content,jdbcType=LONGVARCHAR})
-  </insert>
   <insert id="insertSelective" parameterType="com.ixchou.model.entity.TContent">
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
@@ -64,24 +54,12 @@
     insert into t_content
     <trim prefix="(" suffix=")" suffixOverrides=",">
       id,
-      <if test="type != null">
-        type,
-      </if>
-      <if test="targetId != null">
-        target_id,
-      </if>
       <if test="content != null">
         content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       #{id,jdbcType=INTEGER},
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="targetId != null">
-        #{targetId,jdbcType=INTEGER},
-      </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -93,31 +71,10 @@
       <if test="isDeleted != null">
         is_deleted = #{isDeleted,jdbcType=TINYINT},
       </if>
-      <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="targetId != null">
-        target_id = #{targetId,jdbcType=INTEGER},
-      </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ixchou.model.entity.TContent">
-    update t_content
-    set is_deleted = #{isDeleted,jdbcType=TINYINT},
-      type = #{type,jdbcType=INTEGER},
-      target_id = #{targetId,jdbcType=INTEGER},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ixchou.model.entity.TContent">
-    update t_content
-    set is_deleted = #{isDeleted,jdbcType=TINYINT},
-      type = #{type,jdbcType=INTEGER},
-      target_id = #{targetId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </update>
 </mapper>

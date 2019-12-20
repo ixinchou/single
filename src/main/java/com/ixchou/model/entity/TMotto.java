@@ -1,5 +1,6 @@
 package com.ixchou.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ixchou.model.BaseModel;
 
 public class TMotto extends BaseModel {
@@ -7,6 +8,9 @@ public class TMotto extends BaseModel {
     private Integer postMember;
 
     private Integer updateTimes;
+
+    @JsonIgnore
+    private Integer contentId;
 
     private TContent content;
 
@@ -24,6 +28,14 @@ public class TMotto extends BaseModel {
 
     public void setUpdateTimes(Integer updateTimes) {
         this.updateTimes = updateTimes;
+    }
+
+    public Integer getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(Integer contentId) {
+        this.contentId = contentId;
     }
 
     public TContent getContent() {

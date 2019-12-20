@@ -8,10 +8,10 @@
     <result column="update_times" property="updateTimes" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <association property="content" column="id" fetchType="eager" select="com.ixchou.mappings.TContentMapper.selectByTargetId"/>
+    <association property="content" column="content_id" fetchType="eager" select="com.ixchou.mappings.TContentMapper.selectByPrimaryKey"/>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, is_deleted, post_member, update_times, create_time, update_time
+    id, is_deleted, post_member, update_times, create_time, update_time, content_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -48,10 +48,16 @@
       <if test="postMember != null" >
         post_member,
       </if>
+      <if test="contentId != null" >
+        content_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="postMember != null" >
         #{postMember,jdbcType=INTEGER},
+      </if>
+      <if test="contentId != null" >
+        #{contentId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -66,6 +72,9 @@
       </if>
       <if test="updateTimes != null" >
         update_times = update_times + 1,
+      </if>
+      <if test="contentId != null" >
+        content_id = #{contentId,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0

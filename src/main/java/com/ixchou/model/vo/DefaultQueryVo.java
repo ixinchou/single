@@ -10,6 +10,7 @@ package com.ixchou.model.vo;
 public class DefaultQueryVo {
 
     private int id;
+    private int contentId;
     private String sessionId;
     private String content;
 
@@ -27,6 +28,14 @@ public class DefaultQueryVo {
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
+    }
+
+    public int getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(int contentId) {
+        this.contentId = contentId;
     }
 
     public String getContent() {
