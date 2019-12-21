@@ -10,7 +10,7 @@ package com.ixchou.model.vo;
 public class CourseVo {
     private int id;
     private String name;
-    private String classType;
+    private int classType;
     private int classFee;
     private String classTime;
     private int cover;
@@ -32,11 +32,11 @@ public class CourseVo {
         this.name = name;
     }
 
-    public String getClassType() {
+    public int getClassType() {
         return classType;
     }
 
-    public void setClassType(String classType) {
+    public void setClassType(int classType) {
         this.classType = classType;
     }
 

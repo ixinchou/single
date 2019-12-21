@@ -7,7 +7,7 @@ public class TCourse extends BaseModel {
 
     private String name;
 
-    private String classType;
+    private Integer classType;
 
     private String classTime;
 
@@ -22,6 +22,8 @@ public class TCourse extends BaseModel {
     private Integer contentId;
 
     private TContent content;
+
+    private TTerm term;
 
     public String getName() {
         return name;
@@ -39,11 +41,11 @@ public class TCourse extends BaseModel {
         this.classTime = classTime;
     }
 
-    public String getClassType() {
+    public Integer getClassType() {
         return classType;
     }
 
-    public void setClassType(String classType) {
+    public void setClassType(Integer classType) {
         this.classType = classType;
     }
 
@@ -85,5 +87,13 @@ public class TCourse extends BaseModel {
 
     public void setContent(TContent content) {
         this.content = content;
+    }
+
+    public TTerm getTerm() {
+        return term;
+    }
+
+    public void setTerm(TTerm term) {
+        this.term = term;
     }
 }

@@ -8,10 +8,11 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="class_time" property="classTime" jdbcType="VARCHAR" />
-    <result column="class_type" property="classType" jdbcType="VARCHAR" />
+    <result column="class_type" property="classType" jdbcType="INTEGER" />
     <result column="fee" property="fee" jdbcType="INTEGER" />
     <association property="cover" column="cover_id" fetchType="eager" select="com.ixchou.mappings.TAttachmentMapper.selectByPrimaryKey"/>
     <association property="content" column="content_id" fetchType="eager" select="com.ixchou.mappings.TContentMapper.selectByPrimaryKey"/>
+    <association property="term" column="class_type" fetchType="eager" select="com.ixchou.mappings.TTermMapper.selectByPrimaryKey"/>
   </resultMap>
   <sql id="Base_Column_List" >
     id, is_deleted, create_time, update_time, name, cover_id, content_id, class_time, class_type, fee
