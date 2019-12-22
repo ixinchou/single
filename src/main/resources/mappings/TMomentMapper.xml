@@ -1,97 +1,78 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ixchou.mappings.TMomentMapper" >
-  <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TMoment" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
-    <result column="course_id" property="courseId" jdbcType="INTEGER" />
-    <result column="member_id" property="memberId" jdbcType="INTEGER" />
-    <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ixchou.mappings.TMomentMapper">
+  <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TMoment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="content_id" jdbcType="INTEGER" property="contentId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <association property="content" column="content_id" fetchType="eager" select="com.ixchou.mappings.TContentMapper.selectByPrimaryKey"/>
+    <collection property="attachments" column="id" fetchType="eager" select="com.ixchou.mappings.TAttachmentMapper.selectByHostId"/>
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, is_deleted, course_id, member_id, post_time, title, content
+  <sql id="Base_Column_List">
+    id, is_deleted, create_time, update_time, type, content_id, title
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_moment
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_moment
-    where id = #{id,jdbcType=INTEGER}
+  <!-- 直接查询 -->
+  <select id="list" parameterType="java.lang.Byte" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_moment
+    where type = #{type,jdbcType=TINYINT} and is_deleted = 0
+    order by create_time desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    update t_moment
+    set is_deleted = 1
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </delete>
-  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TMoment" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TMoment" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
     insert into t_moment
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        type,
       </if>
-      <if test="isDeleted != null" >
-        is_deleted,
+      <if test="contentId != null">
+        content_id,
       </if>
-      <if test="courseId != null" >
-        course_id,
-      </if>
-      <if test="memberId != null" >
-        member_id,
-      </if>
-      <if test="postTime != null" >
-        post_time,
-      </if>
-      <if test="title != null" >
+      <if test="title != null">
         title,
       </if>
-      <if test="content != null" >
-        content,
-      </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
       </if>
-      <if test="isDeleted != null" >
-        #{isDeleted,jdbcType=TINYINT},
+      <if test="contentId != null">
+        #{contentId,jdbcType=INTEGER},
       </if>
-      <if test="courseId != null" >
-        #{courseId,jdbcType=INTEGER},
-      </if>
-      <if test="memberId != null" >
-        #{memberId,jdbcType=INTEGER},
-      </if>
-      <if test="postTime != null" >
-        #{postTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="title != null" >
+      <if test="title != null">
         #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ixchou.model.entity.TMoment" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ixchou.model.entity.TMoment">
     update t_moment
-    <set >
-      <if test="isDeleted != null" >
+    <set>
+      <if test="isDeleted != null">
         is_deleted = #{isDeleted,jdbcType=TINYINT},
       </if>
-      <if test="courseId != null" >
-        course_id = #{courseId,jdbcType=INTEGER},
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
       </if>
-      <if test="memberId != null" >
-        member_id = #{memberId,jdbcType=INTEGER},
+      <if test="contentId != null">
+        content_id = #{contentId,jdbcType=INTEGER},
       </if>
-      <if test="postTime != null" >
-        post_time = #{postTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="title != null" >
+      <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

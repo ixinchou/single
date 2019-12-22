@@ -12,7 +12,7 @@ public class DigestTest {
 
     @Test
     public void test() {
-        String digest = DigestUtil.sha1("1".getBytes());
-        System.out.println(digest);
+        //String digest = DigestUtil.sha1("1".getBytes());
+        //System.out.println(digest);
     }
 }

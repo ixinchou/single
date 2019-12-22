@@ -41,7 +41,7 @@
 	<!-- 三、子节点<property> -->
 	<!--子节点<property name="" value=""> ：用来定义变量值，它有两个属性name和value，通过<property>定义的值会被插入到logger上下文中，可以使“${}”来使用变量。-->
 	<!--子节点<property resource=""/> ：用来引入外部属性文件，可以使“${}”来使用变量。-->
-	<property resource="logback.properties"/>
+	<property resource="classpath:logback.properties"/>
 	<!--日志输出格式-->
 	<!--控制台-彩色-->
 	<!--<property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}) %boldYellow([%thread]) %highlight(%-5level) %boldGreen(%logger{50}) - %msg%n" />-->

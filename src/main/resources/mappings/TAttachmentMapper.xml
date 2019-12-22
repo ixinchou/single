@@ -28,12 +28,19 @@
     from t_attachment
     where signature = #{signature,jdbcType=CHAR} and is_deleted = 0
   </select>
-
+  <select id="selectByHostId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from t_attachment
+    where id in (select attachment from t_relation where host = #{host,jdbcType=INTEGER}) and is_deleted = 0
+    order by upload_time
+  </select>
   <select id="list" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from t_attachment
     where is_deleted = 0
+    order by upload_time desc
   </select>
   <!-- 模糊查询 -->
   <select id="fuzzySearch" parameterType="com.ixchou.model.entity.TChild" resultMap="BaseResultMap">

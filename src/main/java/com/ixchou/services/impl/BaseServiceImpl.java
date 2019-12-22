@@ -86,6 +86,12 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
         return new PageInfo<>(list);
     }
 
+    public PageInfo<T> list(String methodName, Object parameter, Integer pageIndex, Integer pageSize) {
+        PageHelper.startPage(pageIndex, pageSize);
+        List<T> list = session.selectList(nameSpace + methodName, parameter);
+        return new PageInfo<>(list);
+    }
+
     @Override
     public PageInfo<T> fuzzySearch(T query, Integer pageIndex, Integer pageSize) {
         if (ObjectUtil.isObjectNull(query)) {

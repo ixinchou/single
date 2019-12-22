@@ -1,5 +1,6 @@
 package com.ixchou.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.ixchou.annotation.MasterService;
@@ -9,6 +10,7 @@ import com.ixchou.util.DigestUtil;
 import com.ixchou.util.ObjectUtil;
 import com.ixchou.util.StringUtil;
 import com.ixchou.util.http.response.HttpResponse;
+import com.ixchou.util.http.response.Pagination;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FilenameUtils;
@@ -113,5 +115,12 @@ public class AttachmentController extends AbstractBaseController<TAttachment> {
         TAttachment attachment = _query("signature", signature);
         // 无论找到相同文件与否，都返回成功
         return HttpResponse.success(attachment);
+    }
+
+    @ApiOperation(value = "找到最新的10张图片")
+    @GetMapping("latest")
+    public HttpResponse hotImages() {
+        PageInfo<TAttachment> info = _list(1, 10);
+        return HttpResponse.success(new Pagination<>(info));
     }
 }

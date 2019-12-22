@@ -1,60 +1,35 @@
 package com.ixchou.model.entity;
 
-import java.util.Date;
+import com.ixchou.model.BaseModel;
 
-public class TMoment {
-    private Integer id;
+import java.util.List;
 
-    private Byte isDeleted;
+public class TMoment extends BaseModel {
 
-    private Integer courseId;
+    private Byte type;
 
-    private Integer memberId;
-
-    private Date postTime;
+    private Integer contentId;
 
     private String title;
 
-    private String content;
+    private TContent content;
 
-    public Integer getId() {
-        return id;
+    private List<TAttachment> attachments;
+
+    public Byte getType() {
+        return type;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setType(Byte type) {
+        this.type = type;
     }
 
-    public Byte getIsDeleted() {
-        return isDeleted;
+    public Integer getContentId() {
+        return contentId;
     }
 
-    public void setIsDeleted(Byte isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
-
-    public Integer getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
-    }
-
-    public Date getPostTime() {
-        return postTime;
-    }
-
-    public void setPostTime(Date postTime) {
-        this.postTime = postTime;
+    public void setContentId(Integer contentId) {
+        this.contentId = contentId;
     }
 
     public String getTitle() {
@@ -65,11 +40,19 @@ public class TMoment {
         this.title = title == null ? null : title.trim();
     }
 
-    public String getContent() {
+    public TContent getContent() {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    public void setContent(TContent content) {
+        this.content = content;
+    }
+
+    public List<TAttachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<TAttachment> attachments) {
+        this.attachments = attachments;
     }
 }

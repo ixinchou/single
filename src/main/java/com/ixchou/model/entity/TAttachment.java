@@ -1,5 +1,6 @@
 package com.ixchou.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ixchou.model.BaseModel;
 
 import java.util.Date;
@@ -16,10 +17,12 @@ public class TAttachment extends BaseModel {
 
     private Date uploadTime;
 
+    @JsonIgnore
     private String signature;
 
     private String url;
 
+    @JsonIgnore
     private String originName;
 
     public Integer getSize() {

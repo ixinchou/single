@@ -29,19 +29,14 @@
     set is_deleted = 1
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0
   </delete>
-  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TTerm">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TTerm" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
     insert into t_term
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
       <if test="name != null">
         name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>

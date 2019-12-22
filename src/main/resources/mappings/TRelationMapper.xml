@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ixchou.mappings.TRelationMapper">
+  <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TRelation">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="host" jdbcType="INTEGER" property="host" />
+    <result column="attachment" jdbcType="INTEGER" property="attachment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, host, attachment
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_relation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByHostKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_relation
+    where host = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_relation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TRelation" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    insert into t_relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="host != null">
+        host,
+      </if>
+      <if test="attachment != null">
+        attachment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="host != null">
+        #{host,jdbcType=INTEGER},
+      </if>
+      <if test="attachment != null">
+        #{attachment,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ixchou.model.entity.TRelation">
+    update t_relation
+    <set>
+      <if test="host != null">
+        host = #{host,jdbcType=INTEGER},
+      </if>
+      <if test="attachment != null">
+        attachment = #{attachment,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
