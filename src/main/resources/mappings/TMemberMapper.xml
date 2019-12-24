@@ -15,10 +15,11 @@
     <result column="wx_id" property="wxId" jdbcType="VARCHAR" />
     <result column="wx_session" property="wxSession" jdbcType="VARCHAR" />
     <result column="wx_nick_name" property="wxNickName" jdbcType="VARCHAR" />
+    <result column="wx_avatar" property="wxAvatar" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, is_deleted, is_upload_able, wx_sex, last_login_time, create_time, update_time, phone, user_name,
-    session_id, wx_id, wx_session, wx_nick_name
+    session_id, wx_id, wx_session, wx_nick_name, wx_avatar
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -103,6 +104,9 @@
       <if test="wxNickName != null" >
         wx_nick_name,
       </if>
+      <if test="wxAvatar != null" >
+        wx_avatar,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="isUploadAble != null" >
@@ -128,6 +132,9 @@
       </if>
       <if test="wxNickName != null" >
         #{wxNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="wxAvatar != null" >
+        #{wxAvatar,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -163,6 +170,9 @@
       </if>
       <if test="wxNickName != null" >
         wx_nick_name = #{wxNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="wxAvatar != null" >
+        wx_avatar = #{wxAvatar,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0

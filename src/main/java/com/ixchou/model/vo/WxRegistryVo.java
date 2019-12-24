@@ -13,6 +13,7 @@ public class WxRegistryVo {
     private String encryptedData;
     private String iv;
     private String nickName;
+    private String avatar;
     private byte gender;
     private String loginCode;
 
@@ -46,6 +47,14 @@ public class WxRegistryVo {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public byte getGender() {

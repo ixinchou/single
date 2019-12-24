@@ -50,6 +50,8 @@ public class MemberServiceImpl extends BaseServiceImpl<TMember> implements IMemb
             member.setWxNickName(info.getNickName());
             // 同时更新微信 sessionid以便后续解码手机号码等信息
             member.setWxSession(openIdVo.getSession_key());
+            // 同时更新微信的头像
+            member.setWxAvatar(info.getAvatar());
             update(member);
             return member;
         }
@@ -63,6 +65,7 @@ public class MemberServiceImpl extends BaseServiceImpl<TMember> implements IMemb
         member.setWxNickName(info.getNickName());
         member.setWxSession(openIdVo.getSession_key());
         member.setWxSex(info.getGender());
+        member.setWxAvatar(info.getAvatar());
         member.setSessionId(UUIDGenerator.getUUID());
         insert(member);
         return member;

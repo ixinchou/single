@@ -30,6 +30,8 @@ public class MemberVo {
 
     private String wxNickName;
 
+    private String wxAvatar;
+
     public MemberVo() {
         super();
     }
@@ -43,6 +45,7 @@ public class MemberVo {
         sessionId = member.getSessionId();
         userName = member.getUserName();
         wxNickName = member.getWxNickName();
+        wxAvatar = member.getWxAvatar();
     }
 
     public Boolean getUploadAble() {
@@ -107,5 +110,13 @@ public class MemberVo {
 
     public void setWxNickName(String wxNickName) {
         this.wxNickName = wxNickName;
+    }
+
+    public String getWxAvatar() {
+        return wxAvatar;
+    }
+
+    public void setWxAvatar(String wxAvatar) {
+        this.wxAvatar = wxAvatar;
     }
 }

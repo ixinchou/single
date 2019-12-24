@@ -24,6 +24,8 @@ public class TMember extends BaseModel {
 
     private String wxNickName;
 
+    private String wxAvatar;
+
     public Byte getIsUploadAble() {
         return isUploadAble;
     }
@@ -94,5 +96,13 @@ public class TMember extends BaseModel {
 
     public void setWxNickName(String wxNickName) {
         this.wxNickName = wxNickName == null ? null : wxNickName.trim();
+    }
+
+    public String getWxAvatar() {
+        return wxAvatar;
+    }
+
+    public void setWxAvatar(String wxAvatar) {
+        this.wxAvatar = wxAvatar;
     }
 }
