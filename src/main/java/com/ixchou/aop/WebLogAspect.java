@@ -2,10 +2,8 @@ package com.ixchou.aop;
 
 import com.ixchou.util.GsonUtil;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,8 +39,8 @@ public class WebLogAspect {
 
     }
 
-    @Before("webLog()")
-    public void doBefore(JoinPoint joinPoint) {
+    @Around("webLog()")
+    public Object around(ProceedingJoinPoint pjp) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert attributes != null;
         HttpServletRequest request = attributes.getRequest();
@@ -50,7 +48,7 @@ public class WebLogAspect {
         String url = request.getRequestURL().toString();
         String method = request.getMethod();
         StringBuilder builder = new StringBuilder();
-        builder.append("=============================== request start\n")
+        builder.append("web request\n=============================== request start\n")
                 .append("URL: ").append(url).append("\n")
                 .append("METHOD: ").append(method).append("\n")
                 .append("IP: ").append(request.getRemoteAddr());
@@ -63,9 +61,20 @@ public class WebLogAspect {
             String name = enumeration.nextElement();
             builder.append("  name: ").append(name).append(", ").append("value: ").append(request.getParameter(name)).append("\n");
         }
+        // header
+        enumeration = request.getHeaderNames();
+        if (enumeration.hasMoreElements()) {
+            builder.append("\nheaders:\n");
+        }
+        while (enumeration.hasMoreElements()) {
+            String name = enumeration.nextElement();
+            if ("51aea310ac094bf281205c37a3fc559d".equals(name)) {
+                builder.append("  name: ").append(name).append(", ").append("value: ").append(request.getHeader(name)).append("\n");
+            }
+        }
         // body
         if (!url.contains("/upload") && "POST".equals(method)) {
-            Object[] args = joinPoint.getArgs();
+            Object[] args = pjp.getArgs();
             if (null != args && args.length > 0) {
                 builder.append("\nbody:\n");
                 for (Object object : args) {
@@ -73,19 +82,24 @@ public class WebLogAspect {
                 }
             }
         }
-        logger.info(builder.toString());
-    }
-
-    @AfterReturning(returning = "object", pointcut = "webLog()")
-    public void doAfterReturning(Object object) {
-        // 处理完成，返回内容
-        if (object instanceof WebAsyncTask) {
-            logger.info("Waiting asynchronous task executing.......");
-        } else {
-            if (showResponseData) {
-                logger.info("RESPONSE: " + GsonUtil.toString(object));
-            }
-            logger.info("=============================== request end");
+        Object object = null;
+        try {
+            object = pjp.proceed(pjp.getArgs());
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
         }
+        // 处理完成，返回内容
+        if (null != object) {
+            if (object instanceof WebAsyncTask) {
+                builder.append("Waiting asynchronous task executing.......\n");
+            } else {
+                if (showResponseData) {
+                    builder.append("RESPONSE: ").append(GsonUtil.toString(object));
+                }
+                builder.append("\n=============================== request end");
+            }
+        }
+        logger.info(builder.toString());
+        return object;
     }
 }
