@@ -114,8 +114,8 @@ public class MemberServiceImpl extends BaseServiceImpl<TMember> implements IMemb
         return updated > 0;
     }
 
-    public boolean updateUploadPermission(Integer id, Boolean uploadAble) {
-        TMember member = select(id);
+    public boolean updateUploadPermission(String sessionId, Boolean uploadAble) {
+        TMember member = query("sessionId", sessionId);
         if (null == member) {
             return false;
         }
