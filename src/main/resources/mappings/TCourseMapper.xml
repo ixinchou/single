@@ -10,12 +10,14 @@
     <result column="class_time" property="classTime" jdbcType="VARCHAR" />
     <result column="class_type" property="classType" jdbcType="INTEGER" />
     <result column="fee" property="fee" jdbcType="INTEGER" />
+    <result column="rebate" property="rebate" jdbcType="TINYINT" />
+    <result column="show_original_price" property="showOriginalPrice" jdbcType="TINYINT" />
     <association property="cover" column="cover_id" fetchType="eager" select="com.ixchou.mappings.TAttachmentMapper.selectByPrimaryKey"/>
     <association property="content" column="content_id" fetchType="eager" select="com.ixchou.mappings.TContentMapper.selectByPrimaryKey"/>
     <association property="term" column="class_type" fetchType="eager" select="com.ixchou.mappings.TTermMapper.selectByPrimaryKey"/>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, is_deleted, create_time, update_time, name, cover_id, content_id, class_time, class_type, fee
+    id, is_deleted, create_time, update_time, name, cover_id, content_id, class_time, class_type, fee, rebate, show_original_price
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -72,6 +74,12 @@
       <if test="fee != null" >
         fee,
       </if>
+      <if test="rebate != null" >
+        rebate,
+      </if>
+      <if test="showOriginalPrice != null" >
+        show_original_price,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="name != null" >
@@ -81,16 +89,22 @@
         #{classTime,jdbcType=VARCHAR},
       </if>
       <if test="coverId != null" >
-        #{coverId,jdbcType=VARCHAR},
+        #{coverId,jdbcType=INTEGER},
       </if>
       <if test="contentId != null" >
-        #{contentId,jdbcType=VARCHAR},
+        #{contentId,jdbcType=INTEGER},
       </if>
       <if test="classType != null" >
-        #{classType,jdbcType=VARCHAR},
+        #{classType,jdbcType=INTEGER},
       </if>
       <if test="fee != null" >
-        #{fee,jdbcType=VARCHAR},
+        #{fee,jdbcType=INTEGER},
+      </if>
+      <if test="rebate != null" >
+        #{rebate,jdbcType=TINYINT},
+      </if>
+      <if test="showOriginalPrice != null" >
+        #{showOriginalPrice,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -107,16 +121,22 @@
         class_time = #{classTime,jdbcType=VARCHAR},
       </if>
       <if test="coverId != null" >
-        cover_id = #{coverId,jdbcType=VARCHAR},
+        cover_id = #{coverId,jdbcType=INTEGER},
       </if>
       <if test="contentId != null" >
-        content_id = #{contentId,jdbcType=VARCHAR},
+        content_id = #{contentId,jdbcType=INTEGER},
       </if>
       <if test="classType != null" >
-        class_type = #{classType,jdbcType=VARCHAR},
+        class_type = #{classType,jdbcType=INTEGER},
       </if>
       <if test="fee != null" >
         fee = #{fee,jdbcType=VARCHAR},
+      </if>
+      <if test="rebate != null" >
+        rebate = #{rebate,jdbcType=TINYINT},
+      </if>
+      <if test="showOriginalPrice != null" >
+        show_original_price = #{showOriginalPrice,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER} and is_deleted = 0

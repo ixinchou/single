@@ -12,6 +12,8 @@ public class CourseVo {
     private String name;
     private int classType;
     private int classFee;
+    private byte classRebate;
+    private byte showOriginalPrice;
     private String classTime;
     private int cover;
     private int content;
@@ -46,6 +48,22 @@ public class CourseVo {
 
     public void setClassFee(int classFee) {
         this.classFee = classFee;
+    }
+
+    public byte getClassRebate() {
+        return classRebate;
+    }
+
+    public void setClassRebate(byte classRebate) {
+        this.classRebate = classRebate;
+    }
+
+    public byte getShowOriginalPrice() {
+        return showOriginalPrice;
+    }
+
+    public void setShowOriginalPrice(byte showOriginalPrice) {
+        this.showOriginalPrice = showOriginalPrice;
     }
 
     public String getClassTime() {
