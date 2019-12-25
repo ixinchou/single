@@ -14,6 +14,8 @@ import java.util.Date;
  */
 public class MemberVo {
 
+    private Integer memberId;
+
     private Boolean uploadAble;
 
     private Boolean wxSex;
@@ -37,6 +39,7 @@ public class MemberVo {
     }
 
     public MemberVo(TMember member) {
+        memberId = member.getId();
         uploadAble = member.getIsUploadAble().equals(IBaseService.True);
         wxSex = member.getWxSex().equals(IBaseService.True);
         lastLogin = member.getLastLoginTime();
@@ -46,6 +49,14 @@ public class MemberVo {
         userName = member.getUserName();
         wxNickName = member.getWxNickName();
         wxAvatar = member.getWxAvatar();
+    }
+
+    public Integer getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
     }
 
     public Boolean getUploadAble() {

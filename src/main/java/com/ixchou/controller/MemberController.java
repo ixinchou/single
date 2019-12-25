@@ -65,6 +65,19 @@ public class MemberController extends AbstractBaseController<TMember> {
         }
     }
 
+    @ApiOperation(value = "通过平台自身的sessionId更新我的名字")
+    @PostMapping("update/upload")
+    public HttpResponse updateUploadAble(@RequestBody MemberVo vo) {
+        if (vo.getMemberId() <= 0) {
+            return HttpResponse.failure(HttpCode.MemberIdNull);
+        }
+        boolean updated = memberService.updateUploadPermission(vo.getMemberId(), vo.getUploadAble());
+        if (updated) {
+            return HttpResponse.success("管理员已修改");
+        }
+        return HttpResponse.failure("设置管理员失败");
+    }
+
     @ApiOperation(value = "列举所有用户")
     @GetMapping("/list")
     @ApiImplicitParams({@ApiImplicitParam(name = "pageIndex", defaultValue = "1", dataType = "Integer", value = "页码"),

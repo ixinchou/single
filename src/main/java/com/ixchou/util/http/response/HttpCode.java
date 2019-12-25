@@ -33,6 +33,10 @@ public enum HttpCode {
      */
     WxGetSessionFailure("602", "获取微信登录信息失败"),
     /**
+     * Id不能为空
+     */
+    MemberIdNull("649", "ID 不能为空"),
+    /**
      * SessionId 不能为空
      */
     MemberSessionIdNull("650", "Session 不能为空"),

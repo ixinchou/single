@@ -113,4 +113,14 @@ public class MemberServiceImpl extends BaseServiceImpl<TMember> implements IMemb
         int updated = update(member);
         return updated > 0;
     }
+
+    public boolean updateUploadPermission(Integer id, Boolean uploadAble) {
+        TMember member = select(id);
+        if (null == member) {
+            return false;
+        }
+        member.setIsUploadAble(uploadAble ? MemberServiceImpl.True : MemberServiceImpl.False);
+        int updated = update(member);
+        return updated > 0;
+    }
 }
