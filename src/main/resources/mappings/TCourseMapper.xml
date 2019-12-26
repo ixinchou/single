@@ -120,10 +120,10 @@
       <if test="classTime != null" >
         class_time = #{classTime,jdbcType=VARCHAR},
       </if>
-      <if test="coverId != null" >
+      <if test="coverId != null and coverId > 0 " >
         cover_id = #{coverId,jdbcType=INTEGER},
       </if>
-      <if test="contentId != null" >
+      <if test="contentId != null and contentId > 0 " >
         content_id = #{contentId,jdbcType=INTEGER},
       </if>
       <if test="classType != null" >

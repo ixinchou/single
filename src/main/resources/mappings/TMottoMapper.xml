@@ -73,7 +73,7 @@
       <if test="updateTimes != null" >
         update_times = update_times + 1,
       </if>
-      <if test="contentId != null" >
+      <if test="contentId != null and contentId > 0 " >
         content_id = #{contentId,jdbcType=INTEGER},
       </if>
     </set>

@@ -56,6 +56,8 @@ public class CourseController extends AbstractHttpController<TCourse> {
         t.setName(course.getName());
         t.setClassType(course.getClassType());
         t.setFee(course.getClassFee());
+        t.setRebate(course.getClassRebate());
+        t.setShowOriginalPrice(course.getShowOriginalPrice());
         t.setClassTime(course.getClassTime());
         t.setCoverId(course.getCover());
         t.setContentId(course.getContent());

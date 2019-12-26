@@ -68,7 +68,7 @@
       <if test="type != null">
         type = #{type,jdbcType=TINYINT},
       </if>
-      <if test="contentId != null">
+      <if test="contentId != null and contentId > 0 ">
         content_id = #{contentId,jdbcType=INTEGER},
       </if>
       <if test="title != null">

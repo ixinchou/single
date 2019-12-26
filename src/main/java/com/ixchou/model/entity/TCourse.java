@@ -15,7 +15,7 @@ public class TCourse extends BaseModel {
 
     private Byte rebate;
 
-    private Boolean showOriginalPrice;
+    private Byte showOriginalPrice;
 
     @JsonIgnore
     private Integer coverId;
@@ -69,11 +69,11 @@ public class TCourse extends BaseModel {
         this.rebate = rebate;
     }
 
-    public Boolean getShowOriginalPrice() {
+    public Byte getShowOriginalPrice() {
         return showOriginalPrice;
     }
 
-    public void setShowOriginalPrice(Boolean showOriginalPrice) {
+    public void setShowOriginalPrice(Byte showOriginalPrice) {
         this.showOriginalPrice = showOriginalPrice;
     }
 
