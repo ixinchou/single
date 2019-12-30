@@ -41,3 +41,5 @@ pagehelper:
 
 setting:
   show-response-data: true
+  wx-msg-token: 92c8b2d368204645a7420d9e5889ddd8
+  wx-msg-security-key: T7mQ2dcKcCAUOMeKAf3phpaS3aWDOXfQYRhx1cI3nTM

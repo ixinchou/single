@@ -13,6 +13,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.async.WebAsyncTask;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 
 /**
@@ -63,12 +67,13 @@ public class WebLogAspect {
         }
         // header
         enumeration = request.getHeaderNames();
-        if (enumeration.hasMoreElements()) {
-            builder.append("\nheaders:\n");
-        }
+//        if (enumeration.hasMoreElements()) {
+//            builder.append("\nheaders:\n");
+//        }
         while (enumeration.hasMoreElements()) {
             String name = enumeration.nextElement();
             if ("51aea310ac094bf281205c37a3fc559d".equals(name)) {
+                builder.append("\nheaders:\n");
                 builder.append("  name: ").append(name).append(", ").append("value: ").append(request.getHeader(name)).append("\n");
             }
         }
@@ -81,6 +86,17 @@ public class WebLogAspect {
                     builder.append(GsonUtil.toString(object)).append("\n");
                 }
             }
+            int length = request.getContentLength();
+            if (length > 0) {
+                // 还有post的内容
+                try {
+                    byte[] bytes = new byte[length];
+                    int read = request.getInputStream().read(bytes);
+                    builder.append("\ncontent:\n").append(new String(bytes, StandardCharsets.UTF_8));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         Object object = null;
         try {
@@ -91,10 +107,10 @@ public class WebLogAspect {
         // 处理完成，返回内容
         if (null != object) {
             if (object instanceof WebAsyncTask) {
-                builder.append("Waiting asynchronous task executing.......\n");
+                builder.append("\nWaiting asynchronous task executing.......\n");
             } else {
                 if (showResponseData) {
-                    builder.append("RESPONSE: ").append(GsonUtil.toString(object));
+                    builder.append("\nresponse content: ").append(GsonUtil.toString(object));
                 }
                 builder.append("\n=============================== request end");
             }
