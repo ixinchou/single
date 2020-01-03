@@ -22,7 +22,11 @@ public abstract class AbstractHttpController<T> extends AbstractBaseController<T
      * 添加内容
      */
     HttpResponse __insert(T entity) {
-        T exist = _query(checkSameRecordPropertyName(), ObjectUtil.getPropertyValue(entity, checkSameRecordPropertyName()));
+        String propertyName = checkSameRecordPropertyName();
+        T exist = null;
+        if (!StringUtil.isEmpty(propertyName)) {
+            exist = _query(propertyName, ObjectUtil.getPropertyValue(entity, propertyName));
+        }
         if (null != exist) {
             return HttpResponse.failure(insertExistCode());
         }

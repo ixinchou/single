@@ -90,9 +90,11 @@ public class WebLogAspect {
             if (length > 0) {
                 // 还有post的内容
                 try {
-                    byte[] bytes = new byte[length];
-                    int read = request.getInputStream().read(bytes);
-                    builder.append("\ncontent:\n").append(new String(bytes, StandardCharsets.UTF_8));
+                    if (!request.getInputStream().isFinished()) {
+                        byte[] bytes = new byte[length];
+                        int read = request.getInputStream().read(bytes);
+                        builder.append("\ncontent:\n").append(new String(bytes, StandardCharsets.UTF_8));
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
