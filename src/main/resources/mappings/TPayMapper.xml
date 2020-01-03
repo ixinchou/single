@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ixchou.mappings.TPayMapper">
+  <resultMap id="BaseResultMap" type="com.ixchou.model.entity.TPay">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="enrolled_id" jdbcType="INTEGER" property="enrolledId" />
+    <result column="is_paid" jdbcType="TINYINT" property="isPaid" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, enrolled_id, is_paid, price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_pay
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByEnrolledId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_pay
+    where enrolled_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_pay
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.ixchou.model.entity.TPay" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    insert into t_pay
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="enrolledId != null">
+        enrolled_id,
+      </if>
+      <if test="isPaid != null">
+        is_paid,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="enrolledId != null">
+        #{enrolledId,jdbcType=INTEGER},
+      </if>
+      <if test="isPaid != null">
+        #{isPaid,jdbcType=TINYINT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ixchou.model.entity.TPay">
+    update t_pay
+    <set>
+      <if test="enrolledId != null">
+        enrolled_id = #{enrolledId,jdbcType=INTEGER},
+      </if>
+      <if test="isPaid != null">
+        is_paid = #{isPaid,jdbcType=TINYINT},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER} and is_deleted = 0
+  </update>
+</mapper>

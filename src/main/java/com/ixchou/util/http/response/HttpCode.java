@@ -81,6 +81,18 @@ public enum HttpCode {
      */
     CourseNameExist("660", "已有同名课程"),
     /**
+     * 课程id为空
+     */
+    CourseIdNull("661", "课程编号不能为空"),
+    /**
+     * 报名方式不正确
+     */
+    CourseEnrollTypeNull("662", "报名类型不正确"),
+    /**
+     * 孩子信息不能为空
+     */
+    CourseChildNotExist("663","报名时孩子的信息不能为空"),
+    /**
      * 没有找到相关数据
      */
     DatabaseSelectNone("995", "找不到相应的内容"),
