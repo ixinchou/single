@@ -36,8 +36,8 @@ fdfs:
 pagehelper:
   reasonable: true
 
-#logging:
-#  config: classpath:logback-.xml
+logging:
+  config: classpath:logback-sample.xml
 
 setting:
   show-response-data: true
